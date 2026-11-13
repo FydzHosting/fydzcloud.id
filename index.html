@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>FydzCloud ID — Infrastruktur Cloud & Toko Digital</title>
+  <title>FydzCloud ID — Layanan Cloud & Toko Digital</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
@@ -20,70 +20,74 @@
     }
   </script>
   <style>
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     html, body { max-width: 100vw; overflow-x: hidden; }
     .view-section { animation: fadeIn 0.2s ease-out; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    ::-webkit-scrollbar { width: 4px; height: 4px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-    .dark ::-webkit-scrollbar-thumb { background: #334155; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased transition-colors duration-200 selection:bg-indigo-600 selection:text-white">
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased pb-24 sm:pb-10 transition-colors duration-200 selection:bg-indigo-600 selection:text-white">
 
-  <!-- TOP APP BAR -->
+  <!-- TOP APP BAR (LEGA & TIDAK TERPOTONG DI LAYAR HP) -->
   <header class="sticky top-0 z-40 w-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2">
-      <div class="flex items-center gap-2.5 min-w-0">
-        <button onclick="toggleSidebar(true)" aria-label="Menu Utama" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 transition active:scale-95 shrink-0">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      
+      <!-- Kiri: Menu & Brand Utama -->
+      <div class="flex items-center gap-3">
+        <button onclick="toggleSidebar(true)" aria-label="Buka Menu" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 transition active:scale-95">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
 
-        <div class="flex items-center gap-2 min-w-0 select-none cursor-pointer" onclick="navigate('home')">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white flex items-center justify-center font-mono font-extrabold text-base shadow-md shadow-indigo-600/20 shrink-0">
+        <div onclick="navigate('home')" class="flex items-center gap-2.5 cursor-pointer select-none">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white flex items-center justify-center font-mono font-extrabold text-base shadow-sm shrink-0">
             F
           </div>
-          <div class="min-w-0">
-            <span class="font-extrabold text-base sm:text-lg tracking-tight block leading-none truncate">FydzCloud <span class="text-indigo-600 dark:text-indigo-400">ID</span></span>
-            <span class="text-[9px] font-mono text-slate-500 dark:text-slate-400 tracking-wide uppercase block mt-0.5 truncate">Cloud & Digital Platform</span>
+          <div>
+            <span class="font-extrabold text-base sm:text-lg tracking-tight block leading-none">FydzCloud <span class="text-indigo-600 dark:text-indigo-400">ID</span></span>
+            <span class="text-[10px] font-mono text-slate-500 dark:text-slate-400 block mt-0.5">Cloud & Digital Store</span>
           </div>
         </div>
       </div>
 
-      <div class="flex items-center gap-2 shrink-0">
+      <!-- Kanan: Tombol Tema & Status Akun Ringkas -->
+      <div class="flex items-center gap-2">
         <button onclick="toggleTheme()" aria-label="Ganti Tema" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition active:scale-95">
-          <svg id="iconSun" class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-          <svg id="iconMoon" class="w-5 h-5 block dark:hidden text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          <svg class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <svg class="w-5 h-5 block dark:hidden text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
         </button>
 
-        <div id="authNavContainer"></div>
+        <div id="topAuthSlot"></div>
       </div>
     </div>
   </header>
 
-  <!-- SIDEBAR NAVIGATION -->
+  <!-- SIDEBAR DRAWER (MENU LACI SAMPING) -->
   <div id="sidebarBackdrop" onclick="toggleSidebar(false)" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-xs transition-opacity"></div>
   <aside id="sidebarDrawer" class="fixed top-0 left-0 bottom-0 z-50 w-72 max-w-[82vw] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform -translate-x-full transition-transform duration-300 ease-out flex flex-col shadow-2xl">
     <div class="h-16 px-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
       <div class="flex items-center gap-2.5">
         <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-mono font-bold text-sm">F</div>
-        <span class="font-bold text-base tracking-tight">Menu Utama</span>
+        <span class="font-bold text-base tracking-tight">FydzCloud ID</span>
       </div>
       <button onclick="toggleSidebar(false)" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
     </div>
 
+    <!-- Info Akun di Dalam Sidebar -->
+    <div id="sidebarAccountBox" class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/50"></div>
+
     <div class="flex-1 overflow-y-auto p-4 space-y-1.5">
-      <div class="px-3 py-1.5 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400">Navigasi Halaman</div>
+      <div class="px-3 py-1 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400">Menu Aplikasi</div>
       
       <button onclick="navigate('home')" data-nav="home" class="nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition">
         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-        <span>Beranda Utama</span>
+        <span>Beranda</span>
       </button>
 
       <button onclick="navigate('catalog')" data-nav="catalog" class="nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition">
@@ -93,7 +97,7 @@
 
       <button onclick="navigate('orders')" data-nav="orders" class="nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition">
         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-        <span>Cek Status Transaksi</span>
+        <span>Status Pesanan</span>
       </button>
 
       <button onclick="navigate('guide')" data-nav="guide" class="nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition">
@@ -102,198 +106,159 @@
       </button>
     </div>
 
-    <div class="p-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
+    <div class="p-4 border-t border-slate-200 dark:border-slate-800 space-y-2.5">
       <a href="https://wa.me/6283120264665" target="_blank" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition shadow-sm">
-        <span>Hubungi Support WhatsApp</span>
+        <span>Chat Support WhatsApp</span>
       </a>
-      <p class="text-[11px] font-mono text-center text-slate-400">FydzCloud ID &bull; v4.5 Enterprise</p>
     </div>
   </aside>
 
   <!-- MAIN CONTENT CONTAINER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
-    <!-- VIEW 1: BERANDA (MURNI LANDING PAGE PROFESIONAL, TANPA KATALOG NUMPUK) -->
-    <section id="view-home" class="view-section space-y-8">
+    <!-- VIEW 1: BERANDA (BERSIH, RINGKAS, TIDAK NUMPUK) -->
+    <section id="view-home" class="view-section space-y-6">
       
-      <!-- HERO BANNER UTAMA -->
-      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-12 border border-slate-800 shadow-xl">
-        <div class="absolute -right-20 -top-20 w-72 h-72 rounded-full bg-indigo-500/15 blur-3xl pointer-events-none"></div>
-        <div class="absolute -left-20 -bottom-20 w-72 h-72 rounded-full bg-violet-500/15 blur-3xl pointer-events-none"></div>
-        
-        <div class="relative z-10 max-w-2xl space-y-5">
-          <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-mono">
+      <!-- HERO BANNER -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-10 border border-slate-800 shadow-lg">
+        <div class="relative z-10 max-w-xl space-y-4">
+          <div id="apiBadge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-mono">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            Sistem Pemesanan Otomatis 24/7 Aktif
+            <span id="apiBadgeText">Menghubungkan Server...</span>
           </div>
-          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-            Infrastruktur Cloud & Toko Digital Profesional.
+          <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+            Infrastruktur Cloud & Toko Digital Otomatis.
           </h1>
-          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Platform pemesanan server panel Pterodactyl, script bot WhatsApp, dan jasa pembuatan web terpercaya. Pembayaran QRIS otomatis langsung tervalidasi instan.
+          <p class="text-slate-300 text-sm leading-relaxed">
+            Pesan server panel Pterodactyl, script bot WhatsApp, dan jasa web secara instan. Pembayaran QRIS langsung diproses oleh sistem tanpa menunggu admin.
           </p>
-          <div class="pt-3 flex flex-wrap gap-3.5">
-            <button onclick="navigate('catalog')" class="px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition shadow-lg shadow-indigo-600/30 flex items-center gap-2">
-              <span>Buka Katalog Layanan</span>
+          <div class="pt-2 flex flex-col sm:flex-row gap-3">
+            <button onclick="navigate('catalog')" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition shadow-md flex items-center justify-center gap-2">
+              <span>Lihat Katalog Layanan</span>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </button>
-            <button onclick="navigate('orders')" class="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/15 text-sm font-semibold transition">
-              Cek Status Pesanan
+            <button onclick="navigate('orders')" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/15 text-sm font-semibold transition text-center">
+              Lacak Pesanan
             </button>
           </div>
         </div>
       </div>
 
-      <!-- KARTU INFORMASI & STATUS API REAL-TIME -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs flex items-start gap-4">
-          <div class="w-11 h-11 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 border border-indigo-500/20">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
-          </div>
-          <div class="min-w-0">
-            <span class="text-xs font-medium text-slate-500 dark:text-slate-400 block">Total Katalog</span>
-            <p id="homeStatProducts" class="text-xl font-extrabold mt-0.5 text-slate-900 dark:text-white">Memuat...</p>
-            <span class="text-[11px] text-indigo-600 dark:text-indigo-400 font-medium block mt-0.5">Tersedia di menu katalog</span>
-          </div>
-        </div>
-
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs flex items-start gap-4">
-          <div class="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/20">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
-          </div>
-          <div class="min-w-0">
-            <span class="text-xs font-medium text-slate-500 dark:text-slate-400 block">Metode Bayar</span>
-            <p class="text-xl font-extrabold mt-0.5 text-slate-900 dark:text-white">QRIS Universal</p>
-            <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium block mt-0.5">Semua E-Wallet & M-Banking</span>
-          </div>
-        </div>
-
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs flex items-start gap-4">
-          <div class="w-11 h-11 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/20">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          </div>
-          <div class="min-w-0">
-            <span class="text-xs font-medium text-slate-500 dark:text-slate-400 block">Kecepatan Sistem</span>
-            <p class="text-xl font-extrabold mt-0.5 text-slate-900 dark:text-white">&lt; 10 Detik</p>
-            <span class="text-[11px] text-amber-600 dark:text-amber-400 font-medium block mt-0.5">Aktivasi akun otomatis</span>
-          </div>
-        </div>
-
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs flex items-start gap-4">
-          <div class="w-11 h-11 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/20">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-          </div>
-          <div class="min-w-0">
-            <span class="text-xs font-medium text-slate-500 dark:text-slate-400 block">Status Server</span>
-            <p id="serverStatusText" class="text-xl font-extrabold mt-0.5 text-emerald-600 dark:text-emerald-400">Normal 100%</p>
-            <span class="text-[11px] text-sky-600 dark:text-sky-400 font-medium block mt-0.5">API Gateway Terhubung</span>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- SHORTCUT MENU UTAMA (BERKELAS) -->
-      <div class="space-y-4 pt-2">
-        <div>
-          <h2 class="text-lg sm:text-xl font-bold tracking-tight">Kategori Layanan Utama</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Pilih kategori untuk melihat daftar produk lengkap di halaman katalog</p>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <button onclick="openCategoryDirect('Panel Pterodactyl')" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-left transition group shadow-xs flex items-center justify-between">
-            <div class="flex items-center gap-4">
-              <div class="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-md">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
+      <!-- KATEGORI CEPAT (3 PILIHAN UTAMA SAJA) -->
+      <div class="space-y-3">
+        <h2 class="text-base sm:text-lg font-bold tracking-tight px-1">Pilih Kategori Layanan</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          <button onclick="openCategoryDirect('Panel Pterodactyl')" class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-left transition flex items-center justify-between shadow-xs active:scale-[0.99]">
+            <div class="flex items-center gap-3.5">
+              <div class="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
               </div>
               <div>
-                <h3 class="font-bold text-sm sm:text-base group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">Panel Pterodactyl</h3>
+                <h3 class="font-bold text-sm">Panel Pterodactyl</h3>
                 <p class="text-xs text-slate-500 mt-0.5">Hosting server bot & aplikasi</p>
               </div>
             </div>
-            <svg class="w-5 h-5 text-slate-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
           </button>
 
-          <button onclick="openCategoryDirect('Script & Bot WA')" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 text-left transition group shadow-xs flex items-center justify-between">
-            <div class="flex items-center gap-4">
-              <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-md">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+          <button onclick="openCategoryDirect('Script & Bot WA')" class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 text-left transition flex items-center justify-between shadow-xs active:scale-[0.99]">
+            <div class="flex items-center gap-3.5">
+              <div class="w-11 h-11 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
               </div>
               <div>
-                <h3 class="font-bold text-sm sm:text-base group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition">Script & Bot WA</h3>
+                <h3 class="font-bold text-sm">Script & Bot WA</h3>
                 <p class="text-xs text-slate-500 mt-0.5">Source code bot siap pakai</p>
               </div>
             </div>
-            <svg class="w-5 h-5 text-slate-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
           </button>
 
-          <button onclick="openCategoryDirect('Jasa & Tools')" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 text-left transition group shadow-xs flex items-center justify-between">
-            <div class="flex items-center gap-4">
-              <div class="w-12 h-12 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center shrink-0 shadow-md">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <button onclick="openCategoryDirect('Jasa & Tools')" class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 text-left transition flex items-center justify-between shadow-xs active:scale-[0.99]">
+            <div class="flex items-center gap-3.5">
+              <div class="w-11 h-11 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
               </div>
               <div>
-                <h3 class="font-bold text-sm sm:text-base group-hover:text-amber-500 transition">Jasa Web & Tools</h3>
-                <p class="text-xs text-slate-500 mt-0.5">Pembuatan web & setup tools</p>
+                <h3 class="font-bold text-sm">Jasa Web & Tools</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Instalasi & pembuatan web</p>
               </div>
             </div>
-            <svg class="w-5 h-5 text-slate-400 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
           </button>
         </div>
       </div>
+
+      <!-- RINGKASAN KEUNGGULAN SISTEM -->
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 grid grid-cols-2 sm:grid-cols-3 gap-4 text-center sm:text-left">
+        <div>
+          <span class="text-[11px] font-mono text-slate-400 block">Pembayaran</span>
+          <span class="font-bold text-sm text-emerald-600 dark:text-emerald-400">QRIS Instan</span>
+        </div>
+        <div>
+          <span class="text-[11px] font-mono text-slate-400 block">Aktivasi Layanan</span>
+          <span class="font-bold text-sm">Otomatis 24 Jam</span>
+        </div>
+        <div class="col-span-2 sm:col-span-1 border-t sm:border-t-0 pt-3 sm:pt-0 border-slate-100 dark:border-slate-800">
+          <span class="text-[11px] font-mono text-slate-400 block">Bantuan Teknis</span>
+          <span class="font-bold text-sm text-indigo-600 dark:text-indigo-400">Support WhatsApp</span>
+        </div>
+      </div>
+
     </section>
 
     <!-- VIEW 2: KATALOG PRODUK (TERPISAH SEPENUHNYA) -->
-    <section id="view-catalog" class="view-section hidden space-y-6">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <section id="view-catalog" class="view-section hidden space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 class="text-2xl font-extrabold tracking-tight">Katalog Layanan & Produk</h1>
-          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Pilih kategori atau cari layanan spesifik yang Anda butuhkan</p>
+          <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">Katalog Layanan</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Pilih paket layanan sesuai kebutuhan Anda</p>
         </div>
         
         <div class="relative w-full sm:w-72">
           <svg class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          <input type="text" id="catalogSearch" oninput="applyCatalogFilter()" placeholder="Cari layanan atau kode..." class="w-full pl-10 pr-4 py-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <input type="text" id="catalogSearch" oninput="applyCatalogFilter()" placeholder="Cari layanan atau kode..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
         </div>
       </div>
 
-      <!-- KATEGORI CHIPS -->
-      <div id="categoryChips" class="flex items-center gap-2 overflow-x-auto pb-1">
-        <button onclick="selectCategory('all')" data-cat="all" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition shadow-xs">
+      <!-- KATEGORI CHIPS (BISA DIGESER HALUS DI HP) -->
+      <div id="categoryChips" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+        <button onclick="selectCategory('all')" data-cat="all" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition">
           Semua Layanan
         </button>
         <button onclick="selectCategory('Panel Pterodactyl')" data-cat="Panel Pterodactyl" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition">
           Panel Pterodactyl
         </button>
         <button onclick="selectCategory('Script & Bot WA')" data-cat="Script & Bot WA" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition">
-          Script & Bot WhatsApp
+          Script & Bot WA
         </button>
         <button onclick="selectCategory('Jasa & Tools')" data-cat="Jasa & Tools" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition">
           Jasa Web & Tools
         </button>
       </div>
 
-      <div id="catalogLoader" class="py-16 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+      <div id="catalogLoader" class="py-14 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
         <div class="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-        <p class="text-xs font-mono text-slate-500">Menghubungkan ke server pusat...</p>
+        <p class="text-xs font-mono text-slate-500">Memuat daftar layanan dari server...</p>
       </div>
 
       <div id="catalogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
-      <div id="catalogEmpty" class="hidden py-14 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
-        <p class="font-bold text-base">Layanan Tidak Ditemukan</p>
-        <p class="text-xs text-slate-500">Coba gunakan kata kunci lain atau pilih kategori yang berbeda.</p>
+      <div id="catalogEmpty" class="hidden py-12 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <p class="font-bold text-sm">Layanan Tidak Ditemukan</p>
+        <p class="text-xs text-slate-500">Coba kata kunci lain atau pilih kategori berbeda.</p>
       </div>
     </section>
 
-    <!-- VIEW 3: CEK STATUS TRANSAKSI & RIWAYAT -->
-    <section id="view-orders" class="view-section hidden space-y-6 max-w-3xl mx-auto">
+    <!-- VIEW 3: STATUS PESANAN & RIWAYAT -->
+    <section id="view-orders" class="view-section hidden space-y-5 max-w-2xl mx-auto">
       <div>
-        <h1 class="text-2xl font-extrabold tracking-tight">Status Pesanan & Riwayat</h1>
-        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Lacak transaksi aktif atau akses kembali invoice pembayaran Anda</p>
+        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">Status Pesanan & Riwayat</h1>
+        <p class="text-xs text-slate-500 dark:text-slate-400">Lacak transaksi atau buka kembali halaman invoice pembayaran</p>
       </div>
 
-      <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4 shadow-xs">
-        <label class="block text-xs font-mono font-semibold uppercase text-slate-500">Cek Berdasarkan Order ID</label>
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3.5 shadow-xs">
+        <label class="block text-xs font-mono font-semibold uppercase text-slate-500">Cek Dengan Order ID</label>
         <div class="flex flex-col sm:flex-row gap-2.5">
           <input type="text" id="manualOrderId" placeholder="Contoh: INV-73371443-9714" class="flex-1 px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
           <button onclick="openDirectInvoice()" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition shrink-0">
@@ -304,50 +269,76 @@
 
       <div class="space-y-3">
         <div class="flex items-center justify-between">
-          <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 font-mono">Riwayat Transaksi Anda</h2>
-          <button onclick="clearOrderHistory()" class="text-xs text-red-500 hover:underline">Bersihkan Riwayat</button>
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 font-mono">Riwayat Transaksi</h2>
+          <button onclick="clearOrderHistory()" class="text-xs text-red-500 hover:underline">Hapus Riwayat</button>
         </div>
         <div id="orderHistoryList" class="space-y-3"></div>
       </div>
     </section>
 
     <!-- VIEW 4: PANDUAN -->
-    <section id="view-guide" class="view-section hidden space-y-6 max-w-4xl mx-auto">
+    <section id="view-guide" class="view-section hidden space-y-5 max-w-3xl mx-auto">
       <div>
-        <h1 class="text-2xl font-extrabold tracking-tight">Panduan & Bantuan Pelanggan</h1>
-        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Tata cara pemesanan otomatis dan informasi layanan pelanggan 24 jam</p>
+        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">Panduan Pemesanan</h1>
+        <p class="text-xs text-slate-500 dark:text-slate-400">Cara mudah memesan layanan secara otomatis di FydzCloud ID</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2.5 shadow-xs">
-          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center">01</span>
-          <h3 class="font-bold text-base">Pilih Paket Layanan</h3>
-          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Masuk ke Katalog Layanan, pilih spesifikasi server Pterodactyl atau script bot, lalu klik Pesan.</p>
+      <div class="space-y-3">
+        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-4">
+          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0">01</span>
+          <div>
+            <h3 class="font-bold text-sm">Pilih Paket Layanan</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Buka menu Katalog, pilih spesifikasi server panel Pterodactyl atau script bot yang diinginkan, lalu tekan tombol Pesan.</p>
+          </div>
         </div>
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2.5 shadow-xs">
-          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center">02</span>
-          <h3 class="font-bold text-base">Scan QRIS Otomatis</h3>
-          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Isi data kontak dan username panel, lalu scan QRIS menggunakan aplikasi M-Banking atau E-Wallet apa saja.</p>
+        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-4">
+          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0">02</span>
+          <div>
+            <h3 class="font-bold text-sm">Bayar Menggunakan QRIS</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Lengkapi data kontak serta username panel Anda, kemudian scan kode QRIS memakai aplikasi E-Wallet atau M-Banking.</p>
+          </div>
         </div>
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2.5 shadow-xs">
-          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center">03</span>
-          <h3 class="font-bold text-base">Aktivasi Instan</h3>
-          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Sistem gateway akan langsung memproses dan mengirimkan detail akun panel setelah pembayaran terkonfirmasi.</p>
+        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-4">
+          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0">03</span>
+          <div>
+            <h3 class="font-bold text-sm">Layanan Aktif Otomatis</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Sistem akan memverifikasi pembayaran dan memproses pesanan Anda secara otomatis dalam hitungan detik.</p>
+          </div>
         </div>
       </div>
 
-      <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
-        <div class="space-y-1">
-          <h3 class="font-bold text-base">Mengalami Kendala Transaksi?</h3>
-          <p class="text-xs text-slate-600 dark:text-slate-400">Tim technical support kami siap membantu Anda kapan saja melalui WhatsApp.</p>
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h3 class="font-bold text-sm">Butuh Bantuan Admin?</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Hubungi tim support kami jika terjadi kendala transaksi.</p>
         </div>
-        <a href="https://wa.me/6283120264665" target="_blank" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold text-center shrink-0 transition shadow-sm">
-          Hubungi WhatsApp (+6283120264665)
+        <a href="https://wa.me/6283120264665" target="_blank" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold text-center shrink-0 transition">
+          Chat WhatsApp Support
         </a>
       </div>
     </section>
 
   </main>
+
+  <!-- BOTTOM NAVIGATION BAR (KHAS APLIKASI ANDROID DI LAYAR HP) -->
+  <nav class="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-2 py-1.5 flex items-center justify-around">
+    <button onclick="navigate('home')" data-bnav="home" class="bnav-item flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-[10px] font-semibold transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span>Beranda</span>
+    </button>
+    <button onclick="navigate('catalog')" data-bnav="catalog" class="bnav-item flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-[10px] font-semibold transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+      <span>Katalog</span>
+    </button>
+    <button onclick="navigate('orders')" data-bnav="orders" class="bnav-item flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-[10px] font-semibold transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+      <span>Pesanan</span>
+    </button>
+    <button onclick="navigate('guide')" data-bnav="guide" class="bnav-item flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-[10px] font-semibold transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+      <span>Panduan</span>
+    </button>
+  </nav>
 
   <!-- MODAL: LOGIN / REGISTER AKUN -->
   <div id="authModal" class="fixed inset-0 z-[300] hidden bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-4">
@@ -357,9 +348,9 @@
       </button>
 
       <div class="text-center space-y-1">
-        <span class="inline-block px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">AKUN KLIEN</span>
+        <span class="inline-block px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">AKUN PELANGGAN</span>
         <h3 id="authModalTitle" class="text-xl font-extrabold tracking-tight">Masuk ke Akun</h3>
-        <p class="text-xs text-slate-500">Simpan riwayat transaksi dan isi formulir pemesanan lebih cepat.</p>
+        <p class="text-xs text-slate-500">Simpan riwayat pesanan secara aman di akun Anda.</p>
       </div>
 
       <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
@@ -487,18 +478,6 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mt-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
-      <div class="font-semibold text-slate-700 dark:text-slate-300">
-        FydzCloud ID &mdash; Layanan Cloud & Toko Digital
-      </div>
-      <div class="font-mono">
-        &copy; 2026 FydzCloud ID. Seluruh Hak Cipta Dilindungi.
-      </div>
-    </div>
-  </footer>
-
   <!-- CORE APPLICATION SCRIPT -->
   <script>
     const API_KEY = "fzx_live_aa67b0dd569d134e686680d3011dee4c049b86b9477fd7d77329774dab3d1a46";
@@ -512,27 +491,43 @@
       return raw ? JSON.parse(raw) : null;
     }
 
-    function renderAuthNav() {
-      const container = document.getElementById('authNavContainer');
+    // Render tombol akun yang ringkas di header & lengkap di dalam Sidebar
+    function renderAuthUI() {
+      const topSlot = document.getElementById('topAuthSlot');
+      const sidebarBox = document.getElementById('sidebarAccountBox');
       const user = getLoggedUser();
 
       if (user) {
-        container.innerHTML = `
-          <div class="flex items-center gap-2">
-            <div class="px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-900 text-xs font-semibold flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span class="truncate max-w-[80px] sm:max-w-[120px]">${user.name}</span>
+        topSlot.innerHTML = `
+          <button onclick="toggleSidebar(true)" class="px-3 py-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-900 text-xs font-semibold flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+            <span class="truncate max-w-[75px] sm:max-w-[120px]">${user.name}</span>
+          </button>
+        `;
+        sidebarBox.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+            <div class="min-w-0">
+              <span class="text-[10px] font-mono text-emerald-500 block">AKUN AKTIF</span>
+              <p class="font-bold text-sm truncate">${user.name}</p>
             </div>
-            <button onclick="handleLogout()" class="p-2 rounded-xl border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 text-xs font-semibold transition hover:bg-red-100" title="Keluar">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+            <button onclick="handleLogout()" class="px-3 py-1.5 rounded-lg bg-red-500/10 text-red-500 text-xs font-semibold hover:bg-red-500 hover:text-white transition shrink-0">
+              Keluar
             </button>
           </div>
         `;
       } else {
-        container.innerHTML = `
-          <button onclick="openAuthModal()" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition shadow-sm">
-            Masuk / Daftar
+        topSlot.innerHTML = `
+          <button onclick="openAuthModal()" class="px-3.5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition shadow-sm">
+            Masuk
           </button>
+        `;
+        sidebarBox.innerHTML = `
+          <div class="space-y-2">
+            <p class="text-xs text-slate-500">Masuk untuk menyimpan riwayat transaksi Anda.</p>
+            <button onclick="toggleSidebar(false); openAuthModal();" class="w-full py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-semibold">
+              Masuk / Daftar Akun
+            </button>
+          </div>
         `;
       }
     }
@@ -588,7 +583,7 @@
         localStorage.setItem('fydz_registered_users', JSON.stringify(users));
         localStorage.setItem('fydz_current_user', JSON.stringify(newUser));
         closeAuthModal();
-        renderAuthNav();
+        renderAuthUI();
         renderOrderHistory();
         showModal('Registrasi Berhasil', 'Akun berhasil dibuat dan Anda otomatis masuk.', 'success');
       } else {
@@ -596,7 +591,7 @@
         if (found) {
           localStorage.setItem('fydz_current_user', JSON.stringify(found));
           closeAuthModal();
-          renderAuthNav();
+          renderAuthUI();
           renderOrderHistory();
           showModal('Login Berhasil', `Selamat datang kembali, ${found.name}!`, 'success');
         } else {
@@ -606,8 +601,9 @@
     }
 
     function handleLogout() {
+      toggleSidebar(false);
       localStorage.removeItem('fydz_current_user');
-      renderAuthNav();
+      renderAuthUI();
       renderOrderHistory();
       showModal('Berhasil Keluar', 'Sesi akun Anda telah diakhiri.', 'success');
     }
@@ -678,6 +674,16 @@
         }
       });
 
+      document.querySelectorAll('.bnav-item').forEach(btn => {
+        if (btn.dataset.bnav === viewName) {
+          btn.classList.add('text-indigo-600', 'dark:text-indigo-400');
+          btn.classList.remove('text-slate-500', 'dark:text-slate-400');
+        } else {
+          btn.classList.remove('text-indigo-600', 'dark:text-indigo-400');
+          btn.classList.add('text-slate-500', 'dark:text-slate-400');
+        }
+      });
+
       if (viewName === 'orders') renderOrderHistory();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -687,8 +693,11 @@
       selectCategory(catName);
     }
 
-    // --- CEK KONDISI API & KATALOG REAL-TIME ---
+    // --- KONEKSI PROXY VERCEL KE SERVER PUSAT ---
     async function loadCatalog() {
+      const badge = document.getElementById('apiBadge');
+      const badgeText = document.getElementById('apiBadgeText');
+
       try {
         const res = await fetch('/api/v1/products?limit=100', {
           headers: {
@@ -696,46 +705,47 @@
             'Accept': 'application/json'
           }
         });
+        
         if (!res.ok) throw new Error('HTTP ' + res.status);
+        
+        const contentType = res.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+          throw new Error('Proxy vercel.json belum terkonfigurasi');
+        }
+
         const json = await res.json();
 
         let items = [];
-        if (Array.isArray(json)) {
-          items = json;
-        } else if (json.data && Array.isArray(json.data)) {
-          items = json.data;
-        } else if (json.products && Array.isArray(json.products)) {
-          items = json.products;
-        } else if (json.result && Array.isArray(json.result)) {
-          items = json.result;
-        } else if (json.data && json.data.products && Array.isArray(json.data.products)) {
-          items = json.data.products;
-        } else {
+        if (Array.isArray(json)) items = json;
+        else if (json.data && Array.isArray(json.data)) items = json.data;
+        else if (json.products && Array.isArray(json.products)) items = json.products;
+        else if (json.result && Array.isArray(json.result)) items = json.result;
+        else if (json.data && json.data.products && Array.isArray(json.data.products)) items = json.data.products;
+        else {
           const foundKey = Object.keys(json).find(k => Array.isArray(json[k]));
           items = foundKey ? json[foundKey] : [];
         }
 
         if (items.length > 0) {
           productsData = items;
-          document.getElementById('homeStatProducts').innerText = productsData.length + ' Paket';
-          document.getElementById('serverStatusText').innerText = 'Normal 100%';
+          badgeText.innerText = `Server Terhubung (${productsData.length} Layanan)`;
           renderCatalogCards(productsData);
         } else {
-          document.getElementById('homeStatProducts').innerText = '0 Paket';
+          badgeText.innerText = 'Server Terhubung (Katalog Kosong)';
           document.getElementById('catalogLoader').innerHTML = `
             <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs font-mono">
-              ⚠️ Katalog server terhubung, namun data layanan belum tersedia.
+              ⚠️ Katalog terhubung, namun belum ada layanan yang tersedia.
             </div>
           `;
         }
       } catch (err) {
         console.error(err);
-        document.getElementById('homeStatProducts').innerText = 'Offline';
-        document.getElementById('serverStatusText').innerText = 'Gangguan';
-        document.getElementById('serverStatusText').className = 'text-xl font-extrabold mt-0.5 text-red-500';
+        badge.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/15 border border-red-400/30 text-red-300 text-xs font-mono';
+        badgeText.innerText = 'Koneksi Proxy Terputus';
         document.getElementById('catalogLoader').innerHTML = `
-          <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-500 text-xs font-mono">
-            ❌ Gagal memuat data katalog dari server pusat.
+          <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-500 text-xs font-mono space-y-1">
+            <p>❌ Gagal mengambil data dari server pusat.</p>
+            <p class="text-[10px] opacity-80">Pastikan file vercel.json sudah di-deploy dengan aturan rewrite /api/.</p>
           </div>
         `;
       }
@@ -756,7 +766,7 @@
       selectedCat = cat;
       document.querySelectorAll('.cat-chip').forEach(btn => {
         if (btn.dataset.cat === cat) {
-          btn.className = 'cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition shadow-xs';
+          btn.className = 'cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition';
         } else {
           btn.className = 'cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition';
         }
@@ -786,8 +796,8 @@
       if (productCat === 'Jasa & Tools') badgeStyle = 'bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400';
 
       return `
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 transition flex flex-col justify-between gap-5 shadow-xs">
-          <div class="space-y-2.5">
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 transition flex flex-col justify-between gap-4 shadow-xs">
+          <div class="space-y-2">
             <div class="flex items-center justify-between gap-2">
               <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono font-semibold uppercase ${badgeStyle}">
                 ${productCat}
@@ -799,7 +809,7 @@
             <h3 class="font-bold text-base leading-snug">${p.name || 'Tanpa Nama'}</h3>
             <p class="text-[11px] font-mono text-slate-400 truncate">Kode: ${p.id || '-'}</p>
           </div>
-          <div class="pt-3.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
             <div>
               <span class="text-[10px] font-mono text-slate-400 block">Harga Paket</span>
               <span class="font-mono font-extrabold text-base text-indigo-600 dark:text-indigo-400">Rp ${Number(p.price || 0).toLocaleString('id-ID')}</span>
@@ -966,7 +976,7 @@
       if (list.length === 0) {
         container.innerHTML = `
           <div class="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center text-xs text-slate-500">
-            ${user ? `Halo ${user.name}, belum ada riwayat transaksi tercatat di akun Anda.` : 'Belum ada riwayat transaksi pada perangkat ini. (Masuk ke akun untuk menyimpan riwayat pesanan secara aman).'}
+            ${user ? `Halo ${user.name}, belum ada riwayat transaksi di akun Anda.` : 'Belum ada riwayat transaksi pada perangkat ini.'}
           </div>
         `;
         return;
@@ -1004,7 +1014,7 @@
     }
 
     initTheme();
-    renderAuthNav();
+    renderAuthUI();
     navigate('home');
     loadCatalog();
   </script>

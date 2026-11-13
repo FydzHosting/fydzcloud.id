@@ -416,56 +416,48 @@
   <script>
     const API_KEY = "fzx_live_aa67b0dd569d134e686680d3011dee4c049b86b9477fd7d77329774dab3d1a46";
     
-    // Konfigurasi Remote JSONBin (Web Utama menggunakan Access Key / Master Key dengan izin Read)
+    // Konfigurasi Master Key untuk Web Utama
     const JSONBIN_BIN_ID = "6af71fbdac021005a852684";
-    const JSONBIN_SECRET_KEY = "$2a$10$/.gygM1.uzeJXyEns9Zaqe7VnA2ZHuOlr6TqVT9eUL2Ccy.L9FHhq";
+    const JSONBIN_SECRET_KEY = "$2a$10$7URRKGPRG/YT/RSdWHDvCuyZx2u0IBQRR4cnvD6UA/8MWNZ2qL46O";
 
     let productsData = [];
     let selectedCat = "all";
 
     async function checkRemoteStatus() {
-  try {
-    let res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
-      method: 'GET',
-      headers: {
-        'X-Access-Key': JSONBIN_SECRET_KEY,
-        'Content-Type': 'application/json'
+      try {
+        let res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
+          method: 'GET',
+          headers: {
+            'X-Master-Key': JSONBIN_SECRET_KEY,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (!res.ok) return;
+        let json = await res.json();
+        let data = json.record || json;
+
+        if (data.maintenance === true || data.maintenance === "true") {
+          localStorage.setItem('fydz_maintenance_enabled', 'true');
+          if (data.maintenance_msg) {
+            localStorage.setItem('fydz_maintenance_msg', data.maintenance_msg);
+          }
+        } else {
+          localStorage.setItem('fydz_maintenance_enabled', 'false');
+        }
+        
+        if (data.broadcast) {
+          localStorage.setItem('fydz_broadcast', JSON.stringify(data.broadcast));
+        } else {
+          localStorage.removeItem('fydz_broadcast');
+        }
+
+        checkMaintenanceState();
+        renderBroadcastBanner();
+      } catch (err) {
+        console.error("Gagal sinkron:", err);
       }
-    });
-    
-    if (!res.ok) {
-      console.error("Gagal mengambil data dari server cloud");
-      return;
     }
-
-    let json = await res.json();
-    // JSONBin v3 menyimpan data asli di dalam properti .record
-    let data = json.record || json;
-
-    console.log("Status Remote Server:", data); // Debugging di Console Browser (F12)
-
-    // Cek apakah mode maintenance aktif (ubah ke boolean untuk keamanan)
-    if (data.maintenance === true || data.maintenance === "true") {
-      localStorage.setItem('fydz_maintenance_enabled', 'true');
-      if (data.maintenance_msg) {
-        localStorage.setItem('fydz_maintenance_msg', data.maintenance_msg);
-      }
-    } else {
-      localStorage.setItem('fydz_maintenance_enabled', 'false');
-    }
-    
-    if (data.broadcast) {
-      localStorage.setItem('fydz_broadcast', JSON.stringify(data.broadcast));
-    } else {
-      localStorage.removeItem('fydz_broadcast');
-    }
-
-    checkMaintenanceState();
-    renderBroadcastBanner();
-  } catch (err) {
-    console.error("Sinkronisasi remote gagal:", err);
-  }
-}
 
     function showModal(title, message, type = 'error') {
       const modal = document.getElementById('appModal');
@@ -860,7 +852,7 @@
           const orderId = d.order_id || d.id || 'INV-' + Math.floor(Math.random() * 900000 + 100000);
           const amount = Number(d.amount || d.total_amount || d.price || 0);
           const qrImg = d.payment?.qr_image_url || d.payment?.qris_url || d.qr_image_url || d.qris_url || d.qr_code || '';
-          const invUrl = d.invoice_url || d.url || `https://store.roselynsound.my.id/invoice/${encodeURIComponent(orderId)}`;
+          const invUrl = json.invoice_url || json.url || `https://store.roselynsound.my.id/invoice/${encodeURIComponent(orderId)}`;
 
           document.getElementById('qrisOrderId').innerText = 'Order ID: ' + orderId;
           document.getElementById('qrisImgTag').src = qrImg;

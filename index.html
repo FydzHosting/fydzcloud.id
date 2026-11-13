@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>FydzCloud.ID — Cloud Infrastructure & Digital Store</title>
+  <title>FydzCloud ID — Cloud Infrastructure & Digital Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
@@ -34,7 +34,7 @@
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased transition-colors duration-200 selection:bg-indigo-600 selection:text-white">
 
-  <!-- MAINTENANCE OVERLAY (MUNCUL SAAT AKTIF & BUKAN ADMIN) -->
+  <!-- MAINTENANCE OVERLAY -->
   <div id="maintenanceOverlay" class="fixed inset-0 z-[100] hidden bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-5">
     <div class="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-7 text-center shadow-2xl space-y-5">
       <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-500 flex items-center justify-center">
@@ -44,7 +44,7 @@
         <span class="inline-block px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400">SYSTEM MAINTENANCE</span>
         <h2 class="text-2xl font-extrabold tracking-tight">Sedang Pemeliharaan Sistem</h2>
         <p id="maintenanceReasonText" class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          Kami sedang melakukan peningkatan infrastruktur server untuk performa yang lebih optimal. Silakan kembali beberapa saat lagi.
+          Kami sedang melakukan peningkatan infrastruktur server untuk performa yang lebih optimal.
         </p>
       </div>
       <div class="pt-2 flex flex-col gap-2.5">
@@ -58,7 +58,7 @@
     </div>
   </div>
 
-  <!-- BROADCAST ANNOUNCEMENT BAR -->
+  <!-- BROADCAST BANNER -->
   <div id="broadcastBanner" class="hidden bg-indigo-600 text-white border-b border-indigo-500">
     <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3 text-xs sm:text-sm">
       <div class="flex items-center gap-2.5 min-w-0">
@@ -67,23 +67,20 @@
       </div>
       <div class="flex items-center gap-2 shrink-0">
         <span id="broadcastTimerDisplay" class="hidden sm:inline font-mono text-[11px] text-indigo-200"></span>
-        <button onclick="dismissBroadcastSession()" class="p-1 rounded hover:bg-white/20 transition" title="Tutup sementara">
+        <button onclick="dismissBroadcastSession()" class="p-1 rounded hover:bg-white/20 transition" title="Tutup">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- TOP NAVBAR (GARIS 3 KIRI ATAS + BRAND + DARK/LIGHT MODE KANAN ATAS) -->
+  <!-- TOP NAVBAR -->
   <header class="sticky top-0 z-40 w-full bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
       
-      <!-- Kiri: Hamburger Menu (Garis 3) + Logo -->
       <div class="flex items-center gap-3 min-w-0">
         <button onclick="toggleSidebar(true)" aria-label="Buka Menu" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 transition active:scale-95">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
 
         <div onclick="navigate('home')" class="flex items-center gap-2.5 cursor-pointer min-w-0">
@@ -91,37 +88,29 @@
             F
           </div>
           <div class="truncate">
-            <span class="font-extrabold text-lg tracking-tight block leading-none">FydzCloud<span class="text-indigo-600 dark:text-indigo-400">.ID</span></span>
+            <span class="font-extrabold text-lg tracking-tight block leading-none">FydzCloud <span class="text-indigo-600 dark:text-indigo-400">ID</span></span>
             <span class="text-[10px] font-mono text-slate-500 dark:text-slate-400 tracking-wider uppercase block mt-0.5">Cloud Infrastructure</span>
           </div>
         </div>
       </div>
 
-      <!-- Kanan: Status Pill + Dark/Light Mode Toggle -->
       <div class="flex items-center gap-2 shrink-0">
         <div id="adminBadgeHeader" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-mono font-semibold">
           <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> ADMIN
         </div>
 
-        <button onclick="toggleTheme()" aria-label="Ganti Tema Gelap/Terang" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition active:scale-95">
-          <!-- Sun Icon (muncul saat dark mode) -->
-          <svg id="iconSun" class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
-          </svg>
-          <!-- Moon Icon (muncul saat light mode) -->
-          <svg id="iconMoon" class="w-5 h-5 block dark:hidden text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
-          </svg>
+        <button onclick="toggleTheme()" aria-label="Ganti Tema" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition active:scale-95">
+          <svg id="iconSun" class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <svg id="iconMoon" class="w-5 h-5 block dark:hidden text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- SIDEBAR DRAWER (SEMUA FITUR DI GARIS 3 POJOK KIRI ATAS) -->
+  <!-- SIDEBAR DRAWER -->
   <div id="sidebarBackdrop" onclick="toggleSidebar(false)" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-xs transition-opacity"></div>
   <aside id="sidebarDrawer" class="fixed top-0 left-0 bottom-0 z-50 w-72 max-w-[82vw] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform -translate-x-full transition-transform duration-300 ease-out flex flex-col">
     
-    <!-- Drawer Header -->
     <div class="h-16 px-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
       <div class="flex items-center gap-2.5">
         <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-mono font-bold text-sm">F</div>
@@ -132,7 +121,6 @@
       </button>
     </div>
 
-    <!-- Drawer Navigation Links -->
     <div class="flex-1 overflow-y-auto p-4 space-y-1.5">
       <div class="px-3 py-1.5 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400">Layanan Utama</div>
       
@@ -167,21 +155,19 @@
       </button>
     </div>
 
-    <!-- Drawer Footer -->
     <div class="p-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
       <a href="https://wa.me/6283120264665" target="_blank" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition shadow-sm">
         <span>Hubungi CS WhatsApp</span>
       </a>
-      <p class="text-[11px] font-mono text-center text-slate-400">FydzCloud.ID • v3.0 Enterprise</p>
+      <p class="text-[11px] font-mono text-center text-slate-400">FydzCloud ID • v3.0 Enterprise</p>
     </div>
   </aside>
 
   <!-- MAIN CONTENT AREA -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
-    <!-- ==================== VIEW 1: BERANDA ==================== -->
+    <!-- VIEW 1: BERANDA -->
     <section id="view-home" class="view-section space-y-8">
-      <!-- Hero Card -->
       <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-10 border border-slate-800 shadow-lg">
         <div class="relative z-10 max-w-2xl space-y-4">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-mono">
@@ -205,7 +191,6 @@
         </div>
       </div>
 
-      <!-- Quick Stats Grid -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
           <span class="text-xs font-mono text-slate-500 dark:text-slate-400">Produk Tersedia</span>
@@ -225,7 +210,6 @@
         </div>
       </div>
 
-      <!-- Preview Produk Unggulan -->
       <div class="space-y-4">
         <div class="flex items-center justify-between">
           <div>
@@ -236,13 +220,11 @@
             Lihat Semua &rarr;
           </button>
         </div>
-        <div id="featuredGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <!-- Diisi otomatis dari API -->
-        </div>
+        <div id="featuredGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
     </section>
 
-    <!-- ==================== VIEW 2: KATALOG PRODUK ==================== -->
+    <!-- VIEW 2: KATALOG PRODUK -->
     <section id="view-catalog" class="view-section hidden space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -250,44 +232,38 @@
           <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Pilih paket layanan sesuai kebutuhan Anda</p>
         </div>
         
-        <!-- Search Input -->
         <div class="relative w-full sm:w-72">
           <svg class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           <input type="text" id="catalogSearch" oninput="applyCatalogFilter()" placeholder="Cari produk atau ID..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
         </div>
       </div>
 
-      <!-- Dynamic Category Chips -->
       <div id="categoryChips" class="flex items-center gap-2 overflow-x-auto pb-1">
         <button onclick="selectCategory('all')" data-cat="all" class="cat-chip shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition">
           Semua Produk
         </button>
       </div>
 
-      <!-- Loading State -->
       <div id="catalogLoader" class="py-16 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
         <div class="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
         <p class="text-xs font-mono text-slate-500">Memuat katalog dari server...</p>
       </div>
 
-      <!-- Product Grid -->
       <div id="catalogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
-      <!-- Empty State -->
       <div id="catalogEmpty" class="hidden py-14 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
         <p class="font-bold text-base">Produk tidak ditemukan</p>
         <p class="text-xs text-slate-500">Coba ubah kata kunci pencarian atau pilih kategori lain.</p>
       </div>
     </section>
 
-    <!-- ==================== VIEW 3: RIWAYAT & CEK ORDER ==================== -->
+    <!-- VIEW 3: RIWAYAT & CEK ORDER -->
     <section id="view-orders" class="view-section hidden space-y-6 max-w-3xl mx-auto">
       <div>
         <h1 class="text-2xl font-extrabold tracking-tight">Riwayat & Cek Pesanan</h1>
         <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Lacak status transaksi atau buka kembali invoice QRIS Anda</p>
       </div>
 
-      <!-- Form Cek Manual -->
       <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
         <label class="block text-xs font-mono font-semibold uppercase text-slate-500">Cari Berdasarkan Order ID</label>
         <div class="flex flex-col sm:flex-row gap-2.5">
@@ -298,19 +274,16 @@
         </div>
       </div>
 
-      <!-- Local History List -->
       <div class="space-y-3">
         <div class="flex items-center justify-between">
           <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 font-mono">Riwayat Transaksi di Perangkat Ini</h2>
           <button onclick="clearOrderHistory()" class="text-xs text-red-500 hover:underline">Hapus Riwayat</button>
         </div>
-        <div id="orderHistoryList" class="space-y-3">
-          <!-- Rendered from localStorage -->
-        </div>
+        <div id="orderHistoryList" class="space-y-3"></div>
       </div>
     </section>
 
-    <!-- ==================== VIEW 4: PANDUAN ==================== -->
+    <!-- VIEW 4: PANDUAN -->
     <section id="view-guide" class="view-section hidden space-y-6 max-w-4xl mx-auto">
       <div>
         <h1 class="text-2xl font-extrabold tracking-tight">Panduan Transaksi</h1>
@@ -346,10 +319,9 @@
       </div>
     </section>
 
-    <!-- ==================== VIEW 5: ADMIN LOGIN & DASHBOARD ==================== -->
+    <!-- VIEW 5: ADMIN PANEL -->
     <section id="view-admin" class="view-section hidden max-w-2xl mx-auto">
       
-      <!-- FORM LOGIN ADMIN -->
       <div id="adminLoginBox" class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
         <div class="space-y-1">
           <span class="text-[11px] font-mono font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Restricted Area</span>
@@ -373,7 +345,6 @@
         </form>
       </div>
 
-      <!-- DASHBOARD ADMIN (SETELAH LOGIN) -->
       <div id="adminDashboardBox" class="hidden space-y-6">
         <div class="flex items-center justify-between">
           <div>
@@ -385,7 +356,6 @@
           </button>
         </div>
 
-        <!-- KARTU 1: MODE MAINTENANCE ON/OFF -->
         <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
           <div class="flex items-center justify-between gap-4">
             <div>
@@ -408,7 +378,6 @@
           </div>
         </div>
 
-        <!-- KARTU 2: BROADCAST PENGUMUMAN -->
         <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
           <div>
             <h2 class="font-bold text-base">Broadcast Pengumuman</h2>
@@ -418,7 +387,7 @@
           <form onsubmit="publishBroadcast(event)" class="space-y-4">
             <div>
               <label class="block text-xs font-semibold mb-1.5">Isi Pesan Pengumuman</label>
-              <textarea id="broadcastTextInput" rows="2" required placeholder="Contoh: Promo diskon panel 20% hari ini atau info update server..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+              <textarea id="broadcastTextInput" rows="2" required placeholder="Contoh: Promo diskon panel 20% hari ini..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
             </div>
 
             <div>
@@ -446,7 +415,6 @@
             </button>
           </form>
 
-          <!-- Status Broadcast Aktif & Tombol Hapus Langsung -->
           <div id="activeBroadcastAdminCard" class="hidden p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-900/50 space-y-3">
             <div class="flex items-start justify-between gap-3">
               <div class="space-y-1 min-w-0">
@@ -466,7 +434,7 @@
 
   </main>
 
-  <!-- MODAL: CHECKOUT PESANAN -->
+  <!-- MODAL: CHECKOUT -->
   <div id="checkoutModal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-5 relative">
       <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 p-2 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
@@ -502,7 +470,7 @@
     </div>
   </div>
 
-  <!-- MODAL: PEMBAYARAN QRIS -->
+  <!-- MODAL: QRIS -->
   <div id="qrisModal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-5 text-center relative">
       <button onclick="closeQrisModal()" class="absolute top-4 right-4 p-2 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
@@ -539,7 +507,7 @@
   <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
       <div class="font-semibold text-slate-700 dark:text-slate-300">
-        FydzCloud.ID &mdash; Enterprise Cloud & Digital Store
+        FydzCloud ID &mdash; Enterprise Cloud & Digital Store
       </div>
       <div class="font-mono">
         &copy; 2026 FydzCloud ID. All Rights Reserved.
@@ -547,7 +515,7 @@
     </div>
   </footer>
 
-  <!-- CORE APPLICATION SCRIPT -->
+  <!-- CORE SCRIPT -->
   <script>
     const API_KEY = "fzx_live_aa67b0dd569d134e686680d3011dee4c049b86b9477fd7d77329774dab3d1a46";
     const ADMIN_USER = "Fydz";
@@ -556,7 +524,6 @@
     let productsData = [];
     let selectedCat = "all";
 
-    // ==================== 1. THEME (DARK / LIGHT MODE) ====================
     function initTheme() {
       const savedTheme = localStorage.getItem('fydz_theme');
       if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -571,7 +538,6 @@
       localStorage.setItem('fydz_theme', isDark ? 'dark' : 'light');
     }
 
-    // ==================== 2. SIDEBAR DRAWER & NAVIGATION ====================
     function toggleSidebar(open) {
       const drawer = document.getElementById('sidebarDrawer');
       const backdrop = document.getElementById('sidebarBackdrop');
@@ -590,7 +556,6 @@
       const target = document.getElementById('view-' + viewName);
       if (target) target.classList.remove('hidden');
 
-      // Highlight active nav item
       document.querySelectorAll('.nav-item').forEach(btn => {
         if (btn.dataset.nav === viewName) {
           btn.classList.add('bg-indigo-600', 'text-white');
@@ -606,7 +571,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // ==================== 3. ADMIN AUTH, MAINTENANCE & BROADCAST ====================
     function isAdminLoggedIn() {
       return sessionStorage.getItem('fydz_admin_auth') === 'true';
     }
@@ -655,13 +619,10 @@
         sidebarStatus.innerText = 'Aktif';
         sidebarStatus.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
 
-        // Sync Maintenance Toggle
         const mEnabled = localStorage.getItem('fydz_maintenance_enabled') === 'true';
         const mMsg = localStorage.getItem('fydz_maintenance_msg') || '';
         document.getElementById('maintenanceMessageInput').value = mMsg;
         updateToggleVisual(mEnabled);
-
-        // Sync Broadcast Admin View
         syncBroadcastAdminCard();
       } else {
         loginBox.classList.remove('hidden');
@@ -673,7 +634,6 @@
       }
     }
 
-    // Maintenance Logic
     function updateToggleVisual(active) {
       const btn = document.getElementById('maintenanceToggleBtn');
       const knob = document.getElementById('maintenanceToggleKnob');
@@ -730,7 +690,6 @@
       }
     }
 
-    // Broadcast Logic (Auto Expire 7 Jam / 24 Jam + Hapus Langsung)
     function publishBroadcast(e) {
       e.preventDefault();
       const text = document.getElementById('broadcastTextInput').value.trim();
@@ -808,7 +767,6 @@
       card.classList.remove('hidden');
     }
 
-    // ==================== 4. API CATALOG & CHECKOUT ====================
     async function loadCatalog() {
       try {
         const res = await fetch('/api/v1/products?limit=100', {
@@ -827,10 +785,10 @@
           renderCatalogCards(productsData);
           renderFeaturedCards(productsData.slice(0, 3));
         } else {
-          document.getElementById('catalogLoader').innerHTML = '<p class="text-xs font-mono text-red-500">Gagal memuat produk dari API.</p>';
+          document.getElementById('catalogLoader').innerHTML = '<p class="text-xs font-mono text-red-500">Format data API tidak valid.</p>';
         }
       } catch (err) {
-        document.getElementById('catalogLoader').innerHTML = '<p class="text-xs font-mono text-red-500">Koneksi API gagal. Pastikan file vercel.json sudah terpasang.</p>';
+        document.getElementById('catalogLoader').innerHTML = '<p class="text-xs font-mono text-red-500">Gagal mengambil produk. Pastikan vercel.json aktif.</p>';
       }
     }
 
@@ -920,7 +878,6 @@
       grid.innerHTML = items.map(createProductCardHTML).join('');
     }
 
-    // Checkout & QRIS Modal
     function openCheckout(id, name, price) {
       document.getElementById('chkProductId').value = id;
       document.getElementById('chkProductName').innerText = name;
@@ -993,7 +950,6 @@
       }
     }
 
-    // ==================== 5. RIWAYAT & CEK ORDER ====================
     function saveOrderToHistory(entry) {
       const list = JSON.parse(localStorage.getItem('fydz_order_history') || '[]');
       list.unshift(entry);
@@ -1038,12 +994,11 @@
       window.open(`https://store.roselynsound.my.id/invoice/${encodeURIComponent(id)}`, '_blank');
     }
 
-    // ==================== INITIALIZATION ====================
     initTheme();
     syncAdminUI();
     checkMaintenanceState();
     renderBroadcastBanner();
-    setInterval(renderBroadcastBanner, 60000); // Cek kedaluwarsa broadcast tiap menit
+    setInterval(renderBroadcastBanner, 60000);
     navigate('home');
     loadCatalog();
   </script>

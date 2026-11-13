@@ -47,13 +47,10 @@
           Sistem sedang melakukan peningkatan infrastruktur server. Akses publik ditutup sementara.
         </p>
       </div>
-      <div class="pt-2 flex flex-col gap-2.5">
-        <a href="https://wa.me/6283120264665" target="_blank" class="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition text-center shadow-sm">
+      <div class="pt-2">
+        <a href="https://wa.me/6283120264665" target="_blank" class="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition text-center shadow-sm block">
           Hubungi Support WhatsApp
         </a>
-        <button onclick="openAdminFromMaintenance()" type="button" class="w-full py-3 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-mono font-bold text-slate-700 dark:text-slate-200 transition">
-          🔐 Login Admin / Bypass Maintenance
-        </button>
       </div>
     </div>
   </div>
@@ -82,8 +79,7 @@
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
 
-        <!-- LOGO TRIPLE-TAP SECRET BYPASS -->
-        <div onclick="handleLogoTripleTap()" class="flex items-center gap-2.5 cursor-pointer min-w-0 select-none" title="Ketuk 3x untuk akses admin">
+        <div class="flex items-center gap-2.5 min-w-0 select-none">
           <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-mono font-bold text-base shadow-sm shrink-0">
             F
           </div>
@@ -95,10 +91,6 @@
       </div>
 
       <div class="flex items-center gap-2 shrink-0">
-        <div id="adminBadgeHeader" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-mono font-semibold">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> ADMIN
-        </div>
-
         <button onclick="toggleTheme()" aria-label="Ganti Tema" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition active:scale-95">
           <svg id="iconSun" class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
           <svg id="iconMoon" class="w-5 h-5 block dark:hidden text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
@@ -142,23 +134,13 @@
         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
         <span>Panduan & Dokumentasi</span>
       </button>
-
-      <div class="pt-4 pb-1 px-3 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400">Kontrol Sistem</div>
-
-      <button onclick="navigate('admin')" data-nav="admin" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition">
-        <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          <span>Panel Admin</span>
-        </div>
-        <span id="sidebarAdminStatus" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Login</span>
-      </button>
     </div>
 
     <div class="p-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
       <a href="https://wa.me/6283120264665" target="_blank" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition shadow-sm">
         <span>Hubungi Support WhatsApp</span>
       </a>
-      <p class="text-[11px] font-mono text-center text-slate-400">FydzCloud ID • v3.7 Enterprise</p>
+      <p class="text-[11px] font-mono text-center text-slate-400">FydzCloud ID • v3.8 Enterprise</p>
     </div>
   </aside>
 
@@ -318,119 +300,6 @@
       </div>
     </section>
 
-    <!-- VIEW 5: ADMIN PANEL -->
-    <section id="view-admin" class="view-section hidden max-w-2xl mx-auto">
-      
-      <div id="adminLoginBox" class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
-        <div class="space-y-1">
-          <span class="text-[11px] font-mono font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Restricted Portal</span>
-          <h1 class="text-2xl font-extrabold tracking-tight">Login Administrator</h1>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Autentikasi diperlukan untuk mengontrol parameter operasional sistem.</p>
-        </div>
-
-        <form onsubmit="handleAdminLogin(event)" class="space-y-4">
-          <div>
-            <label class="block text-xs font-semibold mb-1.5">Username Administrator</label>
-            <input type="text" id="adminUsernameInput" required autocomplete="off" placeholder="Masukkan username" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          </div>
-          <div>
-            <label class="block text-xs font-semibold mb-1.5">Password Keamanan</label>
-            <input type="password" id="adminPasswordInput" required placeholder="••••••••" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          </div>
-          <p id="adminLoginError" class="hidden text-xs text-red-500 font-medium">Autentikasi gagal: Username atau password tidak valid.</p>
-          <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition">
-            Masuk ke Dashboard Admin
-          </button>
-        </form>
-      </div>
-
-      <div id="adminDashboardBox" class="hidden space-y-6">
-        <div class="flex items-center justify-between">
-          <div>
-            <span class="text-[11px] font-mono font-semibold uppercase text-emerald-600 dark:text-emerald-400">Authenticated as Fydz</span>
-            <h1 class="text-2xl font-extrabold tracking-tight">Kontrol Sistem Store</h1>
-          </div>
-          <button onclick="handleAdminLogout()" class="px-4 py-2 rounded-xl border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 text-xs font-semibold hover:bg-red-100 transition">
-            Keluar Sesi
-          </button>
-        </div>
-
-        <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
-          <div class="flex items-center justify-between gap-4">
-            <div>
-              <h2 class="font-bold text-base">Mode Pemeliharaan (Maintenance)</h2>
-              <p class="text-xs text-slate-500 dark:text-slate-400">Kunci akses pengunjung publik saat melakukan pembaruan node.</p>
-            </div>
-            <button id="maintenanceToggleBtn" onclick="toggleMaintenance()" class="relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-300 dark:bg-slate-700 transition-colors duration-200 focus:outline-none">
-              <span id="maintenanceToggleKnob" class="pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow ring-0 transition duration-200 translate-x-0"></span>
-            </button>
-          </div>
-          
-          <div class="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400">Pesan Alasan Maintenance (Opsional)</label>
-            <div class="flex gap-2">
-              <input type="text" id="maintenanceMessageInput" placeholder="Contoh: Peningkatan kapasitas RAM server node..." class="flex-1 px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              <button onclick="saveMaintenanceMessage()" class="px-4 py-2 rounded-xl bg-slate-900 dark:bg-slate-800 text-white text-xs font-semibold hover:opacity-90">
-                Simpan
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
-          <div>
-            <h2 class="font-bold text-base">Broadcast Pengumuman Global</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Tampilkan banner informasi penting di bagian atas website klien.</p>
-          </div>
-
-          <form onsubmit="publishBroadcast(event)" class="space-y-4">
-            <div>
-              <label class="block text-xs font-semibold mb-1.5">Teks Pengumuman</label>
-              <textarea id="broadcastTextInput" rows="2" required placeholder="Contoh: Promo diskon server Pterodactyl 25% hari ini..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
-            </div>
-
-            <div>
-              <label class="block text-xs font-semibold mb-1.5">Durasi Tayang Banner</label>
-              <div class="grid grid-cols-2 gap-3">
-                <label class="cursor-pointer">
-                  <input type="radio" name="broadcastDuration" value="7" class="peer sr-only" checked>
-                  <div class="p-3 rounded-xl border border-slate-200 dark:border-slate-800 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 dark:peer-checked:bg-indigo-950/40 text-center transition">
-                    <span class="block font-bold text-sm">7 Jam</span>
-                    <span class="text-[11px] text-slate-500">Hilang otomatis dalam 7 jam</span>
-                  </div>
-                </label>
-                <label class="cursor-pointer">
-                  <input type="radio" name="broadcastDuration" value="24" class="peer sr-only">
-                  <div class="p-3 rounded-xl border border-slate-200 dark:border-slate-800 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 dark:peer-checked:bg-indigo-950/40 text-center transition">
-                    <span class="block font-bold text-sm">24 Jam</span>
-                    <span class="text-[11px] text-slate-500">Hilang otomatis dalam 24 jam</span>
-                  </div>
-                </label>
-              </div>
-            </div>
-
-            <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition">
-              Publikasikan Broadcast
-            </button>
-          </form>
-
-          <div id="activeBroadcastAdminCard" class="hidden p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-900/50 space-y-3">
-            <div class="flex items-start justify-between gap-3">
-              <div class="space-y-1 min-w-0">
-                <span class="text-[10px] font-mono font-bold uppercase text-indigo-600 dark:text-indigo-400">Broadcast Aktif</span>
-                <p id="adminActiveBroadcastText" class="text-xs font-medium break-words"></p>
-                <p id="adminActiveBroadcastExpiry" class="text-[11px] font-mono text-slate-500"></p>
-              </div>
-              <button onclick="deleteBroadcastNow()" class="shrink-0 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-semibold transition">
-                Hapus Broadcast
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
   </main>
 
   <!-- PROFESSIONAL MODAL NOTIFICATION -->
@@ -546,25 +415,43 @@
   <!-- CORE SCRIPT -->
   <script>
     const API_KEY = "fzx_live_aa67b0dd569d134e686680d3011dee4c049b86b9477fd7d77329774dab3d1a46";
-    const ADMIN_USER = "Fydz";
-    const ADMIN_PASS = "FydzBL01";
+    
+    // Konfigurasi Remote JSONBin untuk Web Utama
+    const JSONBIN_BIN_ID = "6af71fbdac021005a852684";
+    const JSONBIN_SECRET_KEY = "$2a$10$7URRKGPRG/YT/RSdWHDvCuyZx2u0IBQRR4cnvD6UA/8MWNZ2qL46O";
 
     let productsData = [];
     let selectedCat = "all";
-    let logoTapCount = 0;
-    let logoTapTimer = null;
 
-    function handleLogoTripleTap() {
-      logoTapCount++;
-      if (logoTapCount === 1) {
-        logoTapTimer = setTimeout(() => { logoTapCount = 0; }, 600);
-      } else if (logoTapCount === 3) {
-        clearTimeout(logoTapTimer);
-        logoTapCount = 0;
-        const overlay = document.getElementById('maintenanceOverlay');
-        overlay.classList.add('hidden');
-        overlay.style.pointerEvents = 'none';
-        navigate('admin');
+    // Fungsi Sinkronisasi Remote dari Web Admin (JSONBin)
+    async function checkRemoteStatus() {
+      try {
+        let res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
+          headers: { 'X-Master-Key': JSONBIN_SECRET_KEY }
+        });
+        if (!res.ok) return;
+        let json = await res.json();
+        let data = json.record;
+
+        if (data.maintenance) {
+          localStorage.setItem('fydz_maintenance_enabled', 'true');
+          if (data.maintenance_msg) {
+            localStorage.setItem('fydz_maintenance_msg', data.maintenance_msg);
+          }
+        } else {
+          localStorage.setItem('fydz_maintenance_enabled', 'false');
+        }
+        
+        if (data.broadcast) {
+          localStorage.setItem('fydz_broadcast', JSON.stringify(data.broadcast));
+        } else {
+          localStorage.removeItem('fydz_broadcast');
+        }
+
+        checkMaintenanceState();
+        renderBroadcastBanner();
+      } catch (err) {
+        console.error("Gagal sinkronisasi remote:", err);
       }
     }
 
@@ -608,7 +495,7 @@
 
     function toggleSidebar(open) {
       const enabled = localStorage.getItem('fydz_maintenance_enabled') === 'true';
-      if (enabled && !isAdminLoggedIn()) {
+      if (enabled) {
         checkMaintenanceState();
         return;
       }
@@ -626,7 +513,7 @@
 
     function navigate(viewName) {
       const enabled = localStorage.getItem('fydz_maintenance_enabled') === 'true';
-      if (enabled && !isAdminLoggedIn() && viewName !== 'admin') {
+      if (enabled) {
         checkMaintenanceState();
         return;
       }
@@ -647,106 +534,7 @@
       });
 
       if (viewName === 'orders') renderOrderHistory();
-      if (viewName === 'admin') syncAdminUI();
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function isAdminLoggedIn() {
-      return sessionStorage.getItem('fydz_admin_auth') === 'true';
-    }
-
-    function handleAdminLogin(e) {
-      e.preventDefault();
-      const u = document.getElementById('adminUsernameInput').value.trim();
-      const p = document.getElementById('adminPasswordInput').value;
-      const err = document.getElementById('adminLoginError');
-
-      if (u === ADMIN_USER && p === ADMIN_PASS) {
-        sessionStorage.setItem('fydz_admin_auth', 'true');
-        err.classList.add('hidden');
-        document.getElementById('adminUsernameInput').value = '';
-        document.getElementById('adminPasswordInput').value = '';
-        syncAdminUI();
-        checkMaintenanceState();
-        showModal('Autentikasi Berhasil', 'Selamat datang kembali, Administrator Fydz.', 'success');
-      } else {
-        err.classList.remove('hidden');
-      }
-    }
-
-    function handleAdminLogout() {
-      sessionStorage.removeItem('fydz_admin_auth');
-      syncAdminUI();
-      checkMaintenanceState();
-      showModal('Sesi Berakhir', 'Anda telah keluar dari panel administrator.', 'success');
-    }
-
-    function openAdminFromMaintenance() {
-      const overlay = document.getElementById('maintenanceOverlay');
-      overlay.classList.add('hidden');
-      overlay.style.pointerEvents = 'none';
-      navigate('admin');
-    }
-
-    function syncAdminUI() {
-      const loggedIn = isAdminLoggedIn();
-      const loginBox = document.getElementById('adminLoginBox');
-      const dashBox = document.getElementById('adminDashboardBox');
-      const badgeHeader = document.getElementById('adminBadgeHeader');
-      const sidebarStatus = document.getElementById('sidebarAdminStatus');
-
-      if (loggedIn) {
-        loginBox.classList.add('hidden');
-        dashBox.classList.remove('hidden');
-        badgeHeader.classList.remove('hidden');
-        badgeHeader.classList.add('inline-flex');
-        sidebarStatus.innerText = 'Aktif';
-        sidebarStatus.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
-
-        const mEnabled = localStorage.getItem('fydz_maintenance_enabled') === 'true';
-        const mMsg = localStorage.getItem('fydz_maintenance_msg') || '';
-        document.getElementById('maintenanceMessageInput').value = mMsg;
-        updateToggleVisual(mEnabled);
-        syncBroadcastAdminCard();
-      } else {
-        loginBox.classList.remove('hidden');
-        dashBox.classList.add('hidden');
-        badgeHeader.classList.add('hidden');
-        badgeHeader.classList.remove('inline-flex');
-        sidebarStatus.innerText = 'Login';
-        sidebarStatus.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400';
-      }
-    }
-
-    function updateToggleVisual(active) {
-      const btn = document.getElementById('maintenanceToggleBtn');
-      const knob = document.getElementById('maintenanceToggleKnob');
-      if (active) {
-        btn.classList.remove('bg-slate-300', 'dark:bg-slate-700');
-        btn.classList.add('bg-amber-500');
-        knob.classList.remove('translate-x-0');
-        knob.classList.add('translate-x-5');
-      } else {
-        btn.classList.add('bg-slate-300', 'dark:bg-slate-700');
-        btn.classList.remove('bg-amber-500');
-        knob.classList.add('translate-x-0');
-        knob.classList.remove('translate-x-5');
-      }
-    }
-
-    function toggleMaintenance() {
-      const current = localStorage.getItem('fydz_maintenance_enabled') === 'true';
-      const next = !current;
-      localStorage.setItem('fydz_maintenance_enabled', String(next));
-      updateToggleVisual(next);
-      checkMaintenanceState();
-    }
-
-    function saveMaintenanceMessage() {
-      const val = document.getElementById('maintenanceMessageInput').value.trim();
-      localStorage.setItem('fydz_maintenance_msg', val);
-      checkMaintenanceState();
-      showModal('Berhasil Disimpan', 'Pesan pemeliharaan sistem telah diperbarui.', 'success');
     }
 
     function checkMaintenanceState() {
@@ -762,47 +550,15 @@
       if (enabled) {
         homeStat.innerText = 'Maintenance';
         homeStat.className = 'text-2xl font-extrabold mt-1 text-amber-500';
-        if (!isAdminLoggedIn()) {
-          overlay.classList.remove('hidden');
-          overlay.style.pointerEvents = 'auto';
-          toggleSidebar(false);
-        } else {
-          overlay.classList.add('hidden');
-          overlay.style.pointerEvents = 'none';
-        }
+        overlay.classList.remove('hidden');
+        overlay.style.pointerEvents = 'auto';
+        toggleSidebar(false);
       } else {
         homeStat.innerText = 'Operational';
         homeStat.className = 'text-2xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400';
         overlay.classList.add('hidden');
         overlay.style.pointerEvents = 'none';
       }
-    }
-
-    function publishBroadcast(e) {
-      e.preventDefault();
-      const text = document.getElementById('broadcastTextInput').value.trim();
-      const hours = Number(document.querySelector('input[name="broadcastDuration"]:checked').value);
-      if (!text) return;
-
-      const payload = {
-        text: text,
-        expiresAt: Date.now() + (hours * 60 * 60 * 1000),
-        durationHours: hours
-      };
-
-      localStorage.setItem('fydz_broadcast', JSON.stringify(payload));
-      sessionStorage.removeItem('fydz_broadcast_dismissed');
-      document.getElementById('broadcastTextInput').value = '';
-      renderBroadcastBanner();
-      syncBroadcastAdminCard();
-      showModal('Broadcast Aktif', 'Pengumuman global berhasil disiarkan ke seluruh pengunjung.', 'success');
-    }
-
-    function deleteBroadcastNow() {
-      localStorage.removeItem('fydz_broadcast');
-      renderBroadcastBanner();
-      syncBroadcastAdminCard();
-      showModal('Broadcast Dihapus', 'Banner pengumuman berhasil ditiadakan.', 'success');
     }
 
     function dismissBroadcastSession() {
@@ -842,19 +598,6 @@
       document.getElementById('broadcastMessageDisplay').innerText = data.text;
       document.getElementById('broadcastTimerDisplay').innerText = `Sisa ${hrs}j ${mins}m`;
       banner.classList.remove('hidden');
-    }
-
-    function syncBroadcastAdminCard() {
-      const card = document.getElementById('activeBroadcastAdminCard');
-      const data = getValidBroadcast();
-      if (!data) {
-        card.classList.add('hidden');
-        return;
-      }
-      const expDate = new Date(data.expiresAt).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' });
-      document.getElementById('adminActiveBroadcastText').innerText = data.text;
-      document.getElementById('adminActiveBroadcastExpiry').innerText = `Berakhir otomatis pada: ${expDate} (${data.durationHours} Jam)`;
-      card.classList.remove('hidden');
     }
 
     async function loadCatalog() {
@@ -1012,7 +755,7 @@
 
     function openCheckout(id, name, price, isPanelProduct) {
       const enabled = localStorage.getItem('fydz_maintenance_enabled') === 'true';
-      if (enabled && !isAdminLoggedIn()) {
+      if (enabled) {
         checkMaintenanceState();
         return;
       }
@@ -1132,14 +875,10 @@
       }
     }
 
-    function saveOrderInfoToHistory(entry) {
+    function saveOrderToHistory(entry) {
       const list = JSON.parse(localStorage.getItem('fydz_order_history') || '[]');
       list.unshift(entry);
       localStorage.setItem('fydz_order_history', JSON.stringify(list.slice(0, 20)));
-    }
-
-    function saveOrderToHistory(entry) {
-      saveOrderInfoToHistory(entry);
     }
 
     function renderOrderHistory() {
@@ -1185,10 +924,13 @@
     }
 
     initTheme();
-    syncAdminUI();
     checkMaintenanceState();
     renderBroadcastBanner();
-    setInterval(renderBroadcastBanner, 60000);
+    
+    // Cek update remote dari admin setiap 5 detik secara otomatis
+    setInterval(checkRemoteStatus, 5000);
+    checkRemoteStatus();
+
     navigate('home');
     loadCatalog();
   </script>

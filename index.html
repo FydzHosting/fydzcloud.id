@@ -778,17 +778,31 @@
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const json = await res.json();
 
-        if (json.success && Array.isArray(json.data)) {
-          productsData = json.data;
+        // Parser fleksibel: mendeteksi array langsung atau berbagai properti pembungkus data
+        let items = [];
+        if (Array.isArray(json)) {
+          items = json;
+        } else if (json.data && Array.isArray(json.data)) {
+          items = json.data;
+        } else if (json.products && Array.isArray(json.products)) {
+          items = json.products;
+        } else {
+          const foundKey = Object.keys(json).find(k => Array.isArray(json[k]));
+          items = foundKey ? json[foundKey] : [];
+        }
+
+        if (items.length > 0) {
+          productsData = items;
           document.getElementById('homeTotalProducts').innerText = productsData.length;
           buildCategoryChips(productsData);
           renderCatalogCards(productsData);
           renderFeaturedCards(productsData.slice(0, 3));
         } else {
-          document.getElementById('catalogLoader').innerHTML = '<p class="text-xs font-mono text-red-500">Format data API tidak valid.</p>';
+          document.getElementById('catalogLoader').innerHTML = '<p class="text-xs font-mono text-amber-500">Katalog kosong atau format data API memerlukan penyesuaian.</p>';
         }
       } catch (err) {
-        document.getElementById('catalogLoader').innerHTML = '<p class="text-xs font-mono text-red-500">Gagal mengambil produk. Pastikan vercel.json aktif.</p>';
+        console.error(err);
+        document.getElementById('catalogLoader').innerHTML = '<p class="text-xs font-mono text-red-500">Gagal memuat produk dari API. Periksa vercel.json.</p>';
       }
     }
 
@@ -821,7 +835,7 @@
       const q = document.getElementById('catalogSearch').value.toLowerCase().trim();
       const filtered = productsData.filter(p => {
         const matchCat = selectedCat === 'all' || (p.category || 'digital').toLowerCase() === selectedCat;
-        const matchText = p.name.toLowerCase().includes(q) || p.id.toLowerCase().includes(q);
+        const matchText = (p.name || '').toLowerCase().includes(q) || (p.id || '').toLowerCase().includes(q);
         return matchCat && matchText;
       });
       renderCatalogCards(filtered);
@@ -829,7 +843,7 @@
 
     function createProductCardHTML(p) {
       const isAvail = (p.status || 'AVAILABLE').toUpperCase() === 'AVAILABLE';
-      const safeName = p.name.replace(/'/g, "\\'");
+      const safeName = (p.name || 'Produk').replace(/'/g, "\\'");
       return `
         <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 transition flex flex-col justify-between gap-5">
           <div class="space-y-2.5">
@@ -841,15 +855,15 @@
                 ${p.status || 'AVAILABLE'}
               </span>
             </div>
-            <h3 class="font-bold text-base leading-snug">${p.name}</h3>
-            <p class="text-[11px] font-mono text-slate-400 truncate">ID: ${p.id}</p>
+            <h3 class="font-bold text-base leading-snug">${p.name || 'Tanpa Nama'}</h3>
+            <p class="text-[11px] font-mono text-slate-400 truncate">ID: ${p.id || '-'}</p>
           </div>
           <div class="pt-3.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
             <div>
               <span class="text-[10px] font-mono text-slate-400 block">Harga</span>
               <span class="font-mono font-extrabold text-base text-indigo-600 dark:text-indigo-400">Rp ${Number(p.price || 0).toLocaleString('id-ID')}</span>
             </div>
-            <button onclick="openCheckout('${p.id}', '${safeName}', ${p.price})" ${!isAvail ? 'disabled' : ''} class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white text-xs font-semibold transition">
+            <button onclick="openCheckout('${p.id}', '${safeName}', ${p.price || 0})" ${!isAvail ? 'disabled' : ''} class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white text-xs font-semibold transition">
               Pesan
             </button>
           </div>

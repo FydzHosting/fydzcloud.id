@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FydzCloud.ID — Cloud Infrastructure & Digital Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { max-width: 100vw; overflow-x: hidden; }
+    .view-section { animation: fadeSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #64748b; border-radius: 9999px; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased transition-colors duration-200 selection:bg-indigo-600 selection:text-white">
+
+  <!-- MAINTENANCE OVERLAY (MUNCUL SAAT AKTIF & BUKAN ADMIN) -->
+  <div id="maintenanceOverlay" class="fixed inset-0 z-[100] hidden bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-5">
+    <div class="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-7 text-center shadow-2xl space-y-5">
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-500 flex items-center justify-center">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      </div>
+      <div class="space-y-2">
+        <span class="inline-block px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400">SYSTEM MAINTENANCE</span>
+        <h2 class="text-2xl font-extrabold tracking-tight">Sedang Pemeliharaan Sistem</h2>
+        <p id="maintenanceReasonText" class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          Kami sedang melakukan peningkatan infrastruktur server untuk performa yang lebih optimal. Silakan kembali beberapa saat lagi.
+        </p>
+      </div>
+      <div class="pt-2 flex flex-col gap-2.5">
+        <a href="https://wa.me/6283120264665" target="_blank" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition">
+          Hubungi CS WhatsApp
+        </a>
+        <button onclick="openAdminFromMaintenance()" class="w-full py-2 px-4 rounded-xl text-xs font-mono text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition">
+          Akses Login Administrator
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BROADCAST ANNOUNCEMENT BAR -->
+  <div id="broadcastBanner" class="hidden bg-indigo-600 text-white border-b border-indigo-500">
+    <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3 text-xs sm:text-sm">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <span class="shrink-0 px-2 py-0.5 rounded bg-white/20 font-mono text-[10px] font-bold uppercase tracking-wider">Info</span>
+        <p id="broadcastMessageDisplay" class="truncate font-medium"></p>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <span id="broadcastTimerDisplay" class="hidden sm:inline font-mono text-[11px] text-indigo-200"></span>
+        <button onclick="dismissBroadcastSession()" class="p-1 rounded hover:bg-white/20 transition" title="Tutup sementara">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOP NAVBAR (GARIS 3 KIRI ATAS + BRAND + DARK/LIGHT MODE KANAN ATAS) -->
+  <header class="sticky top-0 z-40 w-full bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      
+      <!-- Kiri: Hamburger Menu (Garis 3) + Logo -->
+      <div class="flex items-center gap-3 min-w-0">
+        <button onclick="toggleSidebar(true)" aria-label="Buka Menu" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 transition active:scale-95">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+
+        <div onclick="navigate('home')" class="flex items-center gap-2.5 cursor-pointer min-w-0">
+          <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-mono font-bold text-base shadow-sm shrink-0">
+            F
+          </div>
+          <div class="truncate">
+            <span class="font-extrabold text-lg tracking-tight block leading-none">FydzCloud<span class="text-indigo-600 dark:text-indigo-400">.ID</span></span>
+            <span class="text-[10px] font-mono text-slate-500 dark:text-slate-400 tracking-wider uppercase block mt-0.5">Cloud Infrastructure</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kanan: Status Pill + Dark/Light Mode Toggle -->
+      <div class="flex items-center gap-2 shrink-0">
+        <div id="adminBadgeHeader" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-mono font-semibold">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> ADMIN
+        </div>
+
+        <button onclick="toggleTheme()" aria-label="Ganti Tema Gelap/Terang" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition active:scale-95">
+          <!-- Sun Icon (muncul saat dark mode) -->
+          <svg id="iconSun" class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+          </svg>
+          <!-- Moon Icon (muncul saat light mode) -->
+          <svg id="iconMoon" class="w-5 h-5 block dark:hidden text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR DRAWER (SEMUA FITUR DI GARIS 3 POJOK KIRI ATAS) -->
+  <div id="sidebarBackdrop" onclick="toggleSidebar(false)" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-xs transition-opacity"></div>
+  <aside id="sidebarDrawer" class="fixed top-0 left-0 bottom-0 z-50 w-72 max-w-[82vw] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform -translate-x-full transition-transform duration-300 ease-out flex flex-col">
+    
+    <!-- Drawer Header -->
+    <div class="h-16 px-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-mono font-bold text-sm">F</div>
+        <span class="font-bold text-base tracking-tight">Menu Navigasi</span>
+      </div>
+      <button onclick="toggleSidebar(false)" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Drawer Navigation Links -->
+    <div class="flex-1 overflow-y-auto p-4 space-y-1.5">
+      <div class="px-3 py-1.5 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400">Layanan Utama</div>
+      
+      <button onclick="navigate('home')" data-nav="home" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>Beranda</span>
+      </button>
+
+      <button onclick="navigate('catalog')" data-nav="catalog" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+        <span>Katalog Produk</span>
+      </button>
+
+      <button onclick="navigate('orders')" data-nav="orders" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+        <span>Riwayat & Cek Order</span>
+      </button>
+
+      <button onclick="navigate('guide')" data-nav="guide" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>Panduan & Bantuan</span>
+      </button>
+
+      <div class="pt-4 pb-1 px-3 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400">Sistem & Kontrol</div>
+
+      <button onclick="navigate('admin')" data-nav="admin" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <span>Panel Admin</span>
+        </div>
+        <span id="sidebarAdminStatus" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Login</span>
+      </button>
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="p-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
+      <a href="https://wa.me/6283120264665" target="_blank" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition shadow-sm">
+        <span>Hubungi CS WhatsApp</span>
+      </a>
+      <p class="text-[11px] font-mono text-center text-slate-400">FydzCloud.ID • v3.0 Enterprise</p>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+
+    <!-- ==================== VIEW 1: BERANDA ==================== -->
+    <section id="view-home" class="view-section space-y-8">
+      <!-- Hero Card -->
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-10 border border-slate-800 shadow-lg">
+        <div class="relative z-10 max-w-2xl space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-mono">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Automated Provisioning Active 24/7
+          </div>
+          <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+            Infrastruktur Cloud & Layanan Digital Instan.
+          </h1>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+            Pesan server Pterodactyl dan produk digital resmi secara otomatis. Pembayaran QRIS terverifikasi instan tanpa antre admin.
+          </p>
+          <div class="pt-2 flex flex-wrap gap-3">
+            <button onclick="navigate('catalog')" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition shadow-sm">
+              Jelajahi Katalog
+            </button>
+            <button onclick="navigate('orders')" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/15 text-sm font-semibold transition">
+              Cek Status Pesanan
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Stats Grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <span class="text-xs font-mono text-slate-500 dark:text-slate-400">Produk Tersedia</span>
+          <p id="homeTotalProducts" class="text-2xl font-extrabold mt-1 text-indigo-600 dark:text-indigo-400">-</p>
+        </div>
+        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <span class="text-xs font-mono text-slate-500 dark:text-slate-400">Metode Bayar</span>
+          <p class="text-2xl font-extrabold mt-1">QRIS Instan</p>
+        </div>
+        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <span class="text-xs font-mono text-slate-500 dark:text-slate-400">Waktu Aktivasi</span>
+          <p class="text-2xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400">&lt; 10 Detik</p>
+        </div>
+        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <span class="text-xs font-mono text-slate-500 dark:text-slate-400">Status Server</span>
+          <p id="homeSystemStatus" class="text-2xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400">Normal</p>
+        </div>
+      </div>
+
+      <!-- Preview Produk Unggulan -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-lg sm:text-xl font-bold tracking-tight">Produk Populer</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Pilihan layanan paling sering dipesan pelanggan</p>
+          </div>
+          <button onclick="navigate('catalog')" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
+            Lihat Semua &rarr;
+          </button>
+        </div>
+        <div id="featuredGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Diisi otomatis dari API -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: KATALOG PRODUK ==================== -->
+    <section id="view-catalog" class="view-section hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl font-extrabold tracking-tight">Katalog Produk</h1>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Pilih paket layanan sesuai kebutuhan Anda</p>
+        </div>
+        
+        <!-- Search Input -->
+        <div class="relative w-full sm:w-72">
+          <svg class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" id="catalogSearch" oninput="applyCatalogFilter()" placeholder="Cari produk atau ID..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        </div>
+      </div>
+
+      <!-- Dynamic Category Chips -->
+      <div id="categoryChips" class="flex items-center gap-2 overflow-x-auto pb-1">
+        <button onclick="selectCategory('all')" data-cat="all" class="cat-chip shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition">
+          Semua Produk
+        </button>
+      </div>
+
+      <!-- Loading State -->
+      <div id="catalogLoader" class="py-16 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+        <div class="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+        <p class="text-xs font-mono text-slate-500">Memuat katalog dari server...</p>
+      </div>
+
+      <!-- Product Grid -->
+      <div id="catalogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+      <!-- Empty State -->
+      <div id="catalogEmpty" class="hidden py-14 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <p class="font-bold text-base">Produk tidak ditemukan</p>
+        <p class="text-xs text-slate-500">Coba ubah kata kunci pencarian atau pilih kategori lain.</p>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: RIWAYAT & CEK ORDER ==================== -->
+    <section id="view-orders" class="view-section hidden space-y-6 max-w-3xl mx-auto">
+      <div>
+        <h1 class="text-2xl font-extrabold tracking-tight">Riwayat & Cek Pesanan</h1>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Lacak status transaksi atau buka kembali invoice QRIS Anda</p>
+      </div>
+
+      <!-- Form Cek Manual -->
+      <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+        <label class="block text-xs font-mono font-semibold uppercase text-slate-500">Cari Berdasarkan Order ID</label>
+        <div class="flex flex-col sm:flex-row gap-2.5">
+          <input type="text" id="manualOrderId" placeholder="Contoh: ORD-1715601234567-XYZ" class="flex-1 px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <button onclick="openDirectInvoice()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition shrink-0">
+            Buka Invoice
+          </button>
+        </div>
+      </div>
+
+      <!-- Local History List -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 font-mono">Riwayat Transaksi di Perangkat Ini</h2>
+          <button onclick="clearOrderHistory()" class="text-xs text-red-500 hover:underline">Hapus Riwayat</button>
+        </div>
+        <div id="orderHistoryList" class="space-y-3">
+          <!-- Rendered from localStorage -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 4: PANDUAN ==================== -->
+    <section id="view-guide" class="view-section hidden space-y-6 max-w-4xl mx-auto">
+      <div>
+        <h1 class="text-2xl font-extrabold tracking-tight">Panduan Transaksi</h1>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Alur pemesanan otomatis dan informasi bantuan pelanggan</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2.5">
+          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center">01</span>
+          <h3 class="font-bold text-base">Pilih Produk</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Buka menu Katalog Produk, pilih layanan yang diinginkan, lalu klik tombol Pesan.</p>
+        </div>
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2.5">
+          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center">02</span>
+          <h3 class="font-bold text-base">Bayar via QRIS</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Isi nama, nomor WhatsApp, dan email. Scan kode QRIS yang muncul memakai M-Banking atau E-Wallet apa saja.</p>
+        </div>
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2.5">
+          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center">03</span>
+          <h3 class="font-bold text-base">Otomatis Aktif</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Sistem akan memverifikasi pembayaran dan memproses kredensial akun atau panel Pterodactyl secara instan.</p>
+        </div>
+      </div>
+
+      <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <h3 class="font-bold text-base">Butuh Bantuan Teknis?</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400">Tim Customer Service siap membantu kendala transaksi atau pertanyaan layanan Anda.</p>
+        </div>
+        <a href="https://wa.me/6283120264665" target="_blank" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold text-center shrink-0 transition">
+          Chat WhatsApp (+6283120264665)
+        </a>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 5: ADMIN LOGIN & DASHBOARD ==================== -->
+    <section id="view-admin" class="view-section hidden max-w-2xl mx-auto">
+      
+      <!-- FORM LOGIN ADMIN -->
+      <div id="adminLoginBox" class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+        <div class="space-y-1">
+          <span class="text-[11px] font-mono font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Restricted Area</span>
+          <h1 class="text-2xl font-extrabold tracking-tight">Login Administrator</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Masuk untuk mengelola mode maintenance dan pengumuman broadcast.</p>
+        </div>
+
+        <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold mb-1.5">Username</label>
+            <input type="text" id="adminUsernameInput" required autocomplete="off" placeholder="Masukkan username admin" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1.5">Password</label>
+            <input type="password" id="adminPasswordInput" required placeholder="••••••••" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          </div>
+          <p id="adminLoginError" class="hidden text-xs text-red-500 font-medium">Username atau password salah.</p>
+          <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition">
+            Masuk ke Panel Admin
+          </button>
+        </form>
+      </div>
+
+      <!-- DASHBOARD ADMIN (SETELAH LOGIN) -->
+      <div id="adminDashboardBox" class="hidden space-y-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-[11px] font-mono font-semibold uppercase text-emerald-600 dark:text-emerald-400">Authenticated as Fydz</span>
+            <h1 class="text-2xl font-extrabold tracking-tight">Kontrol Sistem Store</h1>
+          </div>
+          <button onclick="handleAdminLogout()" class="px-4 py-2 rounded-xl border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 text-xs font-semibold hover:bg-red-100 transition">
+            Keluar
+          </button>
+        </div>
+
+        <!-- KARTU 1: MODE MAINTENANCE ON/OFF -->
+        <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <h2 class="font-bold text-base">Mode Maintenance</h2>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Kunci akses pengunjung saat sistem sedang diperbaiki.</p>
+            </div>
+            <button id="maintenanceToggleBtn" onclick="toggleMaintenance()" class="relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-300 dark:bg-slate-700 transition-colors duration-200 focus:outline-none">
+              <span id="maintenanceToggleKnob" class="pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow ring-0 transition duration-200 translate-x-0"></span>
+            </button>
+          </div>
+          
+          <div class="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400">Pesan Maintenance (Opsional)</label>
+            <div class="flex gap-2">
+              <input type="text" id="maintenanceMessageInput" placeholder="Sedang pemeliharaan server..." class="flex-1 px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <button onclick="saveMaintenanceMessage()" class="px-4 py-2 rounded-xl bg-slate-900 dark:bg-slate-800 text-white text-xs font-semibold hover:opacity-90">
+                Simpan
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- KARTU 2: BROADCAST PENGUMUMAN -->
+        <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+          <div>
+            <h2 class="font-bold text-base">Broadcast Pengumuman</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Tampilkan banner info penting di bagian atas website dengan batas waktu otomatis.</p>
+          </div>
+
+          <form onsubmit="publishBroadcast(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-semibold mb-1.5">Isi Pesan Pengumuman</label>
+              <textarea id="broadcastTextInput" rows="2" required placeholder="Contoh: Promo diskon panel 20% hari ini atau info update server..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold mb-1.5">Durasi Tayang Otomatis Hilang</label>
+              <div class="grid grid-cols-2 gap-3">
+                <label class="cursor-pointer">
+                  <input type="radio" name="broadcastDuration" value="7" class="peer sr-only" checked>
+                  <div class="p-3 rounded-xl border border-slate-200 dark:border-slate-800 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 dark:peer-checked:bg-indigo-950/40 text-center transition">
+                    <span class="block font-bold text-sm">7 Jam</span>
+                    <span class="text-[11px] text-slate-500">Hilang otomatis dalam 7 jam</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="broadcastDuration" value="24" class="peer sr-only">
+                  <div class="p-3 rounded-xl border border-slate-200 dark:border-slate-800 peer-checked:border-indigo-600 peer-checked:bg-indigo-50 dark:peer-checked:bg-indigo-950/40 text-center transition">
+                    <span class="block font-bold text-sm">24 Jam</span>
+                    <span class="text-[11px] text-slate-500">Hilang otomatis dalam 24 jam</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition">
+              Kirim Broadcast Sekarang
+            </button>
+          </form>
+
+          <!-- Status Broadcast Aktif & Tombol Hapus Langsung -->
+          <div id="activeBroadcastAdminCard" class="hidden p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-900/50 space-y-3">
+            <div class="flex items-start justify-between gap-3">
+              <div class="space-y-1 min-w-0">
+                <span class="text-[10px] font-mono font-bold uppercase text-indigo-600 dark:text-indigo-400">Broadcast Sedang Aktif</span>
+                <p id="adminActiveBroadcastText" class="text-xs font-medium break-words"></p>
+                <p id="adminActiveBroadcastExpiry" class="text-[11px] font-mono text-slate-500"></p>
+              </div>
+              <button onclick="deleteBroadcastNow()" class="shrink-0 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-semibold transition">
+                Hapus Sekarang
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- MODAL: CHECKOUT PESANAN -->
+  <div id="checkoutModal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-5 relative">
+      <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 p-2 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div>
+        <span class="text-[11px] font-mono font-semibold uppercase text-indigo-600 dark:text-indigo-400">Checkout Layanan</span>
+        <h3 id="chkProductName" class="text-lg font-bold mt-0.5 pr-6">-</h3>
+        <p id="chkProductPrice" class="text-base font-mono font-extrabold text-indigo-600 dark:text-indigo-400 mt-1">Rp 0</p>
+      </div>
+
+      <form onsubmit="processOrder(event)" class="space-y-3.5">
+        <input type="hidden" id="chkProductId">
+        <div>
+          <label class="block text-xs font-semibold mb-1">Nama Lengkap</label>
+          <input type="text" id="chkName" required placeholder="Masukkan nama Anda" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1">Nomor WhatsApp</label>
+          <input type="tel" id="chkPhone" required placeholder="081234567890" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1">Alamat Email</label>
+          <input type="email" id="chkEmail" required placeholder="email@contoh.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        </div>
+        <div class="pt-2">
+          <button type="submit" id="chkSubmitBtn" class="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition">
+            Lanjutkan ke Pembayaran QRIS
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: PEMBAYARAN QRIS -->
+  <div id="qrisModal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-5 text-center relative">
+      <button onclick="closeQrisModal()" class="absolute top-4 right-4 p-2 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div>
+        <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">MENUNGGU PEMBAYARAN</span>
+        <h3 class="text-xl font-extrabold mt-1">Scan QRIS AriesPay</h3>
+        <p id="qrisOrderId" class="text-xs font-mono text-slate-500 mt-0.5">-</p>
+      </div>
+
+      <div class="p-3 rounded-2xl bg-white border border-slate-200 inline-block mx-auto shadow-xs">
+        <img id="qrisImgTag" src="" alt="QRIS Pembayaran" class="w-52 h-52 object-contain mx-auto">
+      </div>
+
+      <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+        <span class="text-[11px] font-mono text-slate-500 block">Total Nominal Bayar</span>
+        <span id="qrisNominal" class="text-2xl font-mono font-extrabold text-indigo-600 dark:text-indigo-400">Rp 0</span>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-2.5">
+        <a id="qrisInvoiceUrl" href="#" target="_blank" class="flex-1 py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition flex items-center justify-center">
+          Buka Halaman Invoice
+        </a>
+        <button onclick="closeQrisModal()" class="flex-1 py-2.5 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-semibold transition">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
+      <div class="font-semibold text-slate-700 dark:text-slate-300">
+        FydzCloud.ID &mdash; Enterprise Cloud & Digital Store
+      </div>
+      <div class="font-mono">
+        &copy; 2026 FydzCloud ID. All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- CORE APPLICATION SCRIPT -->
+  <script>
+    const API_KEY = "fzx_live_aa67b0dd569d134e686680d3011dee4c049b86b9477fd7d77329774dab3d1a46";
+    const ADMIN_USER = "Fydz";
+    const ADMIN_PASS = "FydzBL01";
+
+    let productsData = [];
+    let selectedCat = "all";
+
+    // ==================== 1. THEME (DARK / LIGHT MODE) ====================
+    function initTheme() {
+      const savedTheme = localStorage.getItem('fydz_theme');
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('fydz_theme', isDark ? 'dark' : 'light');
+    }
+
+    // ==================== 2. SIDEBAR DRAWER & NAVIGATION ====================
+    function toggleSidebar(open) {
+      const drawer = document.getElementById('sidebarDrawer');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      if (open) {
+        backdrop.classList.remove('hidden');
+        requestAnimationFrame(() => drawer.classList.remove('-translate-x-full'));
+      } else {
+        drawer.classList.add('-translate-x-full');
+        setTimeout(() => backdrop.classList.add('hidden'), 280);
+      }
+    }
+
+    function navigate(viewName) {
+      toggleSidebar(false);
+      document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById('view-' + viewName);
+      if (target) target.classList.remove('hidden');
+
+      // Highlight active nav item
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        if (btn.dataset.nav === viewName) {
+          btn.classList.add('bg-indigo-600', 'text-white');
+          btn.classList.remove('text-slate-700', 'dark:text-slate-300', 'hover:bg-slate-100', 'dark:hover:bg-slate-800');
+        } else {
+          btn.classList.remove('bg-indigo-600', 'text-white');
+          btn.classList.add('text-slate-700', 'dark:text-slate-300', 'hover:bg-slate-100', 'dark:hover:bg-slate-800');
+        }
+      });
+
+      if (viewName === 'orders') renderOrderHistory();
+      if (viewName === 'admin') syncAdminUI();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ==================== 3. ADMIN AUTH, MAINTENANCE & BROADCAST ====================
+    function isAdminLoggedIn() {
+      return sessionStorage.getItem('fydz_admin_auth') === 'true';
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('adminUsernameInput').value.trim();
+      const p = document.getElementById('adminPasswordInput').value;
+      const err = document.getElementById('adminLoginError');
+
+      if (u === ADMIN_USER && p === ADMIN_PASS) {
+        sessionStorage.setItem('fydz_admin_auth', 'true');
+        err.classList.add('hidden');
+        document.getElementById('adminUsernameInput').value = '';
+        document.getElementById('adminPasswordInput').value = '';
+        syncAdminUI();
+        checkMaintenanceState();
+      } else {
+        err.classList.remove('hidden');
+      }
+    }
+
+    function handleAdminLogout() {
+      sessionStorage.removeItem('fydz_admin_auth');
+      syncAdminUI();
+      checkMaintenanceState();
+    }
+
+    function openAdminFromMaintenance() {
+      document.getElementById('maintenanceOverlay').classList.add('hidden');
+      navigate('admin');
+    }
+
+    function syncAdminUI() {
+      const loggedIn = isAdminLoggedIn();
+      const loginBox = document.getElementById('adminLoginBox');
+      const dashBox = document.getElementById('adminDashboardBox');
+      const badgeHeader = document.getElementById('adminBadgeHeader');
+      const sidebarStatus = document.getElementById('sidebarAdminStatus');
+
+      if (loggedIn) {
+        loginBox.classList.add('hidden');
+        dashBox.classList.remove('hidden');
+        badgeHeader.classList.remove('hidden');
+        badgeHeader.classList.add('inline-flex');
+        sidebarStatus.innerText = 'Aktif';
+        sidebarStatus.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
+
+        // Sync Maintenance Toggle
+        const mEnabled = localStorage.getItem('fydz_maintenance_enabled') === 'true';
+        const mMsg = localStorage.getItem('fydz_maintenance_msg') || '';
+        document.getElementById('maintenanceMessageInput').value = mMsg;
+        updateToggleVisual(mEnabled);
+
+        // Sync Broadcast Admin View
+        syncBroadcastAdminCard();
+      } else {
+        loginBox.classList.remove('hidden');
+        dashBox.classList.add('hidden');
+        badgeHeader.classList.add('hidden');
+        badgeHeader.classList.remove('inline-flex');
+        sidebarStatus.innerText = 'Login';
+        sidebarStatus.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400';
+      }
+    }
+
+    // Maintenance Logic
+    function updateToggleVisual(active) {
+      const btn = document.getElementById('maintenanceToggleBtn');
+      const knob = document.getElementById('maintenanceToggleKnob');
+      if (active) {
+        btn.classList.remove('bg-slate-300', 'dark:bg-slate-700');
+        btn.classList.add('bg-amber-500');
+        knob.classList.remove('translate-x-0');
+        knob.classList.add('translate-x-5');
+      } else {
+        btn.classList.add('bg-slate-300', 'dark:bg-slate-700');
+        btn.classList.remove('bg-amber-500');
+        knob.classList.add('translate-x-0');
+        knob.classList.remove('translate-x-5');
+      }
+    }
+
+    function toggleMaintenance() {
+      const current = localStorage.getItem('fydz_maintenance_enabled') === 'true';
+      const next = !current;
+      localStorage.setItem('fydz_maintenance_enabled', String(next));
+      updateToggleVisual(next);
+      checkMaintenanceState();
+    }
+
+    function saveMaintenanceMessage() {
+      const val = document.getElementById('maintenanceMessageInput').value.trim();
+      localStorage.setItem('fydz_maintenance_msg', val);
+      checkMaintenanceState();
+      alert('Pesan maintenance disimpan.');
+    }
+
+    function checkMaintenanceState() {
+      const enabled = localStorage.getItem('fydz_maintenance_enabled') === 'true';
+      const msg = localStorage.getItem('fydz_maintenance_msg');
+      const overlay = document.getElementById('maintenanceOverlay');
+      const homeStat = document.getElementById('homeSystemStatus');
+
+      if (msg) {
+        document.getElementById('maintenanceReasonText').innerText = msg;
+      }
+
+      if (enabled) {
+        homeStat.innerText = 'Maintenance';
+        homeStat.className = 'text-2xl font-extrabold mt-1 text-amber-500';
+        if (!isAdminLoggedIn()) {
+          overlay.classList.remove('hidden');
+        } else {
+          overlay.classList.add('hidden');
+        }
+      } else {
+        homeStat.innerText = 'Normal';
+        homeStat.className = 'text-2xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400';
+        overlay.classList.add('hidden');
+      }
+    }
+
+    // Broadcast Logic (Auto Expire 7 Jam / 24 Jam + Hapus Langsung)
+    function publishBroadcast(e) {
+      e.preventDefault();
+      const text = document.getElementById('broadcastTextInput').value.trim();
+      const hours = Number(document.querySelector('input[name="broadcastDuration"]:checked').value);
+      if (!text) return;
+
+      const payload = {
+        text: text,
+        expiresAt: Date.now() + (hours * 60 * 60 * 1000),
+        durationHours: hours
+      };
+
+      localStorage.setItem('fydz_broadcast', JSON.stringify(payload));
+      sessionStorage.removeItem('fydz_broadcast_dismissed');
+      document.getElementById('broadcastTextInput').value = '';
+      renderBroadcastBanner();
+      syncBroadcastAdminCard();
+    }
+
+    function deleteBroadcastNow() {
+      localStorage.removeItem('fydz_broadcast');
+      renderBroadcastBanner();
+      syncBroadcastAdminCard();
+    }
+
+    function dismissBroadcastSession() {
+      sessionStorage.setItem('fydz_broadcast_dismissed', 'true');
+      document.getElementById('broadcastBanner').classList.add('hidden');
+    }
+
+    function getValidBroadcast() {
+      const raw = localStorage.getItem('fydz_broadcast');
+      if (!raw) return null;
+      try {
+        const data = JSON.parse(raw);
+        if (Date.now() >= data.expiresAt) {
+          localStorage.removeItem('fydz_broadcast');
+          return null;
+        }
+        return data;
+      } catch {
+        localStorage.removeItem('fydz_broadcast');
+        return null;
+      }
+    }
+
+    function renderBroadcastBanner() {
+      const banner = document.getElementById('broadcastBanner');
+      const data = getValidBroadcast();
+
+      if (!data || sessionStorage.getItem('fydz_broadcast_dismissed') === 'true') {
+        banner.classList.add('hidden');
+        return;
+      }
+
+      const remainingMs = data.expiresAt - Date.now();
+      const hrs = Math.floor(remainingMs / (1000 * 60 * 60));
+      const mins = Math.floor((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
+
+      document.getElementById('broadcastMessageDisplay').innerText = data.text;
+      document.getElementById('broadcastTimerDisplay').innerText = `Sisa ${hrs}j ${mins}m`;
+      banner.classList.remove('hidden');
+    }
+
+    function syncBroadcastAdminCard() {
+      const card = document.getElementById('activeBroadcastAdminCard');
+      const data = getValidBroadcast();
+      if (!data) {
+        card.classList.add('hidden');
+        return;
+      }
+      const expDate = new Date(data.expiresAt).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' });
+      document.getElementById('adminActiveBroadcastText').innerText = data.text;
+      document.getElementById('adminActiveBroadcastExpiry').innerText = `Otomatis hilang pada: ${expDate} (${data.durationHours} Jam)`;
+      card.classList.remove('hidden');
+    }
+
+    // ==================== 4. API CATALOG & CHECKOUT ====================
+    async function loadCatalog() {
+      try {
+        const res = await fetch('/api/v1/products?limit=100', {
+          headers: {
+            'Authorization': `Bearer ${API_KEY}`,
+            'Accept': 'application/json'
+          }
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const json = await res.json();
+
+        if (json.success && Array.isArray(json.data)) {
+          productsData = json.data;
+          document.getElementById('homeTotalProducts').innerText = productsData.length;
+          buildCategoryChips(productsData);
+          renderCatalogCards(productsData);
+          renderFeaturedCards(productsData.slice(0, 3));
+        } else {
+          document.getElementById('catalogLoader').innerHTML = '<p class="text-xs font-mono text-red-500">Gagal memuat produk dari API.</p>';
+        }
+      } catch (err) {
+        document.getElementById('catalogLoader').innerHTML = '<p class="text-xs font-mono text-red-500">Koneksi API gagal. Pastikan file vercel.json sudah terpasang.</p>';
+      }
+    }
+
+    function buildCategoryChips(items) {
+      const container = document.getElementById('categoryChips');
+      const cats = [...new Set(items.map(i => (i.category || 'digital').toLowerCase()))];
+      cats.forEach(c => {
+        const btn = document.createElement('button');
+        btn.dataset.cat = c;
+        btn.onclick = () => selectCategory(c);
+        btn.className = 'cat-chip shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 capitalize transition';
+        btn.innerText = c;
+        container.appendChild(btn);
+      });
+    }
+
+    function selectCategory(cat) {
+      selectedCat = cat;
+      document.querySelectorAll('.cat-chip').forEach(btn => {
+        if (btn.dataset.cat === cat) {
+          btn.className = 'cat-chip shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white capitalize transition';
+        } else {
+          btn.className = 'cat-chip shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 capitalize transition';
+        }
+      });
+      applyCatalogFilter();
+    }
+
+    function applyCatalogFilter() {
+      const q = document.getElementById('catalogSearch').value.toLowerCase().trim();
+      const filtered = productsData.filter(p => {
+        const matchCat = selectedCat === 'all' || (p.category || 'digital').toLowerCase() === selectedCat;
+        const matchText = p.name.toLowerCase().includes(q) || p.id.toLowerCase().includes(q);
+        return matchCat && matchText;
+      });
+      renderCatalogCards(filtered);
+    }
+
+    function createProductCardHTML(p) {
+      const isAvail = (p.status || 'AVAILABLE').toUpperCase() === 'AVAILABLE';
+      const safeName = p.name.replace(/'/g, "\\'");
+      return `
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 transition flex flex-col justify-between gap-5">
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+              <span class="px-2.5 py-0.5 rounded-md text-[10px] font-mono font-semibold uppercase bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                ${p.category || 'digital'}
+              </span>
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold ${isAvail ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-red-500/10 text-red-500'}">
+                ${p.status || 'AVAILABLE'}
+              </span>
+            </div>
+            <h3 class="font-bold text-base leading-snug">${p.name}</h3>
+            <p class="text-[11px] font-mono text-slate-400 truncate">ID: ${p.id}</p>
+          </div>
+          <div class="pt-3.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
+            <div>
+              <span class="text-[10px] font-mono text-slate-400 block">Harga</span>
+              <span class="font-mono font-extrabold text-base text-indigo-600 dark:text-indigo-400">Rp ${Number(p.price || 0).toLocaleString('id-ID')}</span>
+            </div>
+            <button onclick="openCheckout('${p.id}', '${safeName}', ${p.price})" ${!isAvail ? 'disabled' : ''} class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white text-xs font-semibold transition">
+              Pesan
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCatalogCards(items) {
+      const loader = document.getElementById('catalogLoader');
+      const grid = document.getElementById('catalogGrid');
+      const empty = document.getElementById('catalogEmpty');
+
+      loader.classList.add('hidden');
+      if (items.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+      grid.innerHTML = items.map(createProductCardHTML).join('');
+    }
+
+    function renderFeaturedCards(items) {
+      const grid = document.getElementById('featuredGrid');
+      if (!grid) return;
+      grid.innerHTML = items.map(createProductCardHTML).join('');
+    }
+
+    // Checkout & QRIS Modal
+    function openCheckout(id, name, price) {
+      document.getElementById('chkProductId').value = id;
+      document.getElementById('chkProductName').innerText = name;
+      document.getElementById('chkProductPrice').innerText = 'Rp ' + Number(price).toLocaleString('id-ID');
+      document.getElementById('checkoutModal').classList.remove('hidden');
+    }
+
+    function closeCheckoutModal() {
+      document.getElementById('checkoutModal').classList.add('hidden');
+    }
+
+    function closeQrisModal() {
+      document.getElementById('qrisModal').classList.add('hidden');
+    }
+
+    async function processOrder(e) {
+      e.preventDefault();
+      const product_id = document.getElementById('chkProductId').value;
+      const product_name = document.getElementById('chkProductName').innerText;
+      const customer_name = document.getElementById('chkName').value.trim();
+      const customer_phone = document.getElementById('chkPhone').value.trim();
+      const customer_email = document.getElementById('chkEmail').value.trim();
+      const btn = document.getElementById('chkSubmitBtn');
+
+      btn.disabled = true;
+      btn.innerText = 'Membuat QRIS...';
+
+      try {
+        const res = await fetch('/api/v1/orders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${API_KEY}`,
+            'Idempotency-Key': 'fydz-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7)
+          },
+          body: JSON.stringify({
+            product_id,
+            customer_name,
+            customer_phone,
+            customer_email,
+            payment_method: 'QRIS'
+          })
+        });
+
+        const json = await res.json();
+        if (json.success && json.data) {
+          closeCheckoutModal();
+          const d = json.data;
+          document.getElementById('qrisOrderId').innerText = 'Order ID: ' + d.order_id;
+          document.getElementById('qrisImgTag').src = d.payment.qr_image_url;
+          document.getElementById('qrisNominal').innerText = 'Rp ' + Number(d.amount).toLocaleString('id-ID');
+          document.getElementById('qrisInvoiceUrl').href = d.invoice_url;
+          document.getElementById('qrisModal').classList.remove('hidden');
+
+          saveOrderToHistory({
+            order_id: d.order_id,
+            product_name,
+            amount: d.amount,
+            invoice_url: d.invoice_url,
+            created_at: new Date().toLocaleString('id-ID')
+          });
+        } else {
+          alert('Gagal membuat pesanan: ' + (json.message || 'Terjadi kesalahan pada server.'));
+        }
+      } catch (err) {
+        alert('Gagal terhubung ke server pembayaran. Periksa koneksi Anda.');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Lanjutkan ke Pembayaran QRIS';
+      }
+    }
+
+    // ==================== 5. RIWAYAT & CEK ORDER ====================
+    function saveOrderToHistory(entry) {
+      const list = JSON.parse(localStorage.getItem('fydz_order_history') || '[]');
+      list.unshift(entry);
+      localStorage.setItem('fydz_order_history', JSON.stringify(list.slice(0, 20)));
+    }
+
+    function renderOrderHistory() {
+      const container = document.getElementById('orderHistoryList');
+      const list = JSON.parse(localStorage.getItem('fydz_order_history') || '[]');
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center text-xs text-slate-500">
+            Belum ada riwayat pesanan di perangkat ini.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(item => `
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="space-y-1 min-w-0">
+            <span class="text-[11px] font-mono text-indigo-600 dark:text-indigo-400 font-semibold block truncate">${item.order_id}</span>
+            <h4 class="font-bold text-sm truncate">${item.product_name}</h4>
+            <p class="text-[11px] text-slate-400">${item.created_at} &bull; Rp ${Number(item.amount).toLocaleString('id-ID')}</p>
+          </div>
+          <a href="${item.invoice_url}" target="_blank" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-600 hover:text-white text-xs font-semibold text-center shrink-0 transition">
+            Lihat Invoice
+          </a>
+        </div>
+      `).join('');
+    }
+
+    function clearOrderHistory() {
+      localStorage.removeItem('fydz_order_history');
+      renderOrderHistory();
+    }
+
+    function openDirectInvoice() {
+      const id = document.getElementById('manualOrderId').value.trim();
+      if (!id) return alert('Masukkan Order ID terlebih dahulu.');
+      window.open(`https://store.roselynsound.my.id/invoice/${encodeURIComponent(id)}`, '_blank');
+    }
+
+    // ==================== INITIALIZATION ====================
+    initTheme();
+    syncAdminUI();
+    checkMaintenanceState();
+    renderBroadcastBanner();
+    setInterval(renderBroadcastBanner, 60000); // Cek kedaluwarsa broadcast tiap menit
+    navigate('home');
+    loadCatalog();
+  </script>
+</body>
+</html>

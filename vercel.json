@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api/:match*",
-      "destination": "https://store.roselynsound.my.id/api/:match*"
+      "source": "/api/:path*",
+      "destination": "https://store.roselynsound.my.id/api/:path*"
     }
   ]
 }

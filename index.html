@@ -778,7 +778,7 @@
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const json = await res.json();
 
-        // Parser fleksibel: mendeteksi array langsung atau berbagai properti pembungkus data
+        // Parser Universal untuk mendeteksi semua variasi struktur respons JSON API
         let items = [];
         if (Array.isArray(json)) {
           items = json;
@@ -786,7 +786,12 @@
           items = json.data;
         } else if (json.products && Array.isArray(json.products)) {
           items = json.products;
+        } else if (json.result && Array.isArray(json.result)) {
+          items = json.result;
+        } else if (json.data && json.data.products && Array.isArray(json.data.products)) {
+          items = json.data.products;
         } else {
+          // Cari properti apa saja di root objek yang berupa Array
           const foundKey = Object.keys(json).find(k => Array.isArray(json[k]));
           items = foundKey ? json[foundKey] : [];
         }
@@ -798,11 +803,19 @@
           renderCatalogCards(productsData);
           renderFeaturedCards(productsData.slice(0, 3));
         } else {
-          document.getElementById('catalogLoader').innerHTML = '<p class="text-xs font-mono text-amber-500">Katalog kosong atau format data API memerlukan penyesuaian.</p>';
+          document.getElementById('catalogLoader').innerHTML = `
+            <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs font-mono">
+              ⚠️ Server merespons, namun data produk kosong atau terbungkus di key lain.
+            </div>
+          `;
         }
       } catch (err) {
         console.error(err);
-        document.getElementById('catalogLoader').innerHTML = '<p class="text-xs font-mono text-red-500">Gagal memuat produk dari API. Periksa vercel.json.</p>';
+        document.getElementById('catalogLoader').innerHTML = `
+          <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-500 text-xs font-mono">
+            ❌ Gagal memuat produk. Pastikan vercel.json aktif dan endpoint API benar.
+          </div>
+        `;
       }
     }
 

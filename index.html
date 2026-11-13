@@ -34,17 +34,17 @@
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased transition-colors duration-200 selection:bg-indigo-600 selection:text-white">
 
-  <!-- MAINTENANCE OVERLAY -->
-  <div id="maintenanceOverlay" class="fixed inset-0 z-[100] hidden bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-5">
+  <!-- MAINTENANCE OVERLAY (DIKUNCI TOTAL JIKA AKTIF) -->
+  <div id="maintenanceOverlay" class="fixed inset-0 z-[200] hidden bg-slate-950/98 backdrop-blur-xl flex items-center justify-center p-5">
     <div class="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-7 text-center shadow-2xl space-y-5">
       <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-500 flex items-center justify-center">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
       </div>
       <div class="space-y-2">
         <span class="inline-block px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400">SYSTEM MAINTENANCE</span>
-        <h2 class="text-2xl font-extrabold tracking-tight">Pemeliharaan Infrastruktur</h2>
+        <h2 class="text-2xl font-extrabold tracking-tight">Dalam Pemeliharaan</h2>
         <p id="maintenanceReasonText" class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          Sistem sedang melakukan pembaruan node server untuk meningkatkan performa layanan.
+          Sistem sedang melakukan peningkatan infrastruktur server. Akses publik ditutup sementara.
         </p>
       </div>
       <div class="pt-2 flex flex-col gap-2.5">
@@ -52,7 +52,7 @@
           Hubungi Support WhatsApp
         </a>
         <button onclick="openAdminFromMaintenance()" class="w-full py-2 px-4 rounded-xl text-xs font-mono text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition">
-          Akses Portal Admin
+          Login Admin / Bypass
         </button>
       </div>
     </div>
@@ -157,7 +157,7 @@
       <a href="https://wa.me/6283120264665" target="_blank" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition shadow-sm">
         <span>Hubungi Support WhatsApp</span>
       </a>
-      <p class="text-[11px] font-mono text-center text-slate-400">FydzCloud ID • v3.2 Enterprise</p>
+      <p class="text-[11px] font-mono text-center text-slate-400">FydzCloud ID • v3.4 Enterprise</p>
     </div>
   </aside>
 
@@ -265,7 +265,7 @@
       <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
         <label class="block text-xs font-mono font-semibold uppercase text-slate-500">Cek Berdasarkan Order ID</label>
         <div class="flex flex-col sm:flex-row gap-2.5">
-          <input type="text" id="manualOrderId" placeholder="Contoh: ORD-1715601234567-XYZ" class="flex-1 px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <input type="text" id="manualOrderId" placeholder="Contoh: INV-73371443-9714" class="flex-1 px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
           <button onclick="openDirectInvoice()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition shrink-0">
             Buka Invoice
           </button>
@@ -433,7 +433,7 @@
   </main>
 
   <!-- PROFESSIONAL MODAL NOTIFICATION -->
-  <div id="appModal" class="fixed inset-0 z-[120] hidden bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4">
+  <div id="appModal" class="fixed inset-0 z-[220] hidden bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="w-full max-w-sm rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl text-center space-y-4">
       <div id="modalIconContainer" class="w-12 h-12 mx-auto rounded-xl flex items-center justify-center text-white font-bold"></div>
       <div class="space-y-1.5">
@@ -474,10 +474,9 @@
           <input type="email" id="chkEmail" required placeholder="email@domain.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
         </div>
 
-        <!-- FIELD DINAMIS KHUSUS PANEL PTERODACTYL -->
         <div id="panelFieldsContainer" class="space-y-3.5 pt-2 border-t border-slate-100 dark:border-slate-800 hidden">
           <div class="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/50 text-[11px] text-indigo-600 dark:text-indigo-400">
-            ℹ️ Produk ini memerlukan pembuatan akun panel server Pterodactyl baru.
+            ℹ️ Produk ini memerlukan akun panel server Pterodactyl baru.
           </div>
           <div>
             <label class="block text-xs font-semibold mb-1">Username Panel Pterodactyl</label>
@@ -512,7 +511,7 @@
       </div>
 
       <div class="p-3 rounded-2xl bg-white border border-slate-200 inline-block mx-auto shadow-xs">
-        <img id="qrisImgTag" src="" alt="QRIS Pembayaran" class="w-52 h-52 object-contain mx-auto">
+        <img id="qrisImgTag" src="" alt="QRIS Pembayaran" class="w-52 h-52 object-contain mx-auto bg-slate-100">
       </div>
 
       <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
@@ -591,6 +590,13 @@
     }
 
     function toggleSidebar(open) {
+      // CEK KEAMANAN: Jika mode maintenance aktif & belum login admin, blokir pembukaan sidebar
+      const enabled = localStorage.getItem('fydz_maintenance_enabled') === 'true';
+      if (enabled && !isAdminLoggedIn()) {
+        checkMaintenanceState();
+        return;
+      }
+
       const drawer = document.getElementById('sidebarDrawer');
       const backdrop = document.getElementById('sidebarBackdrop');
       if (open) {
@@ -603,6 +609,13 @@
     }
 
     function navigate(viewName) {
+      // CEK KEAMANAN: Cegah perpindahan view jika maintenance aktif dan belum login
+      const enabled = localStorage.getItem('fydz_maintenance_enabled') === 'true';
+      if (enabled && !isAdminLoggedIn() && viewName !== 'admin') {
+        checkMaintenanceState();
+        return;
+      }
+
       toggleSidebar(false);
       document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
       const target = document.getElementById('view-' + viewName);
@@ -734,6 +747,8 @@
         homeStat.className = 'text-2xl font-extrabold mt-1 text-amber-500';
         if (!isAdminLoggedIn()) {
           overlay.classList.remove('hidden');
+          // Tutup sidebar jika kebetulan terbuka saat maintenance aktif
+          toggleSidebar(false);
         } else {
           overlay.classList.add('hidden');
         }
@@ -873,14 +888,27 @@
       }
     }
 
+    function getProductCategory(p) {
+      const rawCat = (p.category || '').toLowerCase().trim();
+      const name = (p.name || '').toLowerCase().trim();
+      
+      if (rawCat.includes('panel') || name.includes('panel') || name.includes('ram')) return 'Panel Pterodactyl';
+      if (rawCat.includes('bot') || name.includes('bot') || name.includes('script')) return 'Script & Bot WA';
+      if (rawCat.includes('jasa') || name.includes('jasa') || name.includes('install')) return 'Jasa & Tools';
+      if (rawCat && rawCat !== 'digital') return p.category;
+      return 'Digital Product';
+    }
+
     function buildCategoryChips(items) {
       const container = document.getElementById('categoryChips');
-      const cats = [...new Set(items.map(i => (i.category || 'digital').toLowerCase()))];
+      container.innerHTML = `<button onclick="selectCategory('all')" data-cat="all" class="cat-chip shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition">Semua Layanan</button>`;
+      
+      const cats = [...new Set(items.map(i => getProductCategory(i)))];
       cats.forEach(c => {
         const btn = document.createElement('button');
         btn.dataset.cat = c;
         btn.onclick = () => selectCategory(c);
-        btn.className = 'cat-chip shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 capitalize transition';
+        btn.className = 'cat-chip shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition';
         btn.innerText = c;
         container.appendChild(btn);
       });
@@ -890,9 +918,9 @@
       selectedCat = cat;
       document.querySelectorAll('.cat-chip').forEach(btn => {
         if (btn.dataset.cat === cat) {
-          btn.className = 'cat-chip shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white capitalize transition';
+          btn.className = 'cat-chip shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition';
         } else {
-          btn.className = 'cat-chip shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 capitalize transition';
+          btn.className = 'cat-chip shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition';
         }
       });
       applyCatalogFilter();
@@ -901,7 +929,8 @@
     function applyCatalogFilter() {
       const q = document.getElementById('catalogSearch').value.toLowerCase().trim();
       const filtered = productsData.filter(p => {
-        const matchCat = selectedCat === 'all' || (p.category || 'digital').toLowerCase() === selectedCat;
+        const productCat = getProductCategory(p);
+        const matchCat = selectedCat === 'all' || productCat === selectedCat;
         const matchText = (p.name || '').toLowerCase().includes(q) || (p.id || '').toLowerCase().includes(q);
         return matchCat && matchText;
       });
@@ -911,15 +940,15 @@
     function createProductCardHTML(p) {
       const isAvail = (p.status || 'AVAILABLE').toUpperCase() === 'AVAILABLE';
       const safeName = (p.name || 'Layanan').replace(/'/g, "\\'");
-      const cat = (p.category || '').toLowerCase();
-      const isPanel = cat.includes('panel') || cat.includes('server') || (p.name || '').toLowerCase().includes('panel');
+      const productCat = getProductCategory(p);
+      const isPanel = productCat === 'Panel Pterodactyl' || (p.name || '').toLowerCase().includes('panel');
 
       return `
         <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 transition flex flex-col justify-between gap-5 shadow-xs">
           <div class="space-y-2.5">
             <div class="flex items-center justify-between gap-2">
               <span class="px-2.5 py-0.5 rounded-md text-[10px] font-mono font-semibold uppercase bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                ${p.category || 'digital'}
+                ${productCat}
               </span>
               <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold ${isAvail ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-red-500/10 text-red-500'}">
                 ${p.status || 'AVAILABLE'}
@@ -963,6 +992,12 @@
     }
 
     function openCheckout(id, name, price, isPanelProduct) {
+      const enabled = localStorage.getItem('fydz_maintenance_enabled') === 'true';
+      if (enabled && !isAdminLoggedIn()) {
+        checkMaintenanceState();
+        return;
+      }
+
       document.getElementById('chkProductId').value = id;
       document.getElementById('chkProductName').innerText = name;
       document.getElementById('chkProductPrice').innerText = 'Rp ' + Number(price).toLocaleString('id-ID');
@@ -1018,7 +1053,6 @@
           payment_method: 'QRIS'
         };
 
-        // Sertakan field panel jika form panel sedang aktif
         if (!panelContainer.classList.contains('hidden')) {
           payload.panel_username = panel_username;
           if (panel_password) {
@@ -1045,22 +1079,25 @@
           throw new Error('Respons gateway tidak valid (HTTP ' + res.status + ')');
         }
 
-        if (res.ok && (json.success || json.data)) {
+        if (res.ok && (json.success || json.data || json.order_id)) {
           closeCheckoutModal();
+          
           const d = json.data || json;
-          const qrImg = d.payment?.qr_image_url || d.qr_image_url || d.qris_url || '';
-          const invUrl = d.invoice_url || `https://store.roselynsound.my.id/invoice/${encodeURIComponent(d.order_id)}`;
+          const orderId = d.order_id || d.id || 'INV-' + Math.floor(Math.random() * 900000 + 100000);
+          const amount = Number(d.amount || d.total_amount || d.price || 0);
+          const qrImg = d.payment?.qr_image_url || d.payment?.qris_url || d.qr_image_url || d.qris_url || d.qr_code || '';
+          const invUrl = d.invoice_url || d.url || `https://store.roselynsound.my.id/invoice/${encodeURIComponent(orderId)}`;
 
-          document.getElementById('qrisOrderId').innerText = 'Order ID: ' + d.order_id;
+          document.getElementById('qrisOrderId').innerText = 'Order ID: ' + orderId;
           document.getElementById('qrisImgTag').src = qrImg;
-          document.getElementById('qrisNominal').innerText = 'Rp ' + Number(d.amount || 0).toLocaleString('id-ID');
+          document.getElementById('qrisNominal').innerText = 'Rp ' + amount.toLocaleString('id-ID');
           document.getElementById('qrisInvoiceUrl').href = invUrl;
           document.getElementById('qrisModal').classList.remove('hidden');
 
           saveOrderToHistory({
-            order_id: d.order_id,
+            order_id: orderId,
             product_name,
-            amount: d.amount,
+            amount: amount,
             invoice_url: invUrl,
             created_at: new Date().toLocaleString('id-ID')
           });

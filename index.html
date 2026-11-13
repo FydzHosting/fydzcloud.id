@@ -34,9 +34,9 @@
 </head>
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased transition-colors duration-200 selection:bg-indigo-600 selection:text-white">
 
-  <!-- MAINTENANCE OVERLAY (DIKUNCI TOTAL JIKA AKTIF) -->
-  <div id="maintenanceOverlay" class="fixed inset-0 z-[200] hidden bg-slate-950/98 backdrop-blur-xl flex items-center justify-center p-5">
-    <div class="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-7 text-center shadow-2xl space-y-5">
+  <!-- MAINTENANCE OVERLAY (DIKUNCI PUBLIK, TOMBOL ADMIN DIJAMIN KLIK-ABLE) -->
+  <div id="maintenanceOverlay" class="fixed inset-0 z-[200] hidden bg-slate-950/98 backdrop-blur-xl flex items-center justify-center p-5 pointer-events-auto">
+    <div class="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-7 text-center shadow-2xl space-y-5 relative z-[210]">
       <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-500 flex items-center justify-center">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
       </div>
@@ -48,11 +48,11 @@
         </p>
       </div>
       <div class="pt-2 flex flex-col gap-2.5">
-        <a href="https://wa.me/6283120264665" target="_blank" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition">
+        <a href="https://wa.me/6283120264665" target="_blank" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition cursor-pointer">
           Hubungi Support WhatsApp
         </a>
-        <button onclick="openAdminFromMaintenance()" class="w-full py-2 px-4 rounded-xl text-xs font-mono text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition">
-          Login Admin / Bypass
+        <button onclick="openAdminFromMaintenance()" type="button" class="w-full py-2.5 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-mono font-semibold text-slate-700 dark:text-slate-200 transition cursor-pointer">
+          🔐 Login Admin / Bypass Maintenance
         </button>
       </div>
     </div>
@@ -157,7 +157,7 @@
       <a href="https://wa.me/6283120264665" target="_blank" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition shadow-sm">
         <span>Hubungi Support WhatsApp</span>
       </a>
-      <p class="text-[11px] font-mono text-center text-slate-400">FydzCloud ID • v3.4 Enterprise</p>
+      <p class="text-[11px] font-mono text-center text-slate-400">FydzCloud ID • v3.5 Enterprise</p>
     </div>
   </aside>
 
@@ -590,7 +590,6 @@
     }
 
     function toggleSidebar(open) {
-      // CEK KEAMANAN: Jika mode maintenance aktif & belum login admin, blokir pembukaan sidebar
       const enabled = localStorage.getItem('fydz_maintenance_enabled') === 'true';
       if (enabled && !isAdminLoggedIn()) {
         checkMaintenanceState();
@@ -609,7 +608,6 @@
     }
 
     function navigate(viewName) {
-      // CEK KEAMANAN: Cegah perpindahan view jika maintenance aktif dan belum login
       const enabled = localStorage.getItem('fydz_maintenance_enabled') === 'true';
       if (enabled && !isAdminLoggedIn() && viewName !== 'admin') {
         checkMaintenanceState();
@@ -747,7 +745,6 @@
         homeStat.className = 'text-2xl font-extrabold mt-1 text-amber-500';
         if (!isAdminLoggedIn()) {
           overlay.classList.remove('hidden');
-          // Tutup sidebar jika kebetulan terbuka saat maintenance aktif
           toggleSidebar(false);
         } else {
           overlay.classList.add('hidden');

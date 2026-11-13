@@ -416,19 +416,23 @@
   <script>
     const API_KEY = "fzx_live_aa67b0dd569d134e686680d3011dee4c049b86b9477fd7d77329774dab3d1a46";
     
-    // Konfigurasi Remote JSONBin untuk Web Utama
+    // Konfigurasi Remote JSONBin (Web Utama menggunakan Access Key / Master Key dengan izin Read)
     const JSONBIN_BIN_ID = "6af71fbdac021005a852684";
-    const JSONBIN_SECRET_KEY = "$2a$10$7URRKGPRG/YT/RSdWHDvCuyZx2u0IBQRR4cnvD6UA/8MWNZ2qL46O";
+    const JSONBIN_SECRET_KEY = "$2a$10$/.gygM1.uzeJXyEns9Zaqe7VnA2ZHuOlr6TqVT9eUL2Ccy.L9FHhq";
 
     let productsData = [];
     let selectedCat = "all";
 
-    // Fungsi Sinkronisasi Remote dari Web Admin (JSONBin)
     async function checkRemoteStatus() {
       try {
         let res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
-          headers: { 'X-Master-Key': JSONBIN_SECRET_KEY }
+          method: 'GET',
+          headers: {
+            'X-Access-Key': JSONBIN_SECRET_KEY,
+            'Content-Type': 'application/json'
+          }
         });
+        
         if (!res.ok) return;
         let json = await res.json();
         let data = json.record;
@@ -451,7 +455,7 @@
         checkMaintenanceState();
         renderBroadcastBanner();
       } catch (err) {
-        console.error("Gagal sinkronisasi remote:", err);
+        console.error("Sinkronisasi remote tertunda:", err);
       }
     }
 
@@ -927,7 +931,7 @@
     checkMaintenanceState();
     renderBroadcastBanner();
     
-    // Cek update remote dari admin setiap 5 detik secara otomatis
+    // Sinkronisasi otomatis setiap 5 detik
     setInterval(checkRemoteStatus, 5000);
     checkRemoteStatus();
 

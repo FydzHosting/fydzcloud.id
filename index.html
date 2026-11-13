@@ -42,17 +42,17 @@
       </div>
       <div class="space-y-2">
         <span class="inline-block px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400">SYSTEM MAINTENANCE</span>
-        <h2 class="text-2xl font-extrabold tracking-tight">Sedang Pemeliharaan Sistem</h2>
+        <h2 class="text-2xl font-extrabold tracking-tight">Pemeliharaan Infrastruktur</h2>
         <p id="maintenanceReasonText" class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-          Kami sedang melakukan peningkatan infrastruktur server untuk performa yang lebih optimal.
+          Sistem sedang melakukan pembaruan node server untuk meningkatkan performa layanan.
         </p>
       </div>
       <div class="pt-2 flex flex-col gap-2.5">
         <a href="https://wa.me/6283120264665" target="_blank" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition">
-          Hubungi CS WhatsApp
+          Hubungi Support WhatsApp
         </a>
         <button onclick="openAdminFromMaintenance()" class="w-full py-2 px-4 rounded-xl text-xs font-mono text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition">
-          Akses Login Administrator
+          Akses Portal Admin
         </button>
       </div>
     </div>
@@ -62,7 +62,7 @@
   <div id="broadcastBanner" class="hidden bg-indigo-600 text-white border-b border-indigo-500">
     <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3 text-xs sm:text-sm">
       <div class="flex items-center gap-2.5 min-w-0">
-        <span class="shrink-0 px-2 py-0.5 rounded bg-white/20 font-mono text-[10px] font-bold uppercase tracking-wider">Info</span>
+        <span class="shrink-0 px-2 py-0.5 rounded bg-white/20 font-mono text-[10px] font-bold uppercase tracking-wider">Pengumuman</span>
         <p id="broadcastMessageDisplay" class="truncate font-medium"></p>
       </div>
       <div class="flex items-center gap-2 shrink-0">
@@ -77,7 +77,6 @@
   <!-- TOP NAVBAR -->
   <header class="sticky top-0 z-40 w-full bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
-      
       <div class="flex items-center gap-3 min-w-0">
         <button onclick="toggleSidebar(true)" aria-label="Buka Menu" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 transition active:scale-95">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -110,11 +109,10 @@
   <!-- SIDEBAR DRAWER -->
   <div id="sidebarBackdrop" onclick="toggleSidebar(false)" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-xs transition-opacity"></div>
   <aside id="sidebarDrawer" class="fixed top-0 left-0 bottom-0 z-50 w-72 max-w-[82vw] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform -translate-x-full transition-transform duration-300 ease-out flex flex-col">
-    
     <div class="h-16 px-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
       <div class="flex items-center gap-2.5">
         <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-mono font-bold text-sm">F</div>
-        <span class="font-bold text-base tracking-tight">Menu Navigasi</span>
+        <span class="font-bold text-base tracking-tight">Navigasi Utama</span>
       </div>
       <button onclick="toggleSidebar(false)" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -122,7 +120,7 @@
     </div>
 
     <div class="flex-1 overflow-y-auto p-4 space-y-1.5">
-      <div class="px-3 py-1.5 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400">Layanan Utama</div>
+      <div class="px-3 py-1.5 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400">Menu Layanan</div>
       
       <button onclick="navigate('home')" data-nav="home" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition">
         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
@@ -131,20 +129,20 @@
 
       <button onclick="navigate('catalog')" data-nav="catalog" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition">
         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-        <span>Katalog Produk</span>
+        <span>Katalog Layanan</span>
       </button>
 
       <button onclick="navigate('orders')" data-nav="orders" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition">
         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-        <span>Riwayat & Cek Order</span>
+        <span>Cek Status Transaksi</span>
       </button>
 
       <button onclick="navigate('guide')" data-nav="guide" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition">
         <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-        <span>Panduan & Bantuan</span>
+        <span>Panduan & Dokumentasi</span>
       </button>
 
-      <div class="pt-4 pb-1 px-3 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400">Sistem & Kontrol</div>
+      <div class="pt-4 pb-1 px-3 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400">Kontrol Sistem</div>
 
       <button onclick="navigate('admin')" data-nav="admin" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition">
         <div class="flex items-center gap-3">
@@ -157,9 +155,9 @@
 
     <div class="p-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
       <a href="https://wa.me/6283120264665" target="_blank" class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition shadow-sm">
-        <span>Hubungi CS WhatsApp</span>
+        <span>Hubungi Support WhatsApp</span>
       </a>
-      <p class="text-[11px] font-mono text-center text-slate-400">FydzCloud ID • v3.0 Enterprise</p>
+      <p class="text-[11px] font-mono text-center text-slate-400">FydzCloud ID • v3.1 Enterprise</p>
     </div>
   </aside>
 
@@ -175,10 +173,10 @@
             Automated Provisioning Active 24/7
           </div>
           <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
-            Infrastruktur Cloud & Layanan Digital Instan.
+            Infrastruktur Cloud & Layanan Digital Berkecepatan Tinggi.
           </h1>
           <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-            Pesan server Pterodactyl dan produk digital resmi secara otomatis. Pembayaran QRIS terverifikasi instan tanpa antre admin.
+            Pesan server Pterodactyl dan berbagai lisensi digital secara instan. Validasi pembayaran QRIS real-time tanpa perlu konfirmasi manual.
           </p>
           <div class="pt-2 flex flex-wrap gap-3">
             <button onclick="navigate('catalog')" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition shadow-sm">
@@ -193,28 +191,28 @@
 
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-          <span class="text-xs font-mono text-slate-500 dark:text-slate-400">Produk Tersedia</span>
+          <span class="text-xs font-mono text-slate-500 dark:text-slate-400">Total Layanan</span>
           <p id="homeTotalProducts" class="text-2xl font-extrabold mt-1 text-indigo-600 dark:text-indigo-400">-</p>
         </div>
         <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-          <span class="text-xs font-mono text-slate-500 dark:text-slate-400">Metode Bayar</span>
-          <p class="text-2xl font-extrabold mt-1">QRIS Instan</p>
+          <span class="text-xs font-mono text-slate-500 dark:text-slate-400">Metode Pembayaran</span>
+          <p class="text-2xl font-extrabold mt-1">QRIS Universal</p>
         </div>
         <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-          <span class="text-xs font-mono text-slate-500 dark:text-slate-400">Waktu Aktivasi</span>
+          <span class="text-xs font-mono text-slate-500 dark:text-slate-400">Kecepatan Aktivasi</span>
           <p class="text-2xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400">&lt; 10 Detik</p>
         </div>
         <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-          <span class="text-xs font-mono text-slate-500 dark:text-slate-400">Status Server</span>
-          <p id="homeSystemStatus" class="text-2xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400">Normal</p>
+          <span class="text-xs font-mono text-slate-500 dark:text-slate-400">Status Node</span>
+          <p id="homeSystemStatus" class="text-2xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400">Operational</p>
         </div>
       </div>
 
       <div class="space-y-4">
         <div class="flex items-center justify-between">
           <div>
-            <h2 class="text-lg sm:text-xl font-bold tracking-tight">Produk Populer</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Pilihan layanan paling sering dipesan pelanggan</p>
+            <h2 class="text-lg sm:text-xl font-bold tracking-tight">Layanan Unggulan</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Paket infrastruktur server paling diminati klien</p>
           </div>
           <button onclick="navigate('catalog')" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">
             Lihat Semua &rarr;
@@ -228,44 +226,44 @@
     <section id="view-catalog" class="view-section hidden space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 class="text-2xl font-extrabold tracking-tight">Katalog Produk</h1>
-          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Pilih paket layanan sesuai kebutuhan Anda</p>
+          <h1 class="text-2xl font-extrabold tracking-tight">Katalog Layanan</h1>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Pilih spesifikasi server atau produk digital sesuai kebutuhan Anda</p>
         </div>
         
         <div class="relative w-full sm:w-72">
           <svg class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          <input type="text" id="catalogSearch" oninput="applyCatalogFilter()" placeholder="Cari produk atau ID..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <input type="text" id="catalogSearch" oninput="applyCatalogFilter()" placeholder="Cari layanan atau ID..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
         </div>
       </div>
 
       <div id="categoryChips" class="flex items-center gap-2 overflow-x-auto pb-1">
         <button onclick="selectCategory('all')" data-cat="all" class="cat-chip shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition">
-          Semua Produk
+          Semua Layanan
         </button>
       </div>
 
       <div id="catalogLoader" class="py-16 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
         <div class="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-        <p class="text-xs font-mono text-slate-500">Memuat katalog dari server...</p>
+        <p class="text-xs font-mono text-slate-500">Menghubungkan ke pusat data server...</p>
       </div>
 
       <div id="catalogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
       <div id="catalogEmpty" class="hidden py-14 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
-        <p class="font-bold text-base">Produk tidak ditemukan</p>
-        <p class="text-xs text-slate-500">Coba ubah kata kunci pencarian atau pilih kategori lain.</p>
+        <p class="font-bold text-base">Layanan tidak ditemukan</p>
+        <p class="text-xs text-slate-500">Coba gunakan kata kunci lain atau reset filter kategori.</p>
       </div>
     </section>
 
     <!-- VIEW 3: RIWAYAT & CEK ORDER -->
     <section id="view-orders" class="view-section hidden space-y-6 max-w-3xl mx-auto">
       <div>
-        <h1 class="text-2xl font-extrabold tracking-tight">Riwayat & Cek Pesanan</h1>
-        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Lacak status transaksi atau buka kembali invoice QRIS Anda</p>
+        <h1 class="text-2xl font-extrabold tracking-tight">Status Pesanan & Riwayat</h1>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Lacak transaksi aktif atau akses kembali invoice pembayaran Anda</p>
       </div>
 
       <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
-        <label class="block text-xs font-mono font-semibold uppercase text-slate-500">Cari Berdasarkan Order ID</label>
+        <label class="block text-xs font-mono font-semibold uppercase text-slate-500">Cek Berdasarkan Order ID</label>
         <div class="flex flex-col sm:flex-row gap-2.5">
           <input type="text" id="manualOrderId" placeholder="Contoh: ORD-1715601234567-XYZ" class="flex-1 px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
           <button onclick="openDirectInvoice()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition shrink-0">
@@ -276,8 +274,8 @@
 
       <div class="space-y-3">
         <div class="flex items-center justify-between">
-          <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 font-mono">Riwayat Transaksi di Perangkat Ini</h2>
-          <button onclick="clearOrderHistory()" class="text-xs text-red-500 hover:underline">Hapus Riwayat</button>
+          <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 font-mono">Riwayat Perangkat Ini</h2>
+          <button onclick="clearOrderHistory()" class="text-xs text-red-500 hover:underline">Bersihkan Riwayat</button>
         </div>
         <div id="orderHistoryList" class="space-y-3"></div>
       </div>
@@ -286,35 +284,35 @@
     <!-- VIEW 4: PANDUAN -->
     <section id="view-guide" class="view-section hidden space-y-6 max-w-4xl mx-auto">
       <div>
-        <h1 class="text-2xl font-extrabold tracking-tight">Panduan Transaksi</h1>
-        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Alur pemesanan otomatis dan informasi bantuan pelanggan</p>
+        <h1 class="text-2xl font-extrabold tracking-tight">Panduan & Bantuan</h1>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Tata cara pemesanan otomatis dan informasi layanan pelanggan</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2.5">
           <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center">01</span>
-          <h3 class="font-bold text-base">Pilih Produk</h3>
-          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Buka menu Katalog Produk, pilih layanan yang diinginkan, lalu klik tombol Pesan.</p>
+          <h3 class="font-bold text-base">Pilih Spesifikasi</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Masuk ke Katalog Layanan, pilih paket server Pterodactyl atau produk digital, lalu klik tombol Pesan.</p>
         </div>
         <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2.5">
           <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center">02</span>
-          <h3 class="font-bold text-base">Bayar via QRIS</h3>
-          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Isi nama, nomor WhatsApp, dan email. Scan kode QRIS yang muncul memakai M-Banking atau E-Wallet apa saja.</p>
+          <h3 class="font-bold text-base">Scan QRIS Instan</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Masukkan data kontak, lalu scan kode QRIS menggunakan aplikasi M-Banking atau E-Wallet apa saja.</p>
         </div>
         <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2.5">
           <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center">03</span>
-          <h3 class="font-bold text-base">Otomatis Aktif</h3>
-          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Sistem akan memverifikasi pembayaran dan memproses kredensial akun atau panel Pterodactyl secara instan.</p>
+          <h3 class="font-bold text-base">Aktivasi Otomatis</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Sistem gateway akan langsung memproses dan mengirimkan detail akun panel setelah pembayaran terkonfirmasi.</p>
         </div>
       </div>
 
       <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div class="space-y-1">
-          <h3 class="font-bold text-base">Butuh Bantuan Teknis?</h3>
-          <p class="text-xs text-slate-600 dark:text-slate-400">Tim Customer Service siap membantu kendala transaksi atau pertanyaan layanan Anda.</p>
+          <h3 class="font-bold text-base">Kendala Transaksi / Bantuan Teknis?</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400">Tim technical support kami siap membantu Anda melalui WhatsApp 24 jam.</p>
         </div>
         <a href="https://wa.me/6283120264665" target="_blank" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold text-center shrink-0 transition">
-          Chat WhatsApp (+6283120264665)
+          Hubungi WhatsApp (+6283120264665)
         </a>
       </div>
     </section>
@@ -324,23 +322,23 @@
       
       <div id="adminLoginBox" class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
         <div class="space-y-1">
-          <span class="text-[11px] font-mono font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Restricted Area</span>
+          <span class="text-[11px] font-mono font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Restricted Portal</span>
           <h1 class="text-2xl font-extrabold tracking-tight">Login Administrator</h1>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Masuk untuk mengelola mode maintenance dan pengumuman broadcast.</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Autentikasi diperlukan untuk mengontrol parameter operasional sistem.</p>
         </div>
 
         <form onsubmit="handleAdminLogin(event)" class="space-y-4">
           <div>
-            <label class="block text-xs font-semibold mb-1.5">Username</label>
-            <input type="text" id="adminUsernameInput" required autocomplete="off" placeholder="Masukkan username admin" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <label class="block text-xs font-semibold mb-1.5">Username Administrator</label>
+            <input type="text" id="adminUsernameInput" required autocomplete="off" placeholder="Masukkan username" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
           </div>
           <div>
-            <label class="block text-xs font-semibold mb-1.5">Password</label>
+            <label class="block text-xs font-semibold mb-1.5">Password Keamanan</label>
             <input type="password" id="adminPasswordInput" required placeholder="••••••••" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
           </div>
-          <p id="adminLoginError" class="hidden text-xs text-red-500 font-medium">Username atau password salah.</p>
+          <p id="adminLoginError" class="hidden text-xs text-red-500 font-medium">Autentikasi gagal: Username atau password tidak valid.</p>
           <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition">
-            Masuk ke Panel Admin
+            Masuk ke Dashboard Admin
           </button>
         </form>
       </div>
@@ -352,15 +350,15 @@
             <h1 class="text-2xl font-extrabold tracking-tight">Kontrol Sistem Store</h1>
           </div>
           <button onclick="handleAdminLogout()" class="px-4 py-2 rounded-xl border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 text-xs font-semibold hover:bg-red-100 transition">
-            Keluar
+            Keluar Sesi
           </button>
         </div>
 
         <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
           <div class="flex items-center justify-between gap-4">
             <div>
-              <h2 class="font-bold text-base">Mode Maintenance</h2>
-              <p class="text-xs text-slate-500 dark:text-slate-400">Kunci akses pengunjung saat sistem sedang diperbaiki.</p>
+              <h2 class="font-bold text-base">Mode Pemeliharaan (Maintenance)</h2>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Kunci akses pengunjung publik saat melakukan pembaruan node.</p>
             </div>
             <button id="maintenanceToggleBtn" onclick="toggleMaintenance()" class="relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-300 dark:bg-slate-700 transition-colors duration-200 focus:outline-none">
               <span id="maintenanceToggleKnob" class="pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow ring-0 transition duration-200 translate-x-0"></span>
@@ -368,9 +366,9 @@
           </div>
           
           <div class="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400">Pesan Maintenance (Opsional)</label>
+            <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400">Pesan Alasan Maintenance (Opsional)</label>
             <div class="flex gap-2">
-              <input type="text" id="maintenanceMessageInput" placeholder="Sedang pemeliharaan server..." class="flex-1 px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <input type="text" id="maintenanceMessageInput" placeholder="Contoh: Peningkatan kapasitas RAM server node..." class="flex-1 px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500">
               <button onclick="saveMaintenanceMessage()" class="px-4 py-2 rounded-xl bg-slate-900 dark:bg-slate-800 text-white text-xs font-semibold hover:opacity-90">
                 Simpan
               </button>
@@ -380,18 +378,18 @@
 
         <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
           <div>
-            <h2 class="font-bold text-base">Broadcast Pengumuman</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Tampilkan banner info penting di bagian atas website dengan batas waktu otomatis.</p>
+            <h2 class="font-bold text-base">Broadcast Pengumuman Global</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Tampilkan banner informasi penting di bagian atas website klien.</p>
           </div>
 
           <form onsubmit="publishBroadcast(event)" class="space-y-4">
             <div>
-              <label class="block text-xs font-semibold mb-1.5">Isi Pesan Pengumuman</label>
-              <textarea id="broadcastTextInput" rows="2" required placeholder="Contoh: Promo diskon panel 20% hari ini..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+              <label class="block text-xs font-semibold mb-1.5">Teks Pengumuman</label>
+              <textarea id="broadcastTextInput" rows="2" required placeholder="Contoh: Promo diskon server Pterodactyl 25% hari ini..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
             </div>
 
             <div>
-              <label class="block text-xs font-semibold mb-1.5">Durasi Tayang Otomatis Hilang</label>
+              <label class="block text-xs font-semibold mb-1.5">Durasi Tayang Banner</label>
               <div class="grid grid-cols-2 gap-3">
                 <label class="cursor-pointer">
                   <input type="radio" name="broadcastDuration" value="7" class="peer sr-only" checked>
@@ -411,19 +409,19 @@
             </div>
 
             <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition">
-              Kirim Broadcast Sekarang
+              Publikasikan Broadcast
             </button>
           </form>
 
           <div id="activeBroadcastAdminCard" class="hidden p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-900/50 space-y-3">
             <div class="flex items-start justify-between gap-3">
               <div class="space-y-1 min-w-0">
-                <span class="text-[10px] font-mono font-bold uppercase text-indigo-600 dark:text-indigo-400">Broadcast Sedang Aktif</span>
+                <span class="text-[10px] font-mono font-bold uppercase text-indigo-600 dark:text-indigo-400">Broadcast Aktif</span>
                 <p id="adminActiveBroadcastText" class="text-xs font-medium break-words"></p>
                 <p id="adminActiveBroadcastExpiry" class="text-[11px] font-mono text-slate-500"></p>
               </div>
               <button onclick="deleteBroadcastNow()" class="shrink-0 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-semibold transition">
-                Hapus Sekarang
+                Hapus Broadcast
               </button>
             </div>
           </div>
@@ -434,6 +432,22 @@
 
   </main>
 
+  <!-- PROFESSIONAL MODAL NOTIFICATION (PENGGANTI ALERT BAWAAN BROWSER) -->
+  <div id="appModal" class="fixed inset-0 z-[120] hidden bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="w-full max-w-sm rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl text-center space-y-4">
+      <div id="modalIconContainer" class="w-12 h-12 mx-auto rounded-xl flex items-center justify-center text-white font-bold">
+        <!-- Icon injected via JS -->
+      </div>
+      <div class="space-y-1.5">
+        <h3 id="modalTitle" class="text-lg font-bold tracking-tight">Judul Notifikasi</h3>
+        <p id="modalMessage" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Pesan detail informasi akan muncul di sini.</p>
+      </div>
+      <button onclick="closeAppModal()" class="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition">
+        Mengerti / Tutup
+      </button>
+    </div>
+  </div>
+
   <!-- MODAL: CHECKOUT -->
   <div id="checkoutModal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="w-full max-w-md rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-5 relative">
@@ -442,7 +456,7 @@
       </button>
 
       <div>
-        <span class="text-[11px] font-mono font-semibold uppercase text-indigo-600 dark:text-indigo-400">Checkout Layanan</span>
+        <span class="text-[11px] font-mono font-semibold uppercase text-indigo-600 dark:text-indigo-400">Konfirmasi Pemesanan</span>
         <h3 id="chkProductName" class="text-lg font-bold mt-0.5 pr-6">-</h3>
         <p id="chkProductPrice" class="text-base font-mono font-extrabold text-indigo-600 dark:text-indigo-400 mt-1">Rp 0</p>
       </div>
@@ -454,16 +468,16 @@
           <input type="text" id="chkName" required placeholder="Masukkan nama Anda" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
         </div>
         <div>
-          <label class="block text-xs font-semibold mb-1">Nomor WhatsApp</label>
+          <label class="block text-xs font-semibold mb-1">Nomor WhatsApp Aktif</label>
           <input type="tel" id="chkPhone" required placeholder="081234567890" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
         </div>
         <div>
-          <label class="block text-xs font-semibold mb-1">Alamat Email</label>
-          <input type="email" id="chkEmail" required placeholder="email@contoh.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <label class="block text-xs font-semibold mb-1">Alamat Email Klien</label>
+          <input type="email" id="chkEmail" required placeholder="email@domain.com" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
         </div>
         <div class="pt-2">
-          <button type="submit" id="chkSubmitBtn" class="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition">
-            Lanjutkan ke Pembayaran QRIS
+          <button type="submit" id="chkSubmitBtn" class="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition shadow-sm">
+            Proses Pembayaran QRIS
           </button>
         </div>
       </form>
@@ -479,7 +493,7 @@
 
       <div>
         <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">MENUNGGU PEMBAYARAN</span>
-        <h3 class="text-xl font-extrabold mt-1">Scan QRIS AriesPay</h3>
+        <h3 class="text-xl font-extrabold mt-1">Scan QRIS Gateway</h3>
         <p id="qrisOrderId" class="text-xs font-mono text-slate-500 mt-0.5">-</p>
       </div>
 
@@ -488,13 +502,13 @@
       </div>
 
       <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
-        <span class="text-[11px] font-mono text-slate-500 block">Total Nominal Bayar</span>
+        <span class="text-[11px] font-mono text-slate-500 block">Total Nominal Tagihan</span>
         <span id="qrisNominal" class="text-2xl font-mono font-extrabold text-indigo-600 dark:text-indigo-400">Rp 0</span>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-2.5">
         <a id="qrisInvoiceUrl" href="#" target="_blank" class="flex-1 py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition flex items-center justify-center">
-          Buka Halaman Invoice
+          Buka Invoice Web
         </a>
         <button onclick="closeQrisModal()" class="flex-1 py-2.5 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-semibold transition">
           Tutup
@@ -507,7 +521,7 @@
   <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
       <div class="font-semibold text-slate-700 dark:text-slate-300">
-        FydzCloud ID &mdash; Enterprise Cloud & Digital Store
+        FydzCloud ID &mdash; Enterprise Cloud & Digital Infrastructure
       </div>
       <div class="font-mono">
         &copy; 2026 FydzCloud ID. All Rights Reserved.
@@ -523,6 +537,31 @@
 
     let productsData = [];
     let selectedCat = "all";
+
+    // FUNGSI NOTIFIKASI MODAL PROFESIONAL (PENGGANTI ALERT)
+    function showModal(title, message, type = 'error') {
+      const modal = document.getElementById('appModal');
+      const titleEl = document.getElementById('modalTitle');
+      const msgEl = document.getElementById('modalMessage');
+      const iconContainer = document.getElementById('modalIconContainer');
+
+      titleEl.innerText = title;
+      msgEl.innerText = message;
+
+      if (type === 'success') {
+        iconContainer.className = 'w-12 h-12 mx-auto rounded-xl bg-emerald-500 flex items-center justify-center text-white shadow-lg shadow-emerald-500/30';
+        iconContainer.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`;
+      } else {
+        iconContainer.className = 'w-12 h-12 mx-auto rounded-xl bg-red-500 flex items-center justify-center text-white shadow-lg shadow-red-500/30';
+        iconContainer.innerHTML = `<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>`;
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeAppModal() {
+      document.getElementById('appModal').classList.add('hidden');
+    }
 
     function initTheme() {
       const savedTheme = localStorage.getItem('fydz_theme');
@@ -588,6 +627,7 @@
         document.getElementById('adminPasswordInput').value = '';
         syncAdminUI();
         checkMaintenanceState();
+        showModal('Autentikasi Berhasil', 'Selamat datang kembali, Administrator Fydz.', 'success');
       } else {
         err.classList.remove('hidden');
       }
@@ -597,6 +637,7 @@
       sessionStorage.removeItem('fydz_admin_auth');
       syncAdminUI();
       checkMaintenanceState();
+      showModal('Sesi Berakhir', 'Anda telah keluar dari panel administrator.', 'success');
     }
 
     function openAdminFromMaintenance() {
@@ -662,7 +703,7 @@
       const val = document.getElementById('maintenanceMessageInput').value.trim();
       localStorage.setItem('fydz_maintenance_msg', val);
       checkMaintenanceState();
-      alert('Pesan maintenance disimpan.');
+      showModal('Berhasil Disimpan', 'Pesan pemeliharaan sistem telah diperbarui.', 'success');
     }
 
     function checkMaintenanceState() {
@@ -684,7 +725,7 @@
           overlay.classList.add('hidden');
         }
       } else {
-        homeStat.innerText = 'Normal';
+        homeStat.innerText = 'Operational';
         homeStat.className = 'text-2xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400';
         overlay.classList.add('hidden');
       }
@@ -707,12 +748,14 @@
       document.getElementById('broadcastTextInput').value = '';
       renderBroadcastBanner();
       syncBroadcastAdminCard();
+      showModal('Broadcast Aktif', 'Pengumuman global berhasil disiarkan ke seluruh pengunjung.', 'success');
     }
 
     function deleteBroadcastNow() {
       localStorage.removeItem('fydz_broadcast');
       renderBroadcastBanner();
       syncBroadcastAdminCard();
+      showModal('Broadcast Dihapus', 'Banner pengumuman berhasil ditiadakan.', 'success');
     }
 
     function dismissBroadcastSession() {
@@ -763,7 +806,7 @@
       }
       const expDate = new Date(data.expiresAt).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' });
       document.getElementById('adminActiveBroadcastText').innerText = data.text;
-      document.getElementById('adminActiveBroadcastExpiry').innerText = `Otomatis hilang pada: ${expDate} (${data.durationHours} Jam)`;
+      document.getElementById('adminActiveBroadcastExpiry').innerText = `Berakhir otomatis pada: ${expDate} (${data.durationHours} Jam)`;
       card.classList.remove('hidden');
     }
 
@@ -778,7 +821,6 @@
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const json = await res.json();
 
-        // Parser Universal untuk mendeteksi semua variasi struktur respons JSON API
         let items = [];
         if (Array.isArray(json)) {
           items = json;
@@ -791,7 +833,6 @@
         } else if (json.data && json.data.products && Array.isArray(json.data.products)) {
           items = json.data.products;
         } else {
-          // Cari properti apa saja di root objek yang berupa Array
           const foundKey = Object.keys(json).find(k => Array.isArray(json[k]));
           items = foundKey ? json[foundKey] : [];
         }
@@ -805,7 +846,7 @@
         } else {
           document.getElementById('catalogLoader').innerHTML = `
             <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs font-mono">
-              ⚠️ Server merespons, namun data produk kosong atau terbungkus di key lain.
+              ⚠️ Katalog server terhubung, namun data layanan kosong.
             </div>
           `;
         }
@@ -813,7 +854,7 @@
         console.error(err);
         document.getElementById('catalogLoader').innerHTML = `
           <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-500 text-xs font-mono">
-            ❌ Gagal memuat produk. Pastikan vercel.json aktif dan endpoint API benar.
+            ❌ Gagal memuat data katalog dari server pusat.
           </div>
         `;
       }
@@ -856,9 +897,9 @@
 
     function createProductCardHTML(p) {
       const isAvail = (p.status || 'AVAILABLE').toUpperCase() === 'AVAILABLE';
-      const safeName = (p.name || 'Produk').replace(/'/g, "\\'");
+      const safeName = (p.name || 'Layanan').replace(/'/g, "\\'");
       return `
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 transition flex flex-col justify-between gap-5">
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 transition flex flex-col justify-between gap-5 shadow-xs">
           <div class="space-y-2.5">
             <div class="flex items-center justify-between gap-2">
               <span class="px-2.5 py-0.5 rounded-md text-[10px] font-mono font-semibold uppercase bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
@@ -873,7 +914,7 @@
           </div>
           <div class="pt-3.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
             <div>
-              <span class="text-[10px] font-mono text-slate-400 block">Harga</span>
+              <span class="text-[10px] font-mono text-slate-400 block">Tarif Layanan</span>
               <span class="font-mono font-extrabold text-base text-indigo-600 dark:text-indigo-400">Rp ${Number(p.price || 0).toLocaleString('id-ID')}</span>
             </div>
             <button onclick="openCheckout('${p.id}', '${safeName}', ${p.price || 0})" ${!isAvail ? 'disabled' : ''} class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white text-xs font-semibold transition">
@@ -930,18 +971,20 @@
       const btn = document.getElementById('chkSubmitBtn');
 
       btn.disabled = true;
-      btn.innerText = 'Membuat QRIS...';
+      btn.innerText = 'Memproses Transaksi...';
 
       try {
         const res = await fetch('/api/v1/orders', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Accept': 'application/json',
             'Authorization': `Bearer ${API_KEY}`,
             'Idempotency-Key': 'fydz-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7)
           },
           body: JSON.stringify({
             product_id,
+            quantity: 1,
             customer_name,
             customer_phone,
             customer_email,
@@ -949,31 +992,42 @@
           })
         });
 
-        const json = await res.json();
-        if (json.success && json.data) {
+        const rawText = await res.text();
+        let json = {};
+        try {
+          json = JSON.parse(rawText);
+        } catch {
+          throw new Error('Respons gateway tidak valid (HTTP ' + res.status + ')');
+        }
+
+        if (res.ok && (json.success || json.data)) {
           closeCheckoutModal();
-          const d = json.data;
+          const d = json.data || json;
+          const qrImg = d.payment?.qr_image_url || d.qr_image_url || d.qris_url || '';
+          const invUrl = d.invoice_url || `https://store.roselynsound.my.id/invoice/${encodeURIComponent(d.order_id)}`;
+
           document.getElementById('qrisOrderId').innerText = 'Order ID: ' + d.order_id;
-          document.getElementById('qrisImgTag').src = d.payment.qr_image_url;
-          document.getElementById('qrisNominal').innerText = 'Rp ' + Number(d.amount).toLocaleString('id-ID');
-          document.getElementById('qrisInvoiceUrl').href = d.invoice_url;
+          document.getElementById('qrisImgTag').src = qrImg;
+          document.getElementById('qrisNominal').innerText = 'Rp ' + Number(d.amount || 0).toLocaleString('id-ID');
+          document.getElementById('qrisInvoiceUrl').href = invUrl;
           document.getElementById('qrisModal').classList.remove('hidden');
 
           saveOrderToHistory({
             order_id: d.order_id,
             product_name,
             amount: d.amount,
-            invoice_url: d.invoice_url,
+            invoice_url: invUrl,
             created_at: new Date().toLocaleString('id-ID')
           });
         } else {
-          alert('Gagal membuat pesanan: ' + (json.message || 'Terjadi kesalahan pada server.'));
+          const serverReason = json.message || json.error || json.msg || 'Permintaan pesanan ditolak oleh server pusat.';
+          showModal('Gagal Memproses Pesanan', serverReason, 'error');
         }
       } catch (err) {
-        alert('Gagal terhubung ke server pembayaran. Periksa koneksi Anda.');
+        showModal('Kesalahan Koneksi', 'Gagal menghubungkan sistem ke gateway pembayaran: ' + err.message, 'error');
       } finally {
         btn.disabled = false;
-        btn.innerText = 'Lanjutkan ke Pembayaran QRIS';
+        btn.innerText = 'Proses Pembayaran QRIS';
       }
     }
 
@@ -990,7 +1044,7 @@
       if (list.length === 0) {
         container.innerHTML = `
           <div class="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center text-xs text-slate-500">
-            Belum ada riwayat pesanan di perangkat ini.
+            Belum ada riwayat transaksi tercatat pada perangkat ini.
           </div>
         `;
         return;
@@ -1013,11 +1067,15 @@
     function clearOrderHistory() {
       localStorage.removeItem('fydz_order_history');
       renderOrderHistory();
+      showModal('Riwayat Dibersihkan', 'Daftar riwayat transaksi pada perangkat berhasil dihapus.', 'success');
     }
 
     function openDirectInvoice() {
       const id = document.getElementById('manualOrderId').value.trim();
-      if (!id) return alert('Masukkan Order ID terlebih dahulu.');
+      if (!id) {
+        showModal('Format Tidak Lengkap', 'Silakan masukkan Order ID yang valid terlebih dahulu.', 'error');
+        return;
+      }
       window.open(`https://store.roselynsound.my.id/invoice/${encodeURIComponent(id)}`, '_blank');
     }
 

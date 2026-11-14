@@ -137,7 +137,7 @@
           </h1>
           
           <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
-            Beli server panel Pterodactyl, script bot WhatsApp premium, e-book, dan produk digital lainnya dengan pembayaran QRIS instan 24 jam nonstop.
+            Beli server panel Pterodactyl, script bot WhatsApp, jasa pembuatan web, e-book, dan produk digital lainnya dengan pembayaran QRIS instan.
           </p>
         </div>
       </div>
@@ -175,15 +175,15 @@
         </div>
       </div>
 
-      <!-- Dynamic Category Shortcuts (Mengikuti Katalog Asli FallZx Store) -->
+      <!-- Kategori Utama Layanan -->
       <div class="space-y-3">
         <div class="px-1">
-          <h2 class="text-base sm:text-lg font-bold tracking-tight">Pilih Kategori Layanan</h2>
+          <h2 class="text-base sm:text-lg font-bold tracking-tight">Kategori Utama Layanan</h2>
         </div>
 
         <div id="homeCategoryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
           <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-400">
-            Memuat kategori dari server...
+            Memuat kategori layanan...
           </div>
         </div>
       </div>
@@ -193,14 +193,14 @@
     <section id="view-catalog" class="view-section hidden space-y-5">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">Katalog Layanan</h1>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Tersinkronisasi langsung dengan katalog FallZx Store</p>
+          <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">Katalog Layanan & Produk</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Pilih kategori atau cari produk yang kamu butuhkan</p>
         </div>
         
         <div class="flex items-center gap-2 w-full sm:w-auto">
           <div class="relative flex-1 sm:w-72">
             <svg class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" id="catalogSearch" oninput="applyCatalogFilter()" placeholder="Cari produk, script, e-book..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <input type="text" id="catalogSearch" oninput="applyCatalogFilter()" placeholder="Cari script, jasa web, e-book..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
           </div>
           <button onclick="loadCatalog()" title="Muat Ulang Katalog" class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 transition shrink-0">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
@@ -208,7 +208,7 @@
         </div>
       </div>
 
-      <!-- Dynamic Filter Chips -->
+      <!-- Filter Kategori Utama (Chips) -->
       <div id="categoryChips" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
         <button onclick="selectCategory('all')" data-cat="all" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition">
           Semua Layanan
@@ -226,7 +226,7 @@
 
       <!-- Empty Search State -->
       <div id="catalogEmpty" class="hidden py-12 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
-        <p class="font-bold text-sm">Layanan Tidak Ditemukan</p>
+        <p class="font-bold text-sm">Produk Tidak Ditemukan</p>
         <p class="text-xs text-slate-500">Coba ganti kata kunci pencarian atau pilih kategori lain.</p>
       </div>
     </section>
@@ -238,7 +238,6 @@
         <p class="text-xs text-slate-500 dark:text-slate-400">Cek status pembayaran dan detail produk langsung dari server pusat</p>
       </div>
 
-      <!-- Live Order Lookup Box -->
       <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4 shadow-xs">
         <label class="block text-xs font-mono font-semibold uppercase text-slate-500">Cek Status via Order ID</label>
         <div class="flex flex-col sm:flex-row gap-2.5">
@@ -247,12 +246,9 @@
             Cek Status
           </button>
         </div>
-
-        <!-- Live Result Card -->
         <div id="liveOrderResult" class="hidden p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3 text-xs"></div>
       </div>
 
-      <!-- Local History List -->
       <div class="space-y-3">
         <div class="flex items-center justify-between">
           <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 font-mono">Riwayat Pesanan di Perangkat Ini</h2>
@@ -273,8 +269,8 @@
         <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-4">
           <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0">01</span>
           <div>
-            <h3 class="font-bold text-sm">Pilih Layanan di Katalog</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Buka menu Katalog, pilih paket panel Pterodactyl, script bot, e-book, atau produk digital lainnya, lalu klik tombol <b>Pesan</b>.</p>
+            <h3 class="font-bold text-sm">Pilih Kategori di Katalog</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Buka menu Katalog, pilih kategori layanan seperti Panel Pterodactyl, Jasa Web, atau Script Bot, lalu klik produk yang diinginkan.</p>
           </div>
         </div>
 
@@ -282,7 +278,7 @@
           <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0">02</span>
           <div>
             <h3 class="font-bold text-sm">Isi Data Pemesan</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Masukkan nama, nomor WhatsApp aktif, dan email. Khusus produk Panel Pterodactyl, masukkan juga username panel yang diinginkan.</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Masukkan nama, nomor WhatsApp aktif, dan email. Sistem otomatis mendeteksi apakah produk memerlukan username panel atau link download langsung.</p>
           </div>
         </div>
 
@@ -290,7 +286,7 @@
           <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0">03</span>
           <div>
             <h3 class="font-bold text-sm">Scan QRIS & Terima Produk</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Kode QRIS akan muncul otomatis sesuai nominal tagihan. Setelah dibayar, sistem memproses pesanan dan mengirimkan detail produk secara instan.</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Selesaikan pembayaran QRIS dan produk/layanan akan langsung diproses instan oleh sistem.</p>
           </div>
         </div>
       </div>
@@ -651,45 +647,52 @@
       selectCategory(catName);
     }
 
-    // --- DETEKSI KATEGORI ASLI DARI API FALLZX STORE ---
-    function normalizeCategoryName(p) {
-      // Ambil langsung nama kategori dari API FallZx Store jika ada
-      const apiCat = (p.category_name || (typeof p.category === 'object' ? p.category?.name : p.category) || p.type || '').trim();
-      if (apiCat) {
-        return apiCat.replace(/\b\w/g, c => c.toUpperCase());
-      }
-      // Fallback cerdas jika field category dari API kosong
+    // --- PENGELOMPOKKAN KATEGORI UTAMA YANG BERSIH & PROGESIF ---
+    function getProductMainCategory(p) {
       const name = (p.name || '').toLowerCase();
-      if (name.includes('panel') || name.includes('ram') || name.includes('pterodactyl') || name.includes('vps')) return 'Panel Pterodactyl';
-      if (name.includes('script') || name.includes('cantharella') || name.includes('bot') || name.includes('sc ')) return 'Script Bot WA';
-      if (name.includes('ebook') || name.includes('e-book') || name.includes('modul') || name.includes('panduan')) return 'E-Book & Digital';
-      return 'Produk Digital';
+      const rawCat = (p.category || p.category_name || p.type || '').toLowerCase();
+
+      // 1. Panel Pterodactyl / Server
+      if (rawCat.includes('panel') || rawCat.includes('pterodactyl') || name.includes('panel') || name.includes('ram') || name.includes('vps')) {
+        return 'Panel Pterodactyl';
+      }
+      // 2. Script & Bot WhatsApp
+      if (rawCat.includes('bot') || rawCat.includes('script') || rawCat.includes('sc ') || name.includes('bot') || name.includes('cantharella') || name.includes('script')) {
+        return 'Script & Bot WA';
+      }
+      // 3. Jasa Pembuatan Website & Web Tools
+      if (rawCat.includes('jasa') || rawCat.includes('web') || name.includes('jasa') || name.includes('company') || name.includes('store') || name.includes('portofolio')) {
+        return 'Jasa & Web Tools';
+      }
+      // 4. E-Book / Produk Digital Lainnya
+      if (rawCat.includes('ebook') || rawCat.includes('book') || rawCat.includes('digital') || name.includes('ebook') || name.includes('e-book') || name.includes('modul')) {
+        return 'Produk Digital & E-Book';
+      }
+
+      return 'Lainnya';
     }
 
     function isPanelProductCheck(p) {
-      const cat = normalizeCategoryName(p).toLowerCase();
-      const name = (p.name || '').toLowerCase();
-      return cat.includes('panel') || cat.includes('pterodactyl') || name.includes('panel pterodactyl') || (name.includes('panel') && name.includes('ram'));
+      return getProductMainCategory(p) === 'Panel Pterodactyl';
     }
 
-    // --- BANGUN CHIP & KARTU KATEGORI DINAMIS SESUAI FALLZX STORE ---
-    function buildDynamicCategories(items) {
+    function buildCategoryFiltersAndHome(items) {
       const counts = {};
       items.forEach(p => {
-        const cat = normalizeCategoryName(p);
+        const cat = getProductMainCategory(p);
         counts[cat] = (counts[cat] || 0) + 1;
       });
 
-      const uniqueCats = Object.keys(counts);
+      const categories = Object.keys(counts);
 
-      // 1. Render Filter Chips di Halaman Katalog
+      // 1. Render Filter Chips di Katalog
       const chipsBox = document.getElementById('categoryChips');
       let chipsHTML = `
         <button onclick="selectCategory('all')" data-cat="all" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition shadow-xs">
           Semua (${items.length})
         </button>
       `;
-      uniqueCats.forEach(cat => {
+      categories.forEach(cat => {
         const safeCat = cat.replace(/'/g, "\\'");
         chipsHTML += `
           <button onclick="selectCategory('${safeCat}')" data-cat="${cat}" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-indigo-500 transition">
@@ -699,25 +702,23 @@
       });
       chipsBox.innerHTML = chipsHTML;
 
-      // 2. Render Kartu Kategori di Halaman Beranda
+      // 2. Render Kategori Utama di Beranda
       const homeGrid = document.getElementById('homeCategoryGrid');
-      const badgeColors = [
-        'bg-indigo-600 text-white',
-        'bg-emerald-600 text-white',
-        'bg-amber-500 text-slate-950',
-        'bg-violet-600 text-white',
-        'bg-rose-600 text-white',
-        'bg-sky-600 text-white'
+      const badgeStyles = [
+        { bg: 'bg-indigo-600 text-white', icon: 'M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01' },
+        { bg: 'bg-emerald-600 text-white', icon: 'M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z' },
+        { bg: 'bg-amber-500 text-slate-950', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' },
+        { bg: 'bg-violet-600 text-white', icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253' }
       ];
 
-      homeGrid.innerHTML = uniqueCats.map((cat, idx) => {
+      homeGrid.innerHTML = categories.map((cat, idx) => {
         const safeCat = cat.replace(/'/g, "\\'");
-        const colorClass = badgeColors[idx % badgeColors.length];
+        const style = badgeStyles[idx % badgeStyles.length];
         return `
           <button onclick="openCategoryDirect('${safeCat}')" class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-left transition flex items-center justify-between group shadow-xs">
             <div class="flex items-center gap-3.5 min-w-0">
-              <div class="w-11 h-11 rounded-xl ${colorClass} flex items-center justify-center font-mono font-bold text-sm shrink-0 group-hover:scale-105 transition">
-                ${cat.substring(0, 2).toUpperCase()}
+              <div class="w-11 h-11 rounded-xl ${style.bg} flex items-center justify-center shrink-0 group-hover:scale-105 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="${style.icon}"/></svg>
               </div>
               <div class="min-w-0">
                 <h3 class="font-bold text-sm truncate">${cat}</h3>
@@ -757,7 +758,7 @@
           dot.className = 'w-2 h-2 rounded-full bg-emerald-400';
           badgeText.innerText = `Server Online • ${productsData.length} Layanan Tersedia`;
           
-          buildDynamicCategories(productsData);
+          buildCategoryFiltersAndHome(productsData);
           renderCatalogCards(productsData);
         } else {
           badgeText.innerText = 'Server Online • Katalog Kosong';
@@ -790,11 +791,11 @@
     function applyCatalogFilter() {
       const q = document.getElementById('catalogSearch').value.toLowerCase().trim();
       const filtered = productsData.filter(p => {
-        const productCat = normalizeCategoryName(p);
-        const matchCat = selectedCat === 'all' || productCat === selectedCat;
+        const mainCat = getProductMainCategory(p);
+        const matchCat = selectedCat === 'all' || mainCat === selectedCat;
         const matchText = (p.name || '').toLowerCase().includes(q) || 
                           (p.description || '').toLowerCase().includes(q) || 
-                          productCat.toLowerCase().includes(q) ||
+                          mainCat.toLowerCase().includes(q) ||
                           String(p.id || '').toLowerCase().includes(q);
         return matchCat && matchText;
       });
@@ -804,7 +805,7 @@
     function createProductCardHTML(p) {
       const isAvail = (p.status || 'AVAILABLE').toUpperCase() === 'AVAILABLE' && (p.stock === undefined || p.stock === null || Number(p.stock) > 0);
       const safeName = (p.name || 'Layanan').replace(/'/g, "\\'");
-      const productCat = normalizeCategoryName(p);
+      const productCat = getProductMainCategory(p);
       const isPanel = isPanelProductCheck(p);
       const desc = p.description ? `<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">${p.description}</p>` : '';
       const stockLabel = (p.stock !== undefined && p.stock !== null) ? ` • Stok: ${p.stock}` : '';

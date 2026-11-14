@@ -1,561 +1,1093 @@
 <!DOCTYPE html>
-<html lang="id" class="light">
+<html lang="id" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FydzCloud ID — Panel Toko Digital</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
-        
-        :root {
-            --bg-main: #f8fafc;
-            --bg-grid: rgba(0, 0, 0, 0.04);
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-sub: #64748b;
-            --border-col: #0f172a;
-            --shadow-col: #0f172a;
-            --accent: #6366f1;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FydzCloud ID — Cloud Infrastructure & Digital Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
         }
-
-        .dark {
-            --bg-main: #090a0f;
-            --bg-grid: rgba(255, 255, 255, 0.03);
-            --card-bg: #13141c;
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --border-col: #27272a;
-            --shadow-col: #000000;
-            --accent: #6366f1;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            background-image: linear-gradient(to right, var(--bg-grid) 1px, transparent 1px), linear-gradient(to bottom, var(--bg-grid) 1px, transparent 1px);
-            background-size: 24px 24px;
-            padding-bottom: 70px;
-            transition: background-color 0.2s ease, color 0.2s ease;
-        }
-
-        .fy-card {
-            background: var(--card-bg);
-            border: 2.5px solid var(--border-col);
-            border-radius: 20px;
-            box-shadow: 4px 4px 0px var(--shadow-col);
-            transition: all 0.2s ease;
-        }
-
-        .fy-btn {
-            background: #ffffff;
-            border: 2.5px solid var(--border-col);
-            box-shadow: 3px 3px 0px var(--shadow-col);
-            border-radius: 14px;
-            font-weight: 800;
-            color: var(--text-main);
-            transition: all 0.08s ease;
-        }
-        .dark .fy-btn {
-            background: #1c1c24;
-            color: #f8fafc;
-        }
-        .fy-btn:active {
-            transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0px var(--shadow-col);
-        }
-
-        .fy-input {
-            background: var(--card-bg);
-            border: 2.5px solid var(--border-col);
-            border-radius: 14px;
-            color: var(--text-main);
-            font-weight: 700;
-        }
-        .fy-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 3px 3px 0px var(--accent);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .anim-fade { animation: fadeIn 0.2s ease-out forwards; }
-        ::-webkit-scrollbar { width: 5px; height: 5px; }::-webkit-scrollbar-track { background: var(--bg-main); }::-webkit-scrollbar-thumb { background: var(--border-col); border-radius: 4px; }
-    </style>
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { max-width: 100vw; overflow-x: hidden; }
+    .view-section { animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+    }
+    .dark .glass-card {
+      background: rgba(15, 23, 42, 0.85);
+    }
+  </style>
 </head>
-<body class="min-h-screen">
+<body class="bg-slate-50 text-slate-900 dark:bg-[#07090e] dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased pb-24 sm:pb-12 transition-colors duration-200 selection:bg-indigo-600 selection:text-white">
 
-    <!-- AUTH MODAL -->
-    <div id="auth-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="fy-card max-w-sm w-full p-6 space-y-5 text-center bg-white dark:bg-zinc-900 border-black">
-            <div class="w-16 h-16 bg-indigo-600 border-2 border-black rounded-2xl mx-auto flex items-center justify-center shadow-[3px_3px_0px_#000]">
-                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-            </div>
-            <div class="space-y-1">
-                <h2 class="text-xl font-black uppercase tracking-tight" style="color: var(--text-main);">Masuk FydzCloud ID</h2>
-                <p class="text-xs font-semibold" style="color: var(--text-sub);">Masukkan username dan PIN akun kamu untuk melanjutkan.</p>
-            </div>
-
-            <div class="space-y-3 text-left">
-                <div>
-                    <label class="block text-[10px] font-black uppercase mb-1" style="color: var(--text-main);">Username</label>
-                    <input type="text" id="auth-username" class="fy-input w-full p-3 text-xs uppercase" placeholder="Contoh: RAFF">
-                </div>
-                <div>
-                    <label class="block text-[10px] font-black uppercase mb-1" style="color: var(--text-main);">PIN / Kata Sandi</label>
-                    <input type="password" id="auth-pin" class="fy-input w-full p-3 text-xs" placeholder="••••">
-                </div>
-            </div>
-
-            <button onclick="handleUserLogin()" class="fy-btn w-full py-3.5 text-xs uppercase tracking-wider text-white font-black shadow-[3px_3px_0px_#000]" style="background-color: var(--accent); border-color: var(--border-col);">
-                Masuk / Buat Akun Otomatis →
-            </button>
-            <p class="text-[10px] font-bold text-zinc-400">Akun baru otomatis mendapatkan saldo awal Rp 0.</p>
-        </div>
-    </div>
-
-    <!-- TOAST NOTIFICATION -->
-    <div id="toast-container" class="fixed top-3 left-0 right-0 z-50 flex flex-col items-center gap-2 px-4 pointer-events-none"></div>
-
-    <!-- FLOATING BANTUAN WIDGET -->
-    <div class="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-2">
-        <div id="help-popup-menu" class="hidden fy-card p-3 space-y-2 bg-white dark:bg-zinc-900 border-black shadow-[4px_4px_0px_#000] mb-2 w-48 anim-fade">
-            <div class="flex justify-between items-center border-b border-zinc-200 dark:border-zinc-800 pb-1.5">
-                <span class="text-[10px] font-black uppercase text-indigo-500">Pusat Bantuan</span>
-                <button onclick="toggleHelpMenu()" class="text-xs font-bold px-1">✕</button>
-            </div>
-            <a href="https://wa.me/6283120264665" target="_blank" class="w-full text-left p-2 rounded-xl bg-emerald-500/10 border-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 text-xs font-black flex items-center gap-2 hover:bg-emerald-500/20">
-                <span>🟢</span> WhatsApp Support
-            </a>
-            <button onclick="openGuideModal()" class="w-full text-left p-2 rounded-xl bg-sky-500/10 border-2 border-sky-500 text-sky-600 dark:text-sky-400 text-xs font-black flex items-center gap-2 hover:bg-sky-500/20">
-                <span>📖</span> Lihat Panduan
-            </button>
-        </div>
-
-        <button onclick="toggleHelpMenu()" class="fy-btn px-4 py-3 bg-indigo-600 text-white border-black font-black text-xs uppercase flex items-center gap-2 shadow-[4px_4px_0px_#000]">
-            <span class="text-base">🛟</span> Bantuan
+  <!-- TOP NAVIGATION BAR -->
+  <header class="sticky top-0 z-40 w-full glass-card border-b border-slate-200/80 dark:border-slate-800/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      
+      <!-- Brand & Drawer Trigger -->
+      <div class="flex items-center gap-3 min-w-0">
+        <button onclick="toggleSidebar(true)" aria-label="Buka Menu" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:border-indigo-500 transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h10"/></svg>
         </button>
+
+        <div onclick="navigate('home')" class="flex items-center gap-2.5 cursor-pointer select-none min-w-0">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-violet-600 to-indigo-500 text-white flex items-center justify-center font-mono font-extrabold text-base shadow-md shadow-indigo-600/20 shrink-0">
+            F
+          </div>
+          <div class="min-w-0">
+            <span class="font-extrabold text-sm sm:text-base tracking-tight block leading-none truncate">FydzCloud ID</span>
+            <span class="text-[10px] font-mono text-indigo-600 dark:text-indigo-400 font-medium block mt-0.5 truncate">Automated Store</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-1 bg-slate-100/80 dark:bg-slate-900/90 p-1 rounded-xl border border-slate-200/60 dark:border-slate-800">
+        <button onclick="navigate('home')" data-dnav="home" class="dnav-item px-4 py-1.5 rounded-lg text-xs font-semibold transition">Beranda</button>
+        <button onclick="navigate('catalog')" data-dnav="catalog" class="dnav-item px-4 py-1.5 rounded-lg text-xs font-semibold transition">Katalog</button>
+        <button onclick="navigate('orders')" data-dnav="orders" class="dnav-item px-4 py-1.5 rounded-lg text-xs font-semibold transition">Cek Pesanan</button>
+        <button onclick="navigate('guide')" data-dnav="guide" class="dnav-item px-4 py-1.5 rounded-lg text-xs font-semibold transition">Panduan</button>
+      </nav>
+
+      <!-- Right Controls -->
+      <div class="flex items-center gap-2 shrink-0">
+        <button onclick="toggleTheme()" aria-label="Ganti Tema" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:border-indigo-500 transition">
+          <svg class="w-4 h-4 hidden dark:block text-amber-400" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <svg class="w-4 h-4 block dark:hidden text-slate-700" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+        </button>
+
+        <div id="topAuthSlot"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE SIDEBAR DRAWER -->
+  <div id="sidebarBackdrop" onclick="toggleSidebar(false)" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-xs transition-opacity"></div>
+  <aside id="sidebarDrawer" class="fixed top-0 left-0 bottom-0 z-50 w-72 max-w-[82vw] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform -translate-x-full transition-transform duration-300 ease-out flex flex-col shadow-2xl">
+    <div class="h-16 px-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-mono font-bold text-sm">F</div>
+        <span class="font-bold text-base tracking-tight">FydzCloud ID</span>
+      </div>
+      <button onclick="toggleSidebar(false)" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
     </div>
 
-    <!-- MODAL PANDUAN -->
-    <div id="guide-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-        <div class="fy-card max-w-sm w-full p-5 space-y-4 bg-white dark:bg-zinc-900 border-black">
-            <div class="flex justify-between items-center border-b-2 border-zinc-200 dark:border-zinc-800 pb-3">
-                <h3 class="font-black text-sm uppercase text-indigo-500">Panduan Penggunaan</h3>
-                <button onclick="closeGuideModal()" class="fy-btn px-2.5 py-1 text-xs">✕</button>
-            </div>
-            <div class="space-y-3 text-xs font-medium" style="color: var(--text-sub);">
-                <p>1. <b>Login Akun:</b> Masukkan username dan PIN kamu untuk mulai.</p>
-                <p>2. <b>Deposit Saldo:</b> Masuk ke menu Deposit QRIS, scan QRIS, dan saldo masuk otomatis[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span).</p>
-                <p>3. <b>Pesan Layanan:</b> Pilih katalog Panel Pterodactyl, Script Bot WA, atau Jasa Web.</p>
-            </div>
-            <button onclick="closeGuideModal()" class="fy-btn w-full py-2.5 text-xs bg-indigo-600 text-white border-black uppercase font-black">Mengerti</button>
-        </div>
+    <div id="sidebarAccountBox" class="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/50"></div>
+
+    <div class="flex-1 overflow-y-auto p-4 space-y-1.5">
+      <div class="px-3 py-1 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400">Menu Utama</div>
+      
+      <button onclick="navigate('home')" data-nav="home" class="nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>Beranda</span>
+      </button>
+
+      <button onclick="navigate('catalog')" data-nav="catalog" class="nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+        <span>Katalog Layanan</span>
+      </button>
+
+      <button onclick="navigate('orders')" data-nav="orders" class="nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+        <span>Status & Riwayat Order</span>
+      </button>
+
+      <button onclick="navigate('guide')" data-nav="guide" class="nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-semibold transition">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <span>Panduan Pemesanan</span>
+      </button>
     </div>
 
-    <!-- SIDEBAR DRAWER -->
-    <div id="sidebar-drawer" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden transition-opacity" onclick="toggleSidebar()">
-        <div class="absolute left-0 top-0 bottom-0 w-72 p-5 space-y-6 flex flex-col justify-between" style="background-color: var(--card-bg); border-right: 3px solid var(--border-col);" onclick="event.stopPropagation()">
-            <div class="space-y-5">
-                <div class="flex justify-between items-center border-b-2 border-zinc-200 dark:border-zinc-800 pb-4">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center font-black text-white text-sm border-2 border-black">F</div>
-                        <div>
-                            <h2 id="sidebar-username" class="font-black text-xs uppercase tracking-wider" style="color: var(--text-main);">User</h2>
-                            <span class="text-[9px] font-bold text-emerald-500">Member Aktif</span>
-                        </div>
-                    </div>
-                    <button onclick="toggleSidebar()" class="fy-btn px-2.5 py-1 text-xs">✕</button>
-                </div>
-                
-                <div class="space-y-2 text-xs font-bold">
-                    <button onclick="toggleSidebar(); switchMainTab(1);" class="w-full text-left p-3 rounded-xl border-2 border-transparent hover:border-black flex items-center gap-3" style="color: var(--text-main);">
-                        <span>🏠</span> Beranda / Dashboard
-                    </button>
-                    <button onclick="toggleSidebar(); switchMainTab(2);" class="w-full text-left p-3 rounded-xl border-2 border-transparent hover:border-black flex items-center gap-3" style="color: var(--text-main);">
-                        <span>📦</span> Katalog Layanan
-                    </button>
-                    <button onclick="toggleSidebar(); switchMainTab(3);" class="w-full text-left p-3 rounded-xl border-2 border-transparent hover:border-black flex items-center gap-3" style="color: var(--text-main);">
-                        <span>📋</span> Status Pesanan
-                    </button>
-                    <button onclick="toggleSidebar(); switchMainTab(4);" class="w-full text-left p-3 rounded-xl border-2 border-transparent hover:border-black flex items-center gap-3" style="color: var(--text-main);">
-                        <span>💳</span> Deposit Saldo QRIS
-                    </button>
-                    <button onclick="toggleSidebar(); logoutUser();" class="w-full text-left p-3 rounded-xl border-2 border-red-500 text-red-500 hover:bg-red-500/10 flex items-center gap-3 font-black mt-3">
-                        <span>🚪</span> Keluar Akun
-                    </button>
-                </div>
-            </div>
-            <div class="text-[10px] font-bold text-center pt-4 border-t border-zinc-200 dark:border-zinc-800" style="color: var(--text-sub);">
-                FydzCloud ID — Automated Store
-            </div>
-        </div>
+    <div class="p-4 border-t border-slate-200 dark:border-slate-800 space-y-2">
+      <a href="https://wa.me/6283120264665" target="_blank" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition shadow-sm">
+        <span>Hubungi WhatsApp Admin</span>
+      </a>
     </div>
+  </aside>
 
-    <!-- HEADER UTAMA -->
-    <header class="backdrop-blur-md border-b-2.5 px-4 py-3.5 sticky top-0 z-40" style="background-color: var(--bg-main); border-color: var(--border-col); opacity: 0.95;">
-        <div class="max-w-md mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <button onclick="toggleSidebar()" class="fy-btn p-2 flex items-center justify-center">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                </button>
-                <div>
-                    <h1 id="header-title" class="font-black text-sm tracking-tight uppercase leading-none" style="color: var(--text-main);">FydzCloud ID</h1>
-                    <span id="header-user-tag" class="text-[10px] font-bold text-indigo-500">User: -</span>
-                </div>
-            </div>
-            
-            <div class="flex items-center gap-2">
-                <button onclick="toggleTheme()" class="fy-btn px-3 py-2 text-xs font-black">🌓</button>
-                <button onclick="switchMainTab(4)" class="fy-btn px-3 py-2 text-xs font-black flex items-center gap-1.5 text-indigo-600">
-                    <span id="header-balance">Rp 0</span> +
-                </button>
-            </div>
+  <!-- MAIN CONTENT AREA -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+
+    <!-- ==================== VIEW 1: BERANDA ==================== -->
+    <section id="view-home" class="view-section space-y-7">
+      
+      <!-- Hero Card -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-10 border border-slate-800 shadow-xl">
+        <div class="absolute -right-20 -top-20 w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-20 -bottom-20 w-72 h-72 bg-violet-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-2xl space-y-4">
+          <div id="apiBadge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/15 border border-indigo-400/30 text-indigo-300 text-xs font-mono">
+            <span id="apiDot" class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+            <span id="apiBadgeText">Menyinkronkan Katalog Server...</span>
+          </div>
+          
+          <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+            Layanan Cloud Panel & Produk Digital Otomatis.
+          </h1>
+          
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
+            Beli server panel Pterodactyl, source code bot WhatsApp, hingga layanan pembuatan web dengan sistem pembayaran QRIS instan 24 jam nonstop.
+          </p>
+          
+          <div class="pt-2 flex flex-col sm:flex-row gap-3">
+            <button onclick="navigate('catalog')" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition shadow-lg shadow-indigo-600/25 flex items-center justify-center gap-2">
+              <span>Jelajahi Katalog</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            </button>
+            <button onclick="navigate('orders')" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/15 text-sm font-semibold transition text-center">
+              Lacak Status Pesanan
+            </button>
+          </div>
         </div>
-    </header>
+      </div>
 
-    <!-- CONTAINER UTAMA -->
-    <main class="max-w-md mx-auto p-4 space-y-4">
+      <!-- Quick Stats / Features -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-3.5">
+          <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm">Proses Otomatis</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Aktif detik itu juga setelah QRIS lunas</p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-3.5">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm">Pembayaran QRIS</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Mendukung Dana, GoPay, OVO, & M-Banking</p>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-3.5">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-sm">Layanan 24/7</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Bantuan kendala langsung via WhatsApp</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Shortcuts -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between px-1">
+          <h2 class="text-base sm:text-lg font-bold tracking-tight">Kategori Populer</h2>
+          <button onclick="navigate('catalog')" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Lihat Semua →</button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          <button onclick="openCategoryDirect('Panel Pterodactyl')" class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-left transition flex items-center justify-between group shadow-xs">
+            <div class="flex items-center gap-3.5">
+              <div class="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-sm">Panel Pterodactyl</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Server Bot WA & Node.js</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-slate-400 group-hover:text-indigo-500 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </button>
+
+          <button onclick="openCategoryDirect('Script & Bot WA')" class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 text-left transition flex items-center justify-between group shadow-xs">
+            <div class="flex items-center gap-3.5">
+              <div class="w-11 h-11 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-sm">Script & Bot WA</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Source code siap jalan</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-slate-400 group-hover:text-emerald-500 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </button>
+
+          <button onclick="openCategoryDirect('Jasa & Tools')" class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 text-left transition flex items-center justify-between group shadow-xs">
+            <div class="flex items-center gap-3.5">
+              <div class="w-11 h-11 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center shrink-0 group-hover:scale-105 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-sm">Jasa Web & Tools</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Custom web & instalasi</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-slate-400 group-hover:text-amber-500 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Featured Products Preview -->
+      <div id="homeFeaturedWrapper" class="hidden space-y-3">
+        <div class="flex items-center justify-between px-1">
+          <h2 class="text-base sm:text-lg font-bold tracking-tight">Layanan Unggulan</h2>
+          <button onclick="navigate('catalog')" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Buka Katalog →</button>
+        </div>
+        <div id="homeFeaturedGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: KATALOG ==================== -->
+    <section id="view-catalog" class="view-section hidden space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">Katalog Layanan</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Pilih paket layanan cloud & digital terbaik untuk kebutuhanmu</p>
+        </div>
         
-        <!-- TAB 1: BERANDA -->
-        <div id="tab-content-1" class="space-y-4 anim-fade">
-            <div class="fy-card p-5 space-y-3 text-white border-black bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900">
-                <div class="space-y-1">
-                    <h2 class="text-xl font-black tracking-tight">Infrastruktur Cloud & Toko Digital Otomatis.</h2>
-                    <p class="text-xs font-medium text-slate-300">Pesan server panel Pterodactyl, script bot WhatsApp, dan jasa web secara instan[span_2](start_span)[span_2](end_span).</p>
-                </div>
-                <button onclick="switchMainTab(2)" class="fy-btn bg-indigo-600 text-white font-black w-full py-3.5 text-xs uppercase tracking-wider shadow-[3px_3px_0px_#000] border-black flex items-center justify-center gap-2">
-                    Lihat Katalog Layanan →
-                </button>
-            </div>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <div class="relative flex-1 sm:w-72">
+            <svg class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="catalogSearch" oninput="applyCatalogFilter()" placeholder="Cari paket atau layanan..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          </div>
+          <button onclick="loadCatalog()" title="Muat Ulang Katalog" class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 transition shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          </button>
+        </div>
+      </div>
 
-            <div class="grid grid-cols-2 gap-3">
-                <div class="fy-card p-4 space-y-1">
-                    <p class="text-[10px] font-black uppercase tracking-wider text-slate-400">Saldo Dompet</p>
-                    <h3 id="dash-balance" class="text-lg font-black text-emerald-500">Rp 0</h3>
-                </div>
-                <div class="fy-card p-4 space-y-1">
-                    <p class="text-[10px] font-black uppercase tracking-wider text-slate-400">Total Transaksi</p>
-                    <h3 id="stat-total-order" class="text-lg font-black">0</h3>
-                </div>
-            </div>
+      <!-- Filter Chips -->
+      <div id="categoryChips" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+        <button onclick="selectCategory('all')" data-cat="all" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition">
+          Semua Layanan
+        </button>
+        <button onclick="selectCategory('Panel Pterodactyl')" data-cat="Panel Pterodactyl" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition">
+          Panel Pterodactyl
+        </button>
+        <button onclick="selectCategory('Script & Bot WA')" data-cat="Script & Bot WA" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition">
+          Script & Bot WA
+        </button>
+        <button onclick="selectCategory('Jasa & Tools')" data-cat="Jasa & Tools" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition">
+          Jasa Web & Tools
+        </button>
+      </div>
+
+      <!-- Loading & Error State -->
+      <div id="catalogLoader" class="py-14 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+        <div class="w-8 h-8 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+        <p class="text-xs font-mono text-slate-500">Mengambil daftar produk dari FallZx Store...</p>
+      </div>
+
+      <!-- Product Cards Grid -->
+      <div id="catalogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+      <!-- Empty Search State -->
+      <div id="catalogEmpty" class="hidden py-12 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+        <p class="font-bold text-sm">Layanan Tidak Ditemukan</p>
+        <p class="text-xs text-slate-500">Coba ganti kata kunci pencarian atau pilih kategori lain.</p>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: STATUS PESANAN ==================== -->
+    <section id="view-orders" class="view-section hidden space-y-6 max-w-2xl mx-auto">
+      <div>
+        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">Lacak & Status Pesanan</h1>
+        <p class="text-xs text-slate-500 dark:text-slate-400">Cek status pembayaran dan detail produk langsung dari server pusat</p>
+      </div>
+
+      <!-- Live Order Lookup Box -->
+      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4 shadow-xs">
+        <label class="block text-xs font-mono font-semibold uppercase text-slate-500">Cek Status via Order ID</label>
+        <div class="flex flex-col sm:flex-row gap-2.5">
+          <input type="text" id="manualOrderId" placeholder="Contoh: ORD-XXXXX atau INV-XXXXX" class="flex-1 px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <button onclick="checkLiveOrderStatus()" id="btnCheckOrder" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition shrink-0">
+            Cek Status
+          </button>
         </div>
 
-        <!-- TAB 2: KATALOG -->
-        <div id="tab-content-2" class="space-y-4 hidden anim-fade">
-            <div class="fy-card p-4 space-y-3.5">
-                <div class="flex justify-between items-center border-b-2 border-zinc-200 dark:border-zinc-800 pb-2.5">
-                    <h3 class="text-xs font-black uppercase tracking-wider">Katalog Layanan</h3>
-                </div>
-                <div>
-                    <input type="text" id="search-catalog" oninput="renderCatalogGrid()" class="fy-input w-full p-3 text-xs" placeholder="Cari layanan...">
-                </div>
-            </div>
+        <!-- Live Result Card -->
+        <div id="liveOrderResult" class="hidden p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3 text-xs"></div>
+      </div>
 
-            <div id="catalog-grid" class="space-y-2.5">
-                <div class="fy-card p-5 text-center text-xs font-bold text-slate-400">Memuat katalog dari server...</div>
-            </div>
+      <!-- Local History List -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 font-mono">Riwayat Pesanan di Perangkat Ini</h2>
+          <button onclick="clearOrderHistory()" class="text-xs text-red-500 hover:underline">Bersihkan</button>
+        </div>
+        <div id="orderHistoryList" class="space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 4: PANDUAN ==================== -->
+    <section id="view-guide" class="view-section hidden space-y-5 max-w-3xl mx-auto">
+      <div>
+        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">Panduan Pemesanan</h1>
+        <p class="text-xs text-slate-500 dark:text-slate-400">Alur pembelian otomatis di FydzCloud ID</p>
+      </div>
+
+      <div class="space-y-3">
+        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-4">
+          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0">01</span>
+          <div>
+            <h3 class="font-bold text-sm">Pilih Layanan di Katalog</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Buka menu Katalog, pilih paket panel Pterodactyl, script bot, atau layanan web yang diinginkan, lalu klik tombol <b>Pesan</b>.</p>
+          </div>
         </div>
 
-        <!-- TAB 3: STATUS PESANAN -->
-        <div id="tab-content-3" class="space-y-4 hidden anim-fade">
-            <div class="fy-card p-4 space-y-3.5">
-                <h3 class="text-xs font-black uppercase tracking-wider border-b-2 border-zinc-200 dark:border-zinc-800 pb-2.5">Riwayat Pesanan & Invoice</h3>
-                <div id="order-history-list" class="space-y-3">
-                    <div class="p-4 rounded-xl border-2 border-dashed border-zinc-300 dark:border-zinc-800 text-center text-xs text-slate-400">Belum ada transaksi pesanan.</div>
-                </div>
-            </div>
+        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-4">
+          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0">02</span>
+          <div>
+            <h3 class="font-bold text-sm">Isi Data Pemesan</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Masukkan nama, nomor WhatsApp aktif, dan email. Khusus produk Panel Pterodactyl, masukkan juga username panel yang diinginkan.</p>
+          </div>
         </div>
 
-        <!-- TAB 4: DEPOSIT QRIS -->
-        <div id="tab-content-4" class="space-y-4 hidden anim-fade">
-            <div class="fy-card p-5 space-y-4">
-                <div class="border-b-2 border-zinc-200 dark:border-zinc-800 pb-3">
-                    <h3 class="font-black text-sm uppercase tracking-wider">Deposit Saldo QRIS Otomatis</h3>
-                </div>
+        <div class="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-4">
+          <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0">03</span>
+          <div>
+            <h3 class="font-bold text-sm">Scan QRIS & Terima Produk</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Kode QRIS akan muncul otomatis sesuai nominal tagihan. Setelah dibayar, sistem memproses pesanan dan mengirimkan detail layanan secara instan.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-                <div class="space-y-3.5 text-xs">
-                    <div class="space-y-1.5">
-                        <label class="block text-[10px] font-black uppercase">Nominal (Rp)</label>
-                        <input type="number" id="dep-nominal" value="20000" class="fy-input w-full p-3.5 text-xs" placeholder="20000">
-                    </div>
+  </main>
 
-                    <button onclick="createDepositQr()" class="fy-btn text-white font-black w-full py-3.5 text-xs uppercase shadow-[3px_3px_0px_#000]" style="background-color: var(--accent); border-color: var(--border-col);">
-                        Generate QRIS Otomatis
-                    </button>
+  <!-- MOBILE BOTTOM NAVIGATION -->
+  <nav class="sm:hidden fixed bottom-0 left-0 right-0 z-40 glass-card border-t border-slate-200 dark:border-slate-800 px-2 py-1.5 flex items-center justify-around">
+    <button onclick="navigate('home')" data-bnav="home" class="bnav-item flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-[10px] font-semibold transition text-slate-500">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span>Beranda</span>
+    </button>
+    <button onclick="navigate('catalog')" data-bnav="catalog" class="bnav-item flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-[10px] font-semibold transition text-slate-500">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+      <span>Katalog</span>
+    </button>
+    <button onclick="navigate('orders')" data-bnav="orders" class="bnav-item flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-[10px] font-semibold transition text-slate-500">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+      <span>Pesanan</span>
+    </button>
+    <button onclick="navigate('guide')" data-bnav="guide" class="bnav-item flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-[10px] font-semibold transition text-slate-500">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+      <span>Panduan</span>
+    </button>
+  </nav>
 
-                    <div id="modal-qris-box" class="hidden p-5 rounded-2xl border-2 border-black bg-zinc-950 text-center space-y-4 anim-fade shadow-[4px_4px_0px_#000]">
-                        <div class="space-y-1">
-                            <p class="font-black text-emerald-400 text-xs uppercase">Scan QRIS Pembayaran</p>
-                            <p id="qris-total" class="font-black text-lg text-white">Rp 0</p>
-                        </div>
-                        <div id="qrcode-container" class="p-3 bg-white border-2 border-black inline-block rounded-xl mx-auto"></div>
-                        <button onclick="checkDepositStatus()" class="fy-btn w-full py-3 text-xs font-black bg-emerald-400 text-black border-black uppercase">🔄 Cek Status Pembayaran</button>
-                    </div>
-                </div>
-            </div>
+  <!-- MODAL ACCOUNT -->
+  <div id="authModal" class="fixed inset-0 z-[300] hidden bg-slate-950/80 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="w-full max-w-sm rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-5 relative">
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 p-2 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div class="text-center space-y-1">
+        <span class="inline-block px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">PROFIL PELANGGAN</span>
+        <h3 id="authModalTitle" class="text-xl font-extrabold tracking-tight">Masuk ke Akun</h3>
+        <p class="text-xs text-slate-500">Simpan data checkout otomatis untuk transaksi berikutnya</p>
+      </div>
+
+      <form onsubmit="handleAuthSubmit(event)" class="space-y-3.5">
+        <div id="registerNameField" class="hidden">
+          <label class="block text-xs font-semibold mb-1">Nama Lengkap</label>
+          <input type="text" id="authName" placeholder="Nama lengkap" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1">Username / Email</label>
+          <input type="text" id="authUsername" required placeholder="Username atau Email" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1">Password</label>
+          <input type="password" id="authPassword" required placeholder="••••••••" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm">
+        </div>
+        <button type="submit" id="authSubmitBtn" class="w-full py-3.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition shadow-sm">
+          Masuk Sekarang
+        </button>
+      </form>
+
+      <div class="text-center pt-2 border-t border-slate-100 dark:border-slate-800">
+        <button onclick="toggleAuthMode()" id="authSwitchModeBtn" class="text-xs text-indigo-600 dark:text-indigo-400 font-semibold">
+          Belum punya akun? Daftar sekarang
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL NOTIFICATION -->
+  <div id="appModal" class="fixed inset-0 z-[320] hidden bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="w-full max-w-sm rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl text-center space-y-4">
+      <div id="modalIconContainer" class="w-12 h-12 mx-auto rounded-2xl flex items-center justify-center text-white font-bold text-lg"></div>
+      <div class="space-y-1.5">
+        <h3 id="modalTitle" class="text-lg font-bold tracking-tight">Notifikasi</h3>
+        <p id="modalMessage" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"></p>
+      </div>
+      <button onclick="closeAppModal()" class="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition">
+        Mengerti
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL CHECKOUT -->
+  <div id="checkoutModal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-5 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 p-2 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div>
+        <span class="text-[11px] font-mono font-semibold uppercase text-indigo-600 dark:text-indigo-400">Checkout Layanan</span>
+        <h3 id="chkProductName" class="text-lg font-bold mt-0.5 pr-6">-</h3>
+        <p id="chkProductPrice" class="text-lg font-mono font-extrabold text-indigo-600 dark:text-indigo-400 mt-1">Rp 0</p>
+      </div>
+
+      <form onsubmit="processOrder(event)" class="space-y-3.5">
+        <input type="hidden" id="chkProductId">
+        <div>
+          <label class="block text-xs font-semibold mb-1">Nama Pemesan</label>
+          <input type="text" id="chkName" required placeholder="Masukkan nama lengkap" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1">Nomor WhatsApp</label>
+          <input type="tel" id="chkPhone" required placeholder="081234567890" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold mb-1">Alamat Email</label>
+          <input type="email" id="chkEmail" required placeholder="nama@email.com" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
         </div>
 
-    </main>
+        <div id="panelFieldsContainer" class="space-y-3.5 pt-2 border-t border-slate-100 dark:border-slate-800 hidden">
+          <div>
+            <label class="block text-xs font-semibold mb-1">Username Panel Pterodactyl</label>
+            <input type="text" id="chkPanelUsername" placeholder="Contoh: fydzuser" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold mb-1">Password Panel (Opsional)</label>
+            <input type="text" id="chkPanelPassword" placeholder="Kosongkan untuk auto-generate" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          </div>
+        </div>
 
-    <!-- SCRIPT ENGINE -->
-    <script>
-        const _PROXY_URL = "/api/proxy";
-        const _SECRET_KEY = "fzx_live_aa67b0dd569d134e686680d3011dee4c049b86b9477fd7d77329774dab3d1a46";
-        
-        let currentUser = null;
-        let globalProductsCache = [];
-        let activeDepositId = null;
-        let activeDepositNominal = 0;
+        <button type="submit" id="chkSubmitBtn" class="w-full py-3.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition shadow-md shadow-indigo-600/20">
+          Bayar Sekarang via QRIS
+        </button>
+      </form>
+    </div>
+  </div>
 
-        function toggleHelpMenu() { document.getElementById('help-popup-menu').classList.toggle('hidden'); }
-        function openGuideModal() { document.getElementById('help-popup-menu').classList.add('hidden'); document.getElementById('guide-modal').classList.remove('hidden'); }
-        function closeGuideModal() { document.getElementById('guide-modal').classList.add('hidden'); }
+  <!-- MODAL QRIS PAYMENT -->
+  <div id="qrisModal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-5 text-center relative">
+      <button onclick="closeQrisModal()" class="absolute top-4 right-4 p-2 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
 
-        function handleUserLogin() {
-            const username = document.getElementById('auth-username').value.trim().toUpperCase();
-            const pin = document.getElementById('auth-pin').value.trim();
-            if(!username || !pin) return showNotif("Masukkan username dan PIN!", "error");
+      <div>
+        <span id="qrisStatusBadge" class="inline-block px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-amber-500/15 text-amber-600 dark:text-amber-400">MENUNGGU PEMBAYARAN</span>
+        <h3 class="text-xl font-extrabold mt-1.5">Scan Kode QRIS</h3>
+        <div class="flex items-center justify-center gap-2 mt-1">
+          <p id="qrisOrderId" class="text-xs font-mono text-slate-500">-</p>
+          <button onclick="copyOrderId()" class="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Salin ID</button>
+        </div>
+      </div>
 
-            let usersDB = JSON.parse(localStorage.getItem('fydz_store_users') || '{}');
-            if(!usersDB[username]) {
-                usersDB[username] = { pin: pin, balance: 0, orders: [] };
-            } else if(usersDB[username].pin !== pin) {
-                return showNotif("PIN salah!", "error");
-            }
+      <div class="p-3 rounded-2xl bg-white border border-slate-200 inline-block mx-auto shadow-xs">
+        <img id="qrisImgTag" src="" alt="QRIS Pembayaran" class="w-52 h-52 object-contain mx-auto bg-slate-50 rounded-lg">
+      </div>
 
-            localStorage.setItem('fydz_store_users', JSON.stringify(usersDB));
-            localStorage.setItem('fydz_store_active', username);
-            currentUser = username;
+      <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+        <span class="text-[11px] font-mono text-slate-500 block">Total Pembayaran</span>
+        <span id="qrisNominal" class="text-2xl font-mono font-extrabold text-indigo-600 dark:text-indigo-400">Rp 0</span>
+      </div>
 
-            document.getElementById('auth-modal').classList.add('hidden');
-            applyUserUI(username);
-            syncUI();
-            showNotif(`Selamat datang, ${username}!`, "success");
-            loadCatalogProducts();
+      <div class="grid grid-cols-2 gap-2.5">
+        <button onclick="verifyCurrentQrisPayment()" id="btnVerifyQris" class="py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition">
+          Cek Status Bayar
+        </button>
+        <a id="qrisInvoiceUrl" href="#" target="_blank" class="py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition flex items-center justify-center">
+          Buka Invoice Web
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Konfigurasi Proxy FallZx Store API v1
+    const PROXY_BASE = "/api/proxy";
+    const API_KEY = "fzx_live_aa67b0dd569d134e686680d3011dee4c049b86b9477fd7d77329774dab3d1a46";
+
+    let productsData = [];
+    let selectedCat = "all";
+    let isRegisterMode = false;
+    let activeOrderId = "";
+
+    // --- HELPER API CALL ---
+    async function callFallZxAPI(endpoint, method = 'GET', payload = null) {
+      const cleanPath = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
+      const options = {
+        method,
+        headers: {
+          'Authorization': `Bearer ${API_KEY}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
         }
+      };
+      if (payload) options.body = JSON.stringify(payload);
 
-        function logoutUser() {
-            localStorage.removeItem('fydz_store_active');
-            location.reload();
+      const response = await fetch(`${PROXY_BASE}/${cleanPath}`, options);
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || data.error || `HTTP Error ${response.status}`);
+      }
+      return data;
+    }
+
+    // --- USER PROFILE (LOCAL STORAGE) ---
+    function getLoggedUser() {
+      const raw = localStorage.getItem('fydz_current_user');
+      return raw ? JSON.parse(raw) : null;
+    }
+
+    function renderAuthUI() {
+      const topSlot = document.getElementById('topAuthSlot');
+      const sidebarBox = document.getElementById('sidebarAccountBox');
+      const user = getLoggedUser();
+
+      if (user) {
+        topSlot.innerHTML = `
+          <button onclick="toggleSidebar(true)" class="px-3 py-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-900 text-xs font-semibold flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
+            <span class="truncate max-w-[85px]">${user.name}</span>
+          </button>
+        `;
+        sidebarBox.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+            <div class="min-w-0">
+              <span class="text-[10px] font-mono text-emerald-500 block">PELANGGAN AKTIF</span>
+              <p class="font-bold text-sm truncate">${user.name}</p>
+            </div>
+            <button onclick="handleLogout()" class="px-3 py-1.5 rounded-lg bg-red-500/10 text-red-500 text-xs font-semibold hover:bg-red-500 hover:text-white transition shrink-0">
+              Keluar
+            </button>
+          </div>
+        `;
+      } else {
+        topSlot.innerHTML = `
+          <button onclick="openAuthModal()" class="px-3.5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition shadow-sm">
+            Masuk
+          </button>
+        `;
+        sidebarBox.innerHTML = `
+          <div class="space-y-2">
+            <p class="text-xs text-slate-500">Simpan profil Anda agar checkout lebih cepat.</p>
+            <button onclick="toggleSidebar(false); openAuthModal();" class="w-full py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-semibold">
+              Masuk / Daftar Akun
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    function openAuthModal() {
+      isRegisterMode = false;
+      document.getElementById('authModalTitle').innerText = 'Masuk ke Akun';
+      document.getElementById('authSubmitBtn').innerText = 'Masuk Sekarang';
+      document.getElementById('registerNameField').classList.add('hidden');
+      document.getElementById('authSwitchModeBtn').innerText = 'Belum punya akun? Daftar sekarang';
+      document.getElementById('authModal').classList.remove('hidden');
+    }
+
+    function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+
+    function toggleAuthMode() {
+      isRegisterMode = !isRegisterMode;
+      document.getElementById('authModalTitle').innerText = isRegisterMode ? 'Buat Akun Baru' : 'Masuk ke Akun';
+      document.getElementById('authSubmitBtn').innerText = isRegisterMode ? 'Daftar Sekarang' : 'Masuk Sekarang';
+      document.getElementById('registerNameField').classList.toggle('hidden', !isRegisterMode);
+      document.getElementById('authSwitchModeBtn').innerText = isRegisterMode ? 'Sudah punya akun? Masuk di sini' : 'Belum punya akun? Daftar sekarang';
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const username = document.getElementById('authUsername').value.trim();
+      const password = document.getElementById('authPassword').value.trim();
+      const name = document.getElementById('authName').value.trim();
+      let users = JSON.parse(localStorage.getItem('fydz_registered_users') || '[]');
+
+      if (isRegisterMode) {
+        if (!name) return showModal('Gagal', 'Nama lengkap wajib diisi.', 'error');
+        if (users.find(u => u.username === username)) return showModal('Gagal', 'Username sudah digunakan.', 'error');
+        const newUser = { name, username, password };
+        users.push(newUser);
+        localStorage.setItem('fydz_registered_users', JSON.stringify(users));
+        localStorage.setItem('fydz_current_user', JSON.stringify(newUser));
+        closeAuthModal(); renderAuthUI(); renderOrderHistory();
+        showModal('Berhasil', 'Akun berhasil dibuat dan aktif.', 'success');
+      } else {
+        const found = users.find(u => u.username === username && u.password === password);
+        if (found) {
+          localStorage.setItem('fydz_current_user', JSON.stringify(found));
+          closeAuthModal(); renderAuthUI(); renderOrderHistory();
+          showModal('Berhasil', `Selamat datang kembali, ${found.name}!`, 'success');
+        } else {
+          showModal('Gagal', 'Username atau password tidak cocok.', 'error');
         }
+      }
+    }
 
-        (function() {
-            const active = localStorage.getItem('fydz_store_active');
-            if(active) {
-                currentUser = active;
-                document.getElementById('auth-modal').classList.add('hidden');
-                applyUserUI(active);
-                syncUI();
-                loadCatalogProducts();
-            }
-        })();
+    function handleLogout() {
+      toggleSidebar(false);
+      localStorage.removeItem('fydz_current_user');
+      renderAuthUI(); renderOrderHistory();
+      showModal('Keluar', 'Sesi akun telah diakhiri.', 'success');
+    }
 
-        function getActiveUser() {
-            if(!currentUser) return null;
-            let db = JSON.parse(localStorage.getItem('fydz_store_users') || '{}');
-            return db[currentUser] || null;
+    function showModal(title, message, type = 'error') {
+      const modal = document.getElementById('appModal');
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalMessage').innerText = message;
+      const icon = document.getElementById('modalIconContainer');
+      icon.className = `w-12 h-12 mx-auto rounded-2xl flex items-center justify-center text-white font-bold text-lg ${type === 'success' ? 'bg-emerald-500' : 'bg-red-500'}`;
+      icon.innerHTML = type === 'success' ? '✓' : '✕';
+      modal.classList.remove('hidden');
+    }
+
+    function closeAppModal() { document.getElementById('appModal').classList.add('hidden'); }
+
+    // --- THEME & NAVIGATION ---
+    function initTheme() {
+      const savedTheme = localStorage.getItem('fydz_theme');
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('fydz_theme', isDark ? 'dark' : 'light');
+    }
+
+    function toggleSidebar(open) {
+      const drawer = document.getElementById('sidebarDrawer');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      if (open) {
+        backdrop.classList.remove('hidden');
+        requestAnimationFrame(() => drawer.classList.remove('-translate-x-full'));
+      } else {
+        drawer.classList.add('-translate-x-full');
+        setTimeout(() => backdrop.classList.add('hidden'), 280);
+      }
+    }
+
+    function navigate(viewName) {
+      toggleSidebar(false);
+      document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+      document.getElementById('view-' + viewName).classList.remove('hidden');
+
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        const active = btn.dataset.nav === viewName;
+        btn.classList.toggle('bg-indigo-600', active);
+        btn.classList.toggle('text-white', active);
+        btn.classList.toggle('text-slate-700', !active);
+        btn.classList.toggle('dark:text-slate-300', !active);
+      });
+
+      document.querySelectorAll('.dnav-item').forEach(btn => {
+        const active = btn.dataset.dnav === viewName;
+        btn.classList.toggle('bg-white', active);
+        btn.classList.toggle('dark:bg-slate-800', active);
+        btn.classList.toggle('text-indigo-600', active);
+        btn.classList.toggle('dark:text-indigo-400', active);
+        btn.classList.toggle('shadow-xs', active);
+        btn.classList.toggle('text-slate-600', !active);
+        btn.classList.toggle('dark:text-slate-400', !active);
+      });
+
+      document.querySelectorAll('.bnav-item').forEach(btn => {
+        const active = btn.dataset.bnav === viewName;
+        btn.classList.toggle('text-indigo-600', active);
+        btn.classList.toggle('dark:text-indigo-400', active);
+        btn.classList.toggle('text-slate-500', !active);
+      });
+
+      if (viewName === 'orders') renderOrderHistory();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openCategoryDirect(catName) {
+      navigate('catalog');
+      selectCategory(catName);
+    }
+
+    // --- CATALOG ENGINE (GET /products) ---
+    async function loadCatalog() {
+      const badge = document.getElementById('apiBadge');
+      const badgeText = document.getElementById('apiBadgeText');
+      const dot = document.getElementById('apiDot');
+      const loader = document.getElementById('catalogLoader');
+
+      loader.classList.remove('hidden');
+      loader.innerHTML = `
+        <div class="w-8 h-8 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+        <p class="text-xs font-mono text-slate-500">Menyinkronkan katalog layanan...</p>
+      `;
+
+      try {
+        const json = await callFallZxAPI('products?limit=100');
+        let items = [];
+        if (Array.isArray(json)) items = json;
+        else if (Array.isArray(json.data)) items = json.data;
+        else if (Array.isArray(json.products)) items = json.products;
+        else if (json.data && Array.isArray(json.data.products)) items = json.data.products;
+
+        productsData = items;
+
+        if (items.length > 0) {
+          badge.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-mono';
+          dot.className = 'w-2 h-2 rounded-full bg-emerald-400';
+          badgeText.innerText = `Server Online • ${productsData.length} Layanan Tersedia`;
+          
+          renderCatalogCards(productsData);
+          renderFeaturedHome(productsData.slice(0, 3));
+        } else {
+          badgeText.innerText = 'Server Online • Katalog Kosong';
+          loader.innerHTML = `<p class="text-xs font-mono text-amber-500">Belum ada produk yang tersedia saat ini.</p>`;
         }
+      } catch (err) {
+        badge.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/15 border border-red-400/30 text-red-300 text-xs font-mono';
+        dot.className = 'w-2 h-2 rounded-full bg-red-400';
+        badgeText.innerText = 'Server Pusat Offline';
+        loader.innerHTML = `
+          <div class="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs font-mono space-y-1 max-w-md mx-auto">
+            <p class="font-bold">Gagal terhubung ke server pusat.</p>
+            <p class="text-[11px] opacity-80">${err.message}</p>
+          </div>
+        `;
+      }
+    }
 
-        function applyUserUI(username) {
-            document.getElementById('sidebar-username').innerText = username;
-            document.getElementById('header-user-tag').innerText = `User: ${username}`;
+    function getProductCategory(p) {
+      const rawCat = (p.category || '').toLowerCase();
+      const name = (p.name || '').toLowerCase();
+      if (rawCat.includes('panel') || name.includes('panel') || name.includes('ram') || name.includes('pterodactyl')) return 'Panel Pterodactyl';
+      if (rawCat.includes('bot') || name.includes('bot') || name.includes('script') || name.includes('sc ') || name.includes('whatsapp')) return 'Script & Bot WA';
+      return 'Jasa & Tools';
+    }
+
+    function selectCategory(cat) {
+      selectedCat = cat;
+      document.querySelectorAll('.cat-chip').forEach(btn => {
+        const isSelected = btn.dataset.cat === cat;
+        btn.className = isSelected
+          ? 'cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition shadow-xs'
+          : 'cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-indigo-500 transition';
+      });
+      applyCatalogFilter();
+    }
+
+    function applyCatalogFilter() {
+      const q = document.getElementById('catalogSearch').value.toLowerCase().trim();
+      const filtered = productsData.filter(p => {
+        const matchCat = selectedCat === 'all' || getProductCategory(p) === selectedCat;
+        const matchText = (p.name || '').toLowerCase().includes(q) || (p.description || '').toLowerCase().includes(q) || String(p.id || '').toLowerCase().includes(q);
+        return matchCat && matchText;
+      });
+      renderCatalogCards(filtered);
+    }
+
+    function createProductCardHTML(p) {
+      const isAvail = (p.status || 'AVAILABLE').toUpperCase() === 'AVAILABLE' && (p.stock === undefined || p.stock === null || Number(p.stock) > 0);
+      const safeName = (p.name || 'Layanan').replace(/'/g, "\\'");
+      const productCat = getProductCategory(p);
+      const isPanel = productCat === 'Panel Pterodactyl';
+      const desc = p.description ? `<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">${p.description}</p>` : '';
+
+      return `
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/60 transition flex flex-col justify-between gap-4 shadow-xs">
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+              <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono font-semibold uppercase bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">${productCat}</span>
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold ${isAvail ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-red-500/10 text-red-500'}">${isAvail ? 'READY' : 'HABIS'}</span>
+            </div>
+            <div>
+              <h3 class="font-bold text-base leading-snug">${p.name || 'Tanpa Nama'}</h3>
+              <p class="text-[11px] font-mono text-slate-400 mt-0.5">ID: ${p.id || '-'}</p>
+            </div>
+            ${desc}
+          </div>
+          <div class="pt-3.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
+            <div>
+              <span class="text-[10px] font-mono text-slate-400 block">Harga Paket</span>
+              <span class="font-mono font-extrabold text-base text-indigo-600 dark:text-indigo-400">Rp ${Number(p.price || 0).toLocaleString('id-ID')}</span>
+            </div>
+            <button onclick="openCheckout('${p.id}', '${safeName}', ${p.price || 0}, ${isPanel})" ${!isAvail ? 'disabled' : ''} class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white text-xs font-semibold transition shadow-xs">
+              Pesan
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderFeaturedHome(items) {
+      if (!items || items.length === 0) return;
+      document.getElementById('homeFeaturedWrapper').classList.remove('hidden');
+      document.getElementById('homeFeaturedGrid').innerHTML = items.map(createProductCardHTML).join('');
+    }
+
+    function renderCatalogCards(items) {
+      const loader = document.getElementById('catalogLoader');
+      const grid = document.getElementById('catalogGrid');
+      const empty = document.getElementById('catalogEmpty');
+
+      loader.classList.add('hidden');
+      if (items.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+      grid.innerHTML = items.map(createProductCardHTML).join('');
+    }
+
+    // --- CHECKOUT & ORDER CREATION (POST /orders) ---
+    function openCheckout(id, name, price, isPanelProduct) {
+      document.getElementById('chkProductId').value = id;
+      document.getElementById('chkProductName').innerText = name;
+      document.getElementById('chkProductPrice').innerText = 'Rp ' + Number(price).toLocaleString('id-ID');
+      
+      const panelContainer = document.getElementById('panelFieldsContainer');
+      const usernameInput = document.getElementById('chkPanelUsername');
+
+      const user = getLoggedUser();
+      if (user) {
+        document.getElementById('chkName').value = user.name || '';
+        if (user.username.includes('@')) document.getElementById('chkEmail').value = user.username;
+      }
+
+      if (isPanelProduct) {
+        panelContainer.classList.remove('hidden');
+        usernameInput.required = true;
+      } else {
+        panelContainer.classList.add('hidden');
+        usernameInput.required = false;
+        usernameInput.value = '';
+      }
+
+      document.getElementById('checkoutModal').classList.remove('hidden');
+    }
+
+    function closeCheckoutModal() { document.getElementById('checkoutModal').classList.add('hidden'); }
+    function closeQrisModal() { document.getElementById('qrisModal').classList.add('hidden'); }
+
+    async function processOrder(e) {
+      e.preventDefault();
+      const product_id = document.getElementById('chkProductId').value;
+      const product_name = document.getElementById('chkProductName').innerText;
+      const customer_name = document.getElementById('chkName').value.trim();
+      const customer_phone = document.getElementById('chkPhone').value.trim();
+      const customer_email = document.getElementById('chkEmail').value.trim();
+      const panel_username = document.getElementById('chkPanelUsername').value.trim();
+      const panel_password = document.getElementById('chkPanelPassword').value.trim();
+
+      const btn = document.getElementById('chkSubmitBtn');
+      btn.disabled = true;
+      btn.innerText = 'Membuat Tagihan QRIS...';
+
+      try {
+        const payload = {
+          product_id,
+          quantity: 1,
+          customer_name,
+          customer_phone,
+          customer_email,
+          payment_method: 'QRIS'
+        };
+        if (panel_username) payload.panel_username = panel_username;
+        if (panel_password) payload.panel_password = panel_password;
+
+        const json = await callFallZxAPI('orders', 'POST', payload);
+        const d = json.data || json;
+
+        closeCheckoutModal();
+
+        const orderId = d.order_id || d.id || '-';
+        activeOrderId = orderId;
+        const amount = Number(d.amount || d.total_amount || d.price || 0);
+        const qrImg = d.payment?.qr_image_url || d.qr_image_url || d.qr_url || '';
+        const invUrl = json.invoice_url || d.invoice_url || `https://store.roselynsound.my.id/invoice/${encodeURIComponent(orderId)}`;
+
+        document.getElementById('qrisStatusBadge').innerText = 'MENUNGGU PEMBAYARAN';
+        document.getElementById('qrisStatusBadge').className = 'inline-block px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-amber-500/15 text-amber-600 dark:text-amber-400';
+        document.getElementById('qrisOrderId').innerText = orderId;
+        document.getElementById('qrisImgTag').src = qrImg;
+        document.getElementById('qrisNominal').innerText = 'Rp ' + amount.toLocaleString('id-ID');
+        document.getElementById('qrisInvoiceUrl').href = invUrl;
+        document.getElementById('qrisModal').classList.remove('hidden');
+
+        saveOrderHistory({
+          order_id: orderId,
+          product_name,
+          amount,
+          status: d.status || 'PENDING',
+          invoice_url: invUrl,
+          created_at: new Date().toLocaleString('id-ID')
+        });
+      } catch (err) {
+        showModal('Gagal Membuat Pesanan', err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Bayar Sekarang via QRIS';
+      }
+    }
+
+    function copyOrderId() {
+      if (!activeOrderId) return;
+      navigator.clipboard.writeText(activeOrderId).then(() => {
+        showModal('Tersalin', `Order ID ${activeOrderId} berhasil disalin ke clipboard.`, 'success');
+      });
+    }
+
+    // --- LIVE ORDER VERIFICATION (GET /orders/:id) ---
+    async function verifyCurrentQrisPayment() {
+      if (!activeOrderId) return;
+      const btn = document.getElementById('btnVerifyQris');
+      btn.disabled = true;
+      btn.innerText = 'Mengecek...';
+
+      try {
+        const json = await callFallZxAPI(`orders/${encodeURIComponent(activeOrderId)}`);
+        const d = json.data || json;
+        const status = (d.status || d.payment_status || 'PENDING').toUpperCase();
+
+        if (status === 'PAID' || status === 'SUCCESS' || status === 'COMPLETED') {
+          document.getElementById('qrisStatusBadge').innerText = 'PEMBAYARAN LUNAS';
+          document.getElementById('qrisStatusBadge').className = 'inline-block px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
+          showModal('Pembayaran Berhasil!', 'Pesanan telah lunas dan diproses oleh sistem. Cek detail di Invoice Web atau menu Status Pesanan.', 'success');
+        } else {
+          showModal('Status: ' + status, 'Pembayaran belum terdeteksi lunas. Silakan selesaikan scan QRIS terlebih dahulu.', 'error');
         }
+      } catch (err) {
+        showModal('Info', 'Tidak dapat memverifikasi otomatis. Silakan klik Buka Invoice Web untuk status detail.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Cek Status Bayar';
+      }
+    }
 
-        function syncUI() {
-            const user = getActiveUser();
-            if(!user) return;
-            const bal = (user.balance || 0).toLocaleString('id-ID');
-            document.getElementById('header-balance').innerText = `Rp ${bal}`;
-            document.getElementById('dash-balance').innerText = `Rp ${bal}`;
-            renderOrdersList();
-        }
+    async function checkLiveOrderStatus() {
+      const id = document.getElementById('manualOrderId').value.trim();
+      if (!id) return showModal('Error', 'Masukkan Order ID terlebih dahulu.', 'error');
 
-        function toggleSidebar() { document.getElementById('sidebar-drawer').classList.toggle('hidden'); }
-        function toggleTheme() { document.documentElement.classList.toggle('light'); document.documentElement.classList.toggle('dark'); }
+      const btn = document.getElementById('btnCheckOrder');
+      const resultBox = document.getElementById('liveOrderResult');
+      btn.disabled = true;
+      btn.innerText = 'Mencari...';
 
-        function showNotif(msg, type = 'info') {
-            const container = document.getElementById('toast-container');
-            if(!container) return;
-            const toast = document.createElement('div');
-            let bg = "bg-white text-zinc-900 border-black";
-            if(type === 'success') bg = "bg-emerald-400 text-black font-black";
-            if(type === 'error') bg = "bg-red-500 text-white font-black";
-            toast.className = `max-w-sm w-full border-2 rounded-2xl px-4 py-3 text-xs shadow-[3px_3px_0px_#000] ${bg}`;
-            toast.innerHTML = `<span>${msg}</span>`;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
+      try {
+        const json = await callFallZxAPI(`orders/${encodeURIComponent(id)}`);
+        const d = json.data || json;
+        const status = (d.status || d.payment_status || 'PENDING').toUpperCase();
+        const isPaid = ['PAID', 'SUCCESS', 'COMPLETED'].includes(status);
+        const invUrl = d.invoice_url || `https://store.roselynsound.my.id/invoice/${encodeURIComponent(id)}`;
 
-        async function requestRoselyn(endpoint, method = 'GET', bodyData = null) {
-            const url = `${_PROXY_URL}/${endpoint}`;
-            const opts = {
-                method,
-                headers: {
-                    'Authorization': `Bearer ${_SECRET_KEY}`,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            };
-            if(bodyData) opts.body = JSON.stringify(bodyData);
-            try {
-                const res = await fetch(url, opts);
-                const data = await res.json();
-                if(!res.ok) throw new Error(data.message || 'Terjadi kesalahan sistem');
-                return data;
-            } catch(e) {
-                showNotif(e.message, 'error');
-                throw e;
-            }
-        }
+        resultBox.classList.remove('hidden');
+        resultBox.innerHTML = `
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2.5">
+            <span class="font-mono font-bold text-indigo-600 dark:text-indigo-400">${d.order_id || id}</span>
+            <span class="px-2.5 py-0.5 rounded-md font-mono font-bold text-[10px] ${isPaid ? 'bg-emerald-500/15 text-emerald-600' : 'bg-amber-500/15 text-amber-600'}">${status}</span>
+          </div>
+          <div class="space-y-1 text-slate-600 dark:text-slate-300">
+            <p>Produk: <b>${d.product_name || d.product?.name || '-'}</b></p>
+            <p>Nominal: <b class="font-mono">Rp ${Number(d.amount || d.total_amount || 0).toLocaleString('id-ID')}</b></p>
+          </div>
+          <a href="${invUrl}" target="_blank" class="inline-block w-full text-center py-2.5 rounded-xl bg-indigo-600 text-white font-semibold mt-1">
+            Buka Halaman Invoice & Detail Akun →
+          </a>
+        `;
+      } catch (err) {
+        resultBox.classList.remove('hidden');
+        resultBox.innerHTML = `
+          <div class="text-center space-y-2 py-2">
+            <p class="text-red-500 font-semibold">Order ID tidak ditemukan atau endpoint privat.</p>
+            <a href="https://store.roselynsound.my.id/invoice/${encodeURIComponent(id)}" target="_blank" class="inline-block px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-800 font-semibold">
+              Coba Buka Invoice Langsung ↗
+            </a>
+          </div>
+        `;
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Cek Status';
+      }
+    }
 
-        function switchMainTab(tabId) {
-            for(let i=1; i<=4; i++) document.getElementById(`tab-content-${i}`).classList.add('hidden');
-            document.getElementById(`tab-content-${tabId}`).classList.remove('hidden');
-            const titles = { 1: "FydzCloud ID", 2: "Katalog Layanan", 3: "Status Pesanan", 4: "Deposit Saldo" };
-            document.getElementById('header-title').innerText = titles[tabId];
-            if(tabId === 2 && globalProductsCache.length === 0) loadCatalogProducts();
-        }
+    // --- LOCAL ORDER HISTORY ---
+    function saveOrderHistory(entry) {
+      const user = getLoggedUser();
+      const key = user ? `fydz_orders_${user.username}` : 'fydz_order_history_guest';
+      const list = JSON.parse(localStorage.getItem(key) || '[]');
+      list.unshift(entry);
+      localStorage.setItem(key, JSON.stringify(list.slice(0, 25)));
+    }
 
-        async function loadCatalogProducts() {
-            const grid = document.getElementById('catalog-grid');
-            grid.innerHTML = `<div class="fy-card p-4 text-center text-xs font-bold text-slate-400">Memuat produk...</div>`;
-            try {
-                const json = await requestRoselyn('products?limit=100');
-                let items = [];
-                if(Array.isArray(json)) items = json;
-                else if(json.data && Array.isArray(json.data)) items = json.data;
-                else if(json.products && Array.isArray(json.products)) items = json.products;
-                globalProductsCache = items;
-                renderCatalogGrid();
-            } catch(e) {
-                grid.innerHTML = `<div class="fy-card p-4 text-center text-xs text-red-500 font-bold">Gagal memuat katalog dari Roselynsound.</div>`;
-            }
-        }
+    function renderOrderHistory() {
+      const container = document.getElementById('orderHistoryList');
+      const user = getLoggedUser();
+      const key = user ? `fydz_orders_${user.username}` : 'fydz_order_history_guest';
+      const list = JSON.parse(localStorage.getItem(key) || '[]');
 
-        function renderCatalogGrid() {
-            const q = document.getElementById('search-catalog').value.toLowerCase();
-            const grid = document.getElementById('catalog-grid');
-            const filtered = globalProductsCache.filter(p => (p.name || '').toLowerCase().includes(q));
-            
-            if(filtered.length === 0) {
-                grid.innerHTML = `<div class="fy-card p-4 text-center text-xs font-bold text-slate-400">Layanan tidak ditemukan.</div>`;
-                return;
-            }
+      if (list.length === 0) {
+        container.innerHTML = `<div class="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center text-xs text-slate-500">Belum ada riwayat pesanan tersimpan di perangkat ini.</div>`;
+        return;
+      }
 
-            grid.innerHTML = filtered.map(p => `
-                <div class="fy-card p-4 flex justify-between items-center gap-3">
-                    <div class="space-y-0.5">
-                        <h4 class="text-xs font-black uppercase truncate">${p.name}</h4>
-                        <p class="text-[10px] font-bold text-slate-400">Status: <b class="text-emerald-500">${p.status || 'AVAILABLE'}</b></p>
-                        <p class="text-xs font-black text-indigo-600">Rp ${Number(p.price || 0).toLocaleString('id-ID')}</p>
-                    </div>
-                    <button onclick="orderProduct('${p.id}', '${p.name.replace(/'/g, "")}', ${p.price})" class="fy-btn px-3 py-2 text-[10px] text-white font-black bg-indigo-600">Pesan</button>
-                </div>
-            `).join('');
-        }
+      container.innerHTML = list.map(item => `
+        <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3">
+          <div class="min-w-0">
+            <span class="text-[11px] font-mono font-semibold text-indigo-600 dark:text-indigo-400 block truncate">${item.order_id}</span>
+            <h4 class="font-bold text-sm truncate mt-0.5">${item.product_name}</h4>
+            <p class="text-[11px] text-slate-400 mt-0.5">Rp ${Number(item.amount).toLocaleString('id-ID')} • ${item.created_at}</p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button onclick="document.getElementById('manualOrderId').value='${item.order_id}'; checkLiveOrderStatus();" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-500/10 text-xs font-semibold transition">Cek</button>
+            <a href="${item.invoice_url}" target="_blank" class="px-3.5 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold transition">Invoice</a>
+          </div>
+        </div>
+      `).join('');
+    }
 
-        async function orderProduct(productId, productName, price) {
-            let db = JSON.parse(localStorage.getItem('fydz_store_users') || '{}');
-            let user = db[currentUser];
-            if(user.balance < price) {
-                return showNotif(`Saldo tidak cukup! Saldo kamu Rp ${user.balance.toLocaleString('id-ID')}, butuh Rp ${price.toLocaleString('id-ID')}.`, 'error');
-            }
+    function clearOrderHistory() {
+      const user = getLoggedUser();
+      const key = user ? `fydz_orders_${user.username}` : 'fydz_order_history_guest';
+      localStorage.removeItem(key);
+      renderOrderHistory();
+      showModal('Berhasil', 'Riwayat transaksi lokal telah dibersihkan.', 'success');
+    }
 
-            try {
-                showNotif("Memproses pesanan...", "info");
-                const res = await requestRoselyn('orders', 'POST', {
-                    product_id: productId,
-                    quantity: 1,
-                    customer_name: currentUser,
-                    customer_phone: '081234567890',
-                    customer_email: `${currentUser.toLowerCase()}@fydz.id`,
-                    payment_method: 'QRIS'
-                });
-
-                user.balance -= price;
-                if(!user.orders) user.orders = [];
-                user.orders.unshift({
-                    id: res.order_id || res.id || 'INV-' + Math.floor(Math.random()*900000),
-                    name: productName,
-                    amount: price,
-                    invoice: res.invoice_url || '#',
-                    time: new Date().toLocaleTimeString()
-                });
-
-                db[currentUser] = user;
-                localStorage.setItem('fydz_store_users', JSON.stringify(db));
-                syncUI();
-                showNotif("Pesanan berhasil dibuat!", "success");
-                switchMainTab(3);
-            } catch(e) {}
-        }
-
-        async function createDepositQr() {
-            const nominal = Number(document.getElementById('dep-nominal').value);
-            if(!nominal || nominal < 1000) return showNotif("Minimal deposit Rp 1.000", "error");
-
-            try {
-                showNotif("Membuat QRIS deposit...", "info");
-                const res = await requestRoselyn('orders', 'POST', {
-                    product_id: 'deposit_saldo',
-                    quantity: 1,
-                    customer_name: currentUser,
-                    customer_phone: '081234567890',
-                    customer_email: `${currentUser.toLowerCase()}@fydz.id`,
-                    payment_method: 'QRIS',
-                    amount: nominal
-                });
-
-                activeDepositId = res.order_id || res.id;
-                activeDepositNominal = nominal;
-                document.getElementById('modal-qris-box').classList.remove('hidden');
-                document.getElementById('qris-total').innerText = `Rp ${nominal.toLocaleString('id-ID')}`;
-                
-                const qrContainer = document.getElementById('qrcode-container');
-                qrContainer.innerHTML = "";
-                new QRCode(qrContainer, { text: res.payment?.qr_image_url || "https://store.roselynsound.my.id", width: 160, height: 160 });
-                showNotif("QRIS siap di-scan!", "success");
-            } catch(e) {}
-        }
-
-        function checkDepositStatus() {
-            showNotif("Mensimulasikan pembayaran sukses...", "info");
-            let db = JSON.parse(localStorage.getItem('fydz_store_users') || '{}');
-            let user = db[currentUser];
-            user.balance += Number(activeDepositNominal);
-            db[currentUser] = user;
-            localStorage.setItem('fydz_store_users', JSON.stringify(db));
-            syncUI();
-            showNotif(`SUKSES! Saldo Rp ${Number(activeDepositNominal).toLocaleString('id-ID')} masuk!`, "success");
-            document.getElementById('modal-qris-box').classList.add('hidden');
-        }
-
-        function renderOrdersList() {
-            const user = getActiveUser();
-            const container = document.getElementById('order-history-list');
-            if(!user || !user.orders || user.orders.length === 0) {
-                container.innerHTML = `<div class="p-4 rounded-xl border-2 border-dashed border-zinc-300 dark:border-zinc-800 text-center text-xs text-slate-400">Belum ada transaksi pesanan.</div>`;
-                return;
-            }
-
-            container.innerHTML = user.orders.map(o => `
-                <div class="p-3.5 rounded-2xl border-2 border-black bg-white dark:bg-zinc-900 flex justify-between items-center text-xs">
-                    <div>
-                        <span class="text-[10px] font-mono text-indigo-600 block">${o.id}</span>
-                        <h4 class="font-black">${o.name}</h4>
-                        <p class="text-[10px] text-slate-400">Rp ${o.amount.toLocaleString('id-ID')} • ${o.time}</p>
-                    </div>
-                    <a href="${o.invoice}" target="_blank" class="fy-btn px-3 py-1.5 text-[10px]">Invoice</a>
-                </div>
-            `).join('');
-        }
-    </script>
+    // Boot App
+    initTheme();
+    renderAuthUI();
+    navigate('home');
+    loadCatalog();
+  </script>
 </body>
 </html>

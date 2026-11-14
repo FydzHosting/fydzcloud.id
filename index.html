@@ -86,7 +86,7 @@
     </div>
   </header>
 
-  <!-- MOBILE SIDEBAR DRAWER (Hanya untuk Profil & Kontak Support) -->
+  <!-- MOBILE SIDEBAR DRAWER -->
   <div id="sidebarBackdrop" onclick="toggleSidebar(false)" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-xs transition-opacity"></div>
   <aside id="sidebarDrawer" class="fixed top-0 left-0 bottom-0 z-50 w-72 max-w-[82vw] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform -translate-x-full transition-transform duration-300 ease-out flex flex-col shadow-2xl">
     <div class="h-16 px-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
@@ -118,7 +118,7 @@
   <!-- MAIN CONTENT AREA -->
   <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
-    <!-- ==================== VIEW 1: BERANDA (TANPA KATALOG DOUBLE) ==================== -->
+    <!-- ==================== VIEW 1: BERANDA ==================== -->
     <section id="view-home" class="view-section space-y-7">
       
       <!-- Hero Card -->
@@ -137,7 +137,7 @@
           </h1>
           
           <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
-            Beli server panel Pterodactyl, source code bot WhatsApp, hingga layanan pembuatan web dengan pembayaran QRIS instan 24 jam nonstop.
+            Beli server panel Pterodactyl, script bot WhatsApp premium, e-book, dan produk digital lainnya dengan pembayaran QRIS instan 24 jam nonstop.
           </p>
         </div>
       </div>
@@ -175,51 +175,16 @@
         </div>
       </div>
 
-      <!-- Category Shortcuts -->
+      <!-- Dynamic Category Shortcuts (Mengikuti Katalog Asli FallZx Store) -->
       <div class="space-y-3">
         <div class="px-1">
           <h2 class="text-base sm:text-lg font-bold tracking-tight">Pilih Kategori Layanan</h2>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-          <button onclick="openCategoryDirect('Panel Pterodactyl')" class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-left transition flex items-center justify-between group shadow-xs">
-            <div class="flex items-center gap-3.5">
-              <div class="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
-              </div>
-              <div>
-                <h3 class="font-bold text-sm">Panel Pterodactyl</h3>
-                <p class="text-xs text-slate-500 mt-0.5">Server Bot WA & Node.js</p>
-              </div>
-            </div>
-            <svg class="w-5 h-5 text-slate-400 group-hover:text-indigo-500 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-          </button>
-
-          <button onclick="openCategoryDirect('Script & Bot WA')" class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 text-left transition flex items-center justify-between group shadow-xs">
-            <div class="flex items-center gap-3.5">
-              <div class="w-11 h-11 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-              </div>
-              <div>
-                <h3 class="font-bold text-sm">Script & Bot WA</h3>
-                <p class="text-xs text-slate-500 mt-0.5">Source code siap jalan</p>
-              </div>
-            </div>
-            <svg class="w-5 h-5 text-slate-400 group-hover:text-emerald-500 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-          </button>
-
-          <button onclick="openCategoryDirect('Jasa & Tools')" class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500 text-left transition flex items-center justify-between group shadow-xs">
-            <div class="flex items-center gap-3.5">
-              <div class="w-11 h-11 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center shrink-0 group-hover:scale-105 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-              </div>
-              <div>
-                <h3 class="font-bold text-sm">Jasa Web & Tools</h3>
-                <p class="text-xs text-slate-500 mt-0.5">Custom web & instalasi</p>
-              </div>
-            </div>
-            <svg class="w-5 h-5 text-slate-400 group-hover:text-amber-500 transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-          </button>
+        <div id="homeCategoryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-400">
+            Memuat kategori dari server...
+          </div>
         </div>
       </div>
     </section>
@@ -229,13 +194,13 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">Katalog Layanan</h1>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Pilih paket layanan cloud & digital terbaik untuk kebutuhanmu</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Tersinkronisasi langsung dengan katalog FallZx Store</p>
         </div>
         
         <div class="flex items-center gap-2 w-full sm:w-auto">
           <div class="relative flex-1 sm:w-72">
             <svg class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <input type="text" id="catalogSearch" oninput="applyCatalogFilter()" placeholder="Cari paket atau layanan..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <input type="text" id="catalogSearch" oninput="applyCatalogFilter()" placeholder="Cari produk, script, e-book..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
           </div>
           <button onclick="loadCatalog()" title="Muat Ulang Katalog" class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-indigo-500 transition shrink-0">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
@@ -243,19 +208,10 @@
         </div>
       </div>
 
-      <!-- Filter Chips -->
+      <!-- Dynamic Filter Chips -->
       <div id="categoryChips" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
         <button onclick="selectCategory('all')" data-cat="all" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition">
           Semua Layanan
-        </button>
-        <button onclick="selectCategory('Panel Pterodactyl')" data-cat="Panel Pterodactyl" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition">
-          Panel Pterodactyl
-        </button>
-        <button onclick="selectCategory('Script & Bot WA')" data-cat="Script & Bot WA" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition">
-          Script & Bot WA
-        </button>
-        <button onclick="selectCategory('Jasa & Tools')" data-cat="Jasa & Tools" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition">
-          Jasa Web & Tools
         </button>
       </div>
 
@@ -318,7 +274,7 @@
           <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0">01</span>
           <div>
             <h3 class="font-bold text-sm">Pilih Layanan di Katalog</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Buka menu Katalog, pilih paket panel Pterodactyl, script bot, atau layanan web yang diinginkan, lalu klik tombol <b>Pesan</b>.</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Buka menu Katalog, pilih paket panel Pterodactyl, script bot, e-book, atau produk digital lainnya, lalu klik tombol <b>Pesan</b>.</p>
           </div>
         </div>
 
@@ -334,7 +290,7 @@
           <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0">03</span>
           <div>
             <h3 class="font-bold text-sm">Scan QRIS & Terima Produk</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Kode QRIS akan muncul otomatis sesuai nominal tagihan. Setelah dibayar, sistem memproses pesanan dan mengirimkan detail layanan secara instan.</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Kode QRIS akan muncul otomatis sesuai nominal tagihan. Setelah dibayar, sistem memproses pesanan dan mengirimkan detail produk secara instan.</p>
           </div>
         </div>
       </div>
@@ -461,7 +417,7 @@
     </div>
   </div>
 
-  <!-- MODAL QRIS PAYMENT (FIXED RENDER QR CODE) -->
+  <!-- MODAL QRIS PAYMENT -->
   <div id="qrisModal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-5 text-center relative">
       <button onclick="closeQrisModal()" class="absolute top-4 right-4 p-2 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
@@ -477,7 +433,6 @@
         </div>
       </div>
 
-      <!-- Container Render QRIS Dinamis -->
       <div class="p-4 rounded-2xl bg-white border border-slate-200 inline-flex items-center justify-center mx-auto shadow-xs min-w-[216px] min-h-[216px]">
         <div id="qrisCanvasBox" class="flex items-center justify-center"></div>
       </div>
@@ -696,6 +651,85 @@
       selectCategory(catName);
     }
 
+    // --- DETEKSI KATEGORI ASLI DARI API FALLZX STORE ---
+    function normalizeCategoryName(p) {
+      // Ambil langsung nama kategori dari API FallZx Store jika ada
+      const apiCat = (p.category_name || (typeof p.category === 'object' ? p.category?.name : p.category) || p.type || '').trim();
+      if (apiCat) {
+        return apiCat.replace(/\b\w/g, c => c.toUpperCase());
+      }
+      // Fallback cerdas jika field category dari API kosong
+      const name = (p.name || '').toLowerCase();
+      if (name.includes('panel') || name.includes('ram') || name.includes('pterodactyl') || name.includes('vps')) return 'Panel Pterodactyl';
+      if (name.includes('script') || name.includes('cantharella') || name.includes('bot') || name.includes('sc ')) return 'Script Bot WA';
+      if (name.includes('ebook') || name.includes('e-book') || name.includes('modul') || name.includes('panduan')) return 'E-Book & Digital';
+      return 'Produk Digital';
+    }
+
+    function isPanelProductCheck(p) {
+      const cat = normalizeCategoryName(p).toLowerCase();
+      const name = (p.name || '').toLowerCase();
+      return cat.includes('panel') || cat.includes('pterodactyl') || name.includes('panel pterodactyl') || (name.includes('panel') && name.includes('ram'));
+    }
+
+    // --- BANGUN CHIP & KARTU KATEGORI DINAMIS SESUAI FALLZX STORE ---
+    function buildDynamicCategories(items) {
+      const counts = {};
+      items.forEach(p => {
+        const cat = normalizeCategoryName(p);
+        counts[cat] = (counts[cat] || 0) + 1;
+      });
+
+      const uniqueCats = Object.keys(counts);
+
+      // 1. Render Filter Chips di Halaman Katalog
+      const chipsBox = document.getElementById('categoryChips');
+      let chipsHTML = `
+        <button onclick="selectCategory('all')" data-cat="all" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition shadow-xs">
+          Semua (${items.length})
+        </button>
+      `;
+      uniqueCats.forEach(cat => {
+        const safeCat = cat.replace(/'/g, "\\'");
+        chipsHTML += `
+          <button onclick="selectCategory('${safeCat}')" data-cat="${cat}" class="cat-chip shrink-0 px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-indigo-500 transition">
+            ${cat} (${counts[cat]})
+          </button>
+        `;
+      });
+      chipsBox.innerHTML = chipsHTML;
+
+      // 2. Render Kartu Kategori di Halaman Beranda
+      const homeGrid = document.getElementById('homeCategoryGrid');
+      const badgeColors = [
+        'bg-indigo-600 text-white',
+        'bg-emerald-600 text-white',
+        'bg-amber-500 text-slate-950',
+        'bg-violet-600 text-white',
+        'bg-rose-600 text-white',
+        'bg-sky-600 text-white'
+      ];
+
+      homeGrid.innerHTML = uniqueCats.map((cat, idx) => {
+        const safeCat = cat.replace(/'/g, "\\'");
+        const colorClass = badgeColors[idx % badgeColors.length];
+        return `
+          <button onclick="openCategoryDirect('${safeCat}')" class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-left transition flex items-center justify-between group shadow-xs">
+            <div class="flex items-center gap-3.5 min-w-0">
+              <div class="w-11 h-11 rounded-xl ${colorClass} flex items-center justify-center font-mono font-bold text-sm shrink-0 group-hover:scale-105 transition">
+                ${cat.substring(0, 2).toUpperCase()}
+              </div>
+              <div class="min-w-0">
+                <h3 class="font-bold text-sm truncate">${cat}</h3>
+                <p class="text-xs text-slate-500 mt-0.5">${counts[cat]} Produk Tersedia</p>
+              </div>
+            </div>
+            <svg class="w-5 h-5 text-slate-400 group-hover:text-indigo-500 transition shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        `;
+      }).join('');
+    }
+
     async function loadCatalog() {
       const badge = document.getElementById('apiBadge');
       const badgeText = document.getElementById('apiBadgeText');
@@ -722,6 +756,8 @@
           badge.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-mono';
           dot.className = 'w-2 h-2 rounded-full bg-emerald-400';
           badgeText.innerText = `Server Online • ${productsData.length} Layanan Tersedia`;
+          
+          buildDynamicCategories(productsData);
           renderCatalogCards(productsData);
         } else {
           badgeText.innerText = 'Server Online • Katalog Kosong';
@@ -740,14 +776,6 @@
       }
     }
 
-    function getProductCategory(p) {
-      const rawCat = (p.category || '').toLowerCase();
-      const name = (p.name || '').toLowerCase();
-      if (rawCat.includes('panel') || name.includes('panel') || name.includes('ram') || name.includes('pterodactyl')) return 'Panel Pterodactyl';
-      if (rawCat.includes('bot') || name.includes('bot') || name.includes('script') || name.includes('sc ') || name.includes('whatsapp')) return 'Script & Bot WA';
-      return 'Jasa & Tools';
-    }
-
     function selectCategory(cat) {
       selectedCat = cat;
       document.querySelectorAll('.cat-chip').forEach(btn => {
@@ -762,8 +790,12 @@
     function applyCatalogFilter() {
       const q = document.getElementById('catalogSearch').value.toLowerCase().trim();
       const filtered = productsData.filter(p => {
-        const matchCat = selectedCat === 'all' || getProductCategory(p) === selectedCat;
-        const matchText = (p.name || '').toLowerCase().includes(q) || (p.description || '').toLowerCase().includes(q) || String(p.id || '').toLowerCase().includes(q);
+        const productCat = normalizeCategoryName(p);
+        const matchCat = selectedCat === 'all' || productCat === selectedCat;
+        const matchText = (p.name || '').toLowerCase().includes(q) || 
+                          (p.description || '').toLowerCase().includes(q) || 
+                          productCat.toLowerCase().includes(q) ||
+                          String(p.id || '').toLowerCase().includes(q);
         return matchCat && matchText;
       });
       renderCatalogCards(filtered);
@@ -772,16 +804,17 @@
     function createProductCardHTML(p) {
       const isAvail = (p.status || 'AVAILABLE').toUpperCase() === 'AVAILABLE' && (p.stock === undefined || p.stock === null || Number(p.stock) > 0);
       const safeName = (p.name || 'Layanan').replace(/'/g, "\\'");
-      const productCat = getProductCategory(p);
-      const isPanel = productCat === 'Panel Pterodactyl';
+      const productCat = normalizeCategoryName(p);
+      const isPanel = isPanelProductCheck(p);
       const desc = p.description ? `<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">${p.description}</p>` : '';
+      const stockLabel = (p.stock !== undefined && p.stock !== null) ? ` • Stok: ${p.stock}` : '';
 
       return `
         <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/60 transition flex flex-col justify-between gap-4 shadow-xs">
           <div class="space-y-2.5">
             <div class="flex items-center justify-between gap-2">
-              <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono font-semibold uppercase bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">${productCat}</span>
-              <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold ${isAvail ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-red-500/10 text-red-500'}">${isAvail ? 'READY' : 'HABIS'}</span>
+              <span class="px-2.5 py-1 rounded-lg text-[10px] font-mono font-semibold uppercase bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 truncate max-w-[170px]">${productCat}</span>
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold shrink-0 ${isAvail ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-red-500/10 text-red-500'}">${isAvail ? 'READY' + stockLabel : 'HABIS'}</span>
             </div>
             <div>
               <h3 class="font-bold text-base leading-snug">${p.name || 'Tanpa Nama'}</h3>
@@ -791,7 +824,7 @@
           </div>
           <div class="pt-3.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
             <div>
-              <span class="text-[10px] font-mono text-slate-400 block">Harga Paket</span>
+              <span class="text-[10px] font-mono text-slate-400 block">Harga</span>
               <span class="font-mono font-extrabold text-base text-indigo-600 dark:text-indigo-400">Rp ${Number(p.price || 0).toLocaleString('id-ID')}</span>
             </div>
             <button onclick="openCheckout('${p.id}', '${safeName}', ${p.price || 0}, ${isPanel})" ${!isAvail ? 'disabled' : ''} class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 text-white text-xs font-semibold transition shadow-xs">
@@ -846,7 +879,6 @@
     function closeCheckoutModal() { document.getElementById('checkoutModal').classList.add('hidden'); }
     function closeQrisModal() { document.getElementById('qrisModal').classList.add('hidden'); }
 
-    // --- RENDER QRIS (MENDUKUNG STRING QRIS MAUPUN URL GAMBAR) ---
     function renderQrisGraphic(paymentObj, rootObj, invUrl) {
       const box = document.getElementById('qrisCanvasBox');
       box.innerHTML = '';
@@ -854,7 +886,6 @@
       const rawQrString = paymentObj.qr_string || paymentObj.qr_code || paymentObj.qris_string || rootObj.qr_string || rootObj.qr_code || '';
       const rawQrUrl = paymentObj.qr_image_url || paymentObj.qr_url || rootObj.qr_image_url || rootObj.qr_url || '';
 
-      // 1. Jika API mengembalikan string QRIS mentah (00020101...), generate langsung pakai QRCode.js
       if (rawQrString && rawQrString.startsWith('000201')) {
         new QRCode(box, {
           text: rawQrString,
@@ -867,14 +898,12 @@
         return;
       }
 
-      // 2. Jika API mengembalikan Data URI Base64 atau URL Gambar HTTP
       if (rawQrUrl) {
         const img = document.createElement('img');
         img.src = rawQrUrl;
         img.alt = "Kode QRIS";
         img.className = "w-48 h-48 object-contain mx-auto";
         img.onerror = () => {
-          // Fallback jika URL gambar gagal dimuat: encode URL invoice ke QR Code agar tetap bisa di-scan
           box.innerHTML = '';
           new QRCode(box, { text: invUrl, width: 190, height: 190 });
         };
@@ -882,7 +911,6 @@
         return;
       }
 
-      // 3. Fallback terakhir jika field QR kosong
       new QRCode(box, { text: invUrl, width: 190, height: 190 });
     }
 
@@ -969,12 +997,12 @@
         if (status === 'PAID' || status === 'SUCCESS' || status === 'COMPLETED') {
           document.getElementById('qrisStatusBadge').innerText = 'PEMBAYARAN LUNAS';
           document.getElementById('qrisStatusBadge').className = 'inline-block px-3 py-1 rounded-full text-[11px] font-mono font-semibold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
-          showModal('Pembayaran Berhasil!', 'Pesanan telah lunas dan diproses oleh sistem.', 'success');
+          showModal('Pembayaran Berhasil!', 'Pesanan telah lunas dan diproses otomatis oleh sistem.', 'success');
         } else {
           showModal('Status: ' + status, 'Pembayaran belum terdeteksi lunas. Silakan selesaikan scan QRIS terlebih dahulu.', 'error');
         }
       } catch (err) {
-        showModal('Info', 'Tidak dapat memverifikasi otomatis. Silakan klik Buka Invoice Web untuk status detail.', 'error');
+        showModal('Info', 'Tidak dapat memverifikasi otomatis. Silakan klik Buka Invoice Web untuk melihat produk.', 'error');
       } finally {
         btn.disabled = false;
         btn.innerText = 'Cek Status Bayar';
@@ -1008,7 +1036,7 @@
             <p>Nominal: <b class="font-mono">Rp ${Number(d.amount || d.total_amount || 0).toLocaleString('id-ID')}</b></p>
           </div>
           <a href="${invUrl}" target="_blank" class="inline-block w-full text-center py-2.5 rounded-xl bg-indigo-600 text-white font-semibold mt-1">
-            Buka Halaman Invoice & Detail Akun →
+            Buka Halaman Invoice & Unduh Produk →
           </a>
         `;
       } catch (err) {
